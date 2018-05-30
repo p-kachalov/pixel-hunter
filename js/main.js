@@ -32,8 +32,8 @@ const ARROW_BUTTONS_TEMPLATE = `
 `;
 
 const KeyCode = {
-  left: 37,
-  right: 39
+  LEFT: 37,
+  RIGHT: 39
 };
 
 const clearContainer = (element) => {
@@ -75,10 +75,10 @@ const nextScreen = () => {
 const addArrowKeyHandlers = () => {
   document.addEventListener(`keydown`, (evt) => {
     switch (evt.keyCode) {
-      case KeyCode.left:
+      case KeyCode.LEFT:
         prevScreen();
         break;
-      case KeyCode.right:
+      case KeyCode.RIGHT:
         nextScreen();
         break;
       default:
@@ -109,9 +109,9 @@ const addArrowsButtons = () => {
   }
 };
 
-let currentScreen;
+let currentScreen = 0;
+
 const init = () => {
-  currentScreen = 0;
   renderScreen(currentScreen);
   addArrowKeyHandlers();
   addArrowsButtons();
