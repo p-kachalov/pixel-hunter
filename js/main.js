@@ -1,4 +1,3 @@
-'use strict';
 
 const SCREEN_SEQUENCE = [
   `greeting`,
