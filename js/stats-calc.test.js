@@ -40,6 +40,7 @@ describe(`statistics`, () => {
       answers[3].slow = true;
       assert.equal(1050, statsCalc(answers, 3));
     });
+
     it(`should return 1150 when user won with 3 live, 2 penalties and 2 bonuses`, () => {
       const answer = Object.assign({}, defaultAnswer, {right: true});
       const answers = generateAnswers(answer, 10);
@@ -49,6 +50,7 @@ describe(`statistics`, () => {
       answers[2].fast = true;
       assert.equal(1150, statsCalc(answers, 3));
     });
+
     it(`should return 1050 when user won with 1 live, 2 penalties and 2 bonuses`, () => {
       const answer = Object.assign({}, defaultAnswer, {right: true});
       const answers = generateAnswers(answer, 10);
