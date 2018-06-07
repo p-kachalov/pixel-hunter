@@ -4,7 +4,7 @@ export default (answers, lives) => {
     return -1;
   }
 
-  let result = answers.reduce((acc, item) => {
+  return answers.reduce((acc, item) => {
     if (!item.right) {
       return acc;
     }
@@ -12,10 +12,5 @@ export default (answers, lives) => {
     acc += item.fast ? 50 : 0;
     acc -= item.slow ? 50 : 0;
     return acc;
-  }, 0);
-
-  result += lives * 50;
-
-
-  return result;
+  }, 0) + lives * 50;
 };
