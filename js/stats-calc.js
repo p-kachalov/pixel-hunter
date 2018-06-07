@@ -8,9 +8,6 @@ export default (answers, lives) => {
     if (!item.right) {
       return acc;
     }
-    acc += 100;
-    acc += item.fast ? 50 : 0;
-    acc -= item.slow ? 50 : 0;
-    return acc;
+    return acc + 100 + (item.fast ? 50 : 0) - (item.slow ? 50 : 0);
   }, 0) + lives * 50;
 };
