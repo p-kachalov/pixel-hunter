@@ -11,16 +11,14 @@ const createTimer = (setTime) => {
     throw new RangeError(`Argument should be more then 0`);
   }
 
-  const currentTime = setTime;
-
-  return {
-    get time() {
-      return currentTime;
-    },
-    tick() {
-      return createTimer(currentTime - 1);
-    }
-  };
+  return Object.freeze(
+      {
+        time: setTime,
+        tick() {
+          return createTimer(setTime - 1);
+        }
+      }
+  );
 };
 
 export default createTimer;
