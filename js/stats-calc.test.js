@@ -1,64 +1,42 @@
 import {assert} from 'chai';
 import statsCalc from './stats-calc';
 
-const generateAnswers = (answer, len) => {
-  const answers = [];
-  for (let i = 0; i < len; i++) {
-    answers.push(Object.assign({}, answer));
+const replicateObject = (obj, count) => {
+  const result = [];
+  for (let i = 0; i < count; i++) {
+    result.push(Object.assign({}, obj));
   }
-  return answers;
+  return result;
 };
-
-const defaultAnswer = {right: false, fast: false, slow: false};
 
 describe(`statistics`, () => {
   describe(`with valid input`, () => {
     it(`should return -1 when user lost`, () => {
-      const answer = Object.assign({}, defaultAnswer);
-      const answers = generateAnswers(answer, 4);
-      assert.equal(-1, statsCalc(answers, 0));
+      const answers = replicateObject({right: false, fast: false, slow: false}, 4);
+      const lives = 0;
+      assert.equal(-1, statsCalc(answers, lives));
     });
 
     it(`should return 1150 when user won with 3 live, without penalties and bonuses`, () => {
-      const answer = Object.assign({}, defaultAnswer, {right: true});
-      const answers = generateAnswers(answer, 10);
-      assert.equal(1150, statsCalc(answers, 3));
+      const answers = replicateObject({right: true, fast: false, slow: false}, 10);
+      const lives = 3;
+      assert.equal(1150, statsCalc(answers, lives));
     });
 
-    it(`should return 1250 when user won with 3 live, without penalties and with 2 bonuses`, () => {
-      const answer = Object.assign({}, defaultAnswer, {right: true});
-      const answers = generateAnswers(answer, 8);
-      answers.push(Object.assign({}, defaultAnswer, {right: true, fast: true}));
-      answers.push(Object.assign({}, defaultAnswer, {right: true, fast: true}));
-      assert.equal(1250, statsCalc(answers, 3));
+    it(`should return 1200 when user won with 3 live, 2 penalties and 3 bonuses`, () => {
+      const answers = replicateObject({right: true, fast: false, slow: false}, 5)
+        .concat(replicateObject({right: true, fast: true, slow: false}, 3))
+        .concat(replicateObject({right: true, fast: false, slow: true}, 2));
+      const lives = 3;
+      assert.equal(1200, statsCalc(answers, lives));
     });
 
-    it(`should return 1050 when user won with 3 live, 2 penalties and without bonuses`, () => {
-      const answer = Object.assign({}, defaultAnswer, {right: true});
-      const answers = generateAnswers(answer, 8);
-      answers.push(Object.assign({}, defaultAnswer, {right: true, slow: true}));
-      answers.push(Object.assign({}, defaultAnswer, {right: true, slow: true}));
-      assert.equal(1050, statsCalc(answers, 3));
-    });
-
-    it(`should return 1150 when user won with 3 live, 2 penalties and 2 bonuses`, () => {
-      const answer = Object.assign({}, defaultAnswer, {right: true});
-      const answers = generateAnswers(answer, 6);
-      answers.push(Object.assign({}, defaultAnswer, {right: true, fast: true}));
-      answers.push(Object.assign({}, defaultAnswer, {right: true, fast: true}));
-      answers.push(Object.assign({}, defaultAnswer, {right: true, slow: true}));
-      answers.push(Object.assign({}, defaultAnswer, {right: true, slow: true}));
-      assert.equal(1150, statsCalc(answers, 3));
-    });
-
-    it(`should return 1050 when user won with 1 live, 2 penalties and 2 bonuses`, () => {
-      const answer = Object.assign({}, defaultAnswer, {right: true});
-      const answers = generateAnswers(answer, 6);
-      answers.push(Object.assign({}, defaultAnswer, {right: true, fast: true}));
-      answers.push(Object.assign({}, defaultAnswer, {right: true, fast: true}));
-      answers.push(Object.assign({}, defaultAnswer, {right: true, slow: true}));
-      answers.push(Object.assign({}, defaultAnswer, {right: true, slow: true}));
-      assert.equal(1050, statsCalc(answers, 1));
+    it(`should return 1000 when user won with 1 live, 3 penalties and 2 bonuses`, () => {
+      const answers = replicateObject({right: true, fast: false, slow: false}, 5)
+        .concat(replicateObject({right: true, fast: true, slow: false}, 2))
+        .concat(replicateObject({right: true, fast: false, slow: true}, 3));
+      const lives = 1;
+      assert.equal(1000, statsCalc(answers, lives));
     });
   });
 });
