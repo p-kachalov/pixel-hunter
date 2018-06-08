@@ -1,21 +1,21 @@
-const createTimer = (setTime) => {
-  if (typeof setTime !== `number`) {
+const createTimer = (time) => {
+  if (typeof time !== `number`) {
     throw new TypeError(`Argument should be a number`);
   }
 
-  if (!Number.isInteger(setTime)) {
+  if (!Number.isInteger(time)) {
     throw new TypeError(`Argument should be integer`);
   }
 
-  if (setTime < 0) {
+  if (time < 0) {
     throw new RangeError(`Argument should be more then 0`);
   }
 
   return Object.freeze(
       {
-        time: setTime,
+        time,
         tick() {
-          return createTimer(setTime - 1);
+          return createTimer(time - 1);
         }
       }
   );
