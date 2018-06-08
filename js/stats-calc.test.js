@@ -27,37 +27,37 @@ describe(`statistics`, () => {
 
     it(`should return 1250 when user won with 3 live, without penalties and with 2 bonuses`, () => {
       const answer = Object.assign({}, defaultAnswer, {right: true});
-      const answers = generateAnswers(answer, 10);
-      answers[0].fast = true;
-      answers[3].fast = true;
+      const answers = generateAnswers(answer, 8);
+      answers.push(Object.assign({}, defaultAnswer, {right: true, fast: true}));
+      answers.push(Object.assign({}, defaultAnswer, {right: true, fast: true}));
       assert.equal(1250, statsCalc(answers, 3));
     });
 
     it(`should return 1050 when user won with 3 live, 2 penalties and without bonuses`, () => {
       const answer = Object.assign({}, defaultAnswer, {right: true});
-      const answers = generateAnswers(answer, 10);
-      answers[0].slow = true;
-      answers[3].slow = true;
+      const answers = generateAnswers(answer, 8);
+      answers.push(Object.assign({}, defaultAnswer, {right: true, slow: true}));
+      answers.push(Object.assign({}, defaultAnswer, {right: true, slow: true}));
       assert.equal(1050, statsCalc(answers, 3));
     });
 
     it(`should return 1150 when user won with 3 live, 2 penalties and 2 bonuses`, () => {
       const answer = Object.assign({}, defaultAnswer, {right: true});
-      const answers = generateAnswers(answer, 10);
-      answers[0].slow = true;
-      answers[3].slow = true;
-      answers[1].fast = true;
-      answers[2].fast = true;
+      const answers = generateAnswers(answer, 6);
+      answers.push(Object.assign({}, defaultAnswer, {right: true, fast: true}));
+      answers.push(Object.assign({}, defaultAnswer, {right: true, fast: true}));
+      answers.push(Object.assign({}, defaultAnswer, {right: true, slow: true}));
+      answers.push(Object.assign({}, defaultAnswer, {right: true, slow: true}));
       assert.equal(1150, statsCalc(answers, 3));
     });
 
     it(`should return 1050 when user won with 1 live, 2 penalties and 2 bonuses`, () => {
       const answer = Object.assign({}, defaultAnswer, {right: true});
-      const answers = generateAnswers(answer, 10);
-      answers[0].slow = true;
-      answers[3].slow = true;
-      answers[1].fast = true;
-      answers[2].fast = true;
+      const answers = generateAnswers(answer, 6);
+      answers.push(Object.assign({}, defaultAnswer, {right: true, fast: true}));
+      answers.push(Object.assign({}, defaultAnswer, {right: true, fast: true}));
+      answers.push(Object.assign({}, defaultAnswer, {right: true, slow: true}));
+      answers.push(Object.assign({}, defaultAnswer, {right: true, slow: true}));
       assert.equal(1050, statsCalc(answers, 1));
     });
   });
