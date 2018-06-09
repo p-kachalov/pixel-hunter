@@ -1,7 +1,6 @@
 import controller from './game-controller';
 import renderTemplate from './render-template';
 
-
 const contentTemplate = `
 <div id="main" class="central__content">
   <div id="intro" class="intro">
@@ -35,7 +34,7 @@ export default (state) => {
 
   const link = screen.content.querySelector(`.intro__asterisk`);
   link.addEventListener(`click`, () => {
-    controller(state, {transition: true});
+    controller(state, true);
   });
   return screen.content;
 };
