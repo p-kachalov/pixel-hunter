@@ -1,7 +1,7 @@
 import controller from './game-controller';
 import renderTemplate from './render-template';
 
-const TEMPLATE = `
+const contentTemplate = `
 <div class="greeting central--blur">
   <div class="greeting__logo"><img src="img/logo_big.png" width="201" height="89" alt="Pixel Hunter"></div>
   <h1 class="greeting__asterisk">*</h1>
@@ -15,6 +15,9 @@ const TEMPLATE = `
   </div>
   <div class="greeting__continue"><span><img src="img/arrow_right.svg" width="64" height="64" alt="Next"></span></div>
 </div>
+`;
+
+const footerTemplate = `
 <footer class="footer">
   <a href="https://htmlacademy.ru" class="social-link social-link--academy">HTML Academy</a>
   <span class="footer__made-in">Сделано в <a href="https://htmlacademy.ru" class="footer__link">HTML Academy</a> &copy; 2016</span>
@@ -28,12 +31,18 @@ const TEMPLATE = `
 `;
 
 export default (state) => {
-  const screen = renderTemplate(TEMPLATE);
-  const link = screen.querySelector(`.greeting__continue`);
+  const screen = document.createElement(`template`);
 
+  const content = renderTemplate(contentTemplate);
+  const footer = renderTemplate(footerTemplate);
+
+  screen.content.appendChild(content);
+  screen.content.appendChild(footer);
+
+  const link = screen.content.querySelector(`.greeting__continue`);
   link.addEventListener(`click`, () => {
     controller(state, {transition: true});
   });
 
-  return screen;
+  return screen.content;
 };
