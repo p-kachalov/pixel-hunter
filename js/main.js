@@ -1,5 +1,8 @@
-import changeScreen from './render-screen';
-import renderNext from './screen-intro';
+import controller from './game-controller';
 
-const nextScreen = renderNext();
-changeScreen(nextScreen);
+const initialState = {
+  screen: `intro`,
+  gameData: null,
+};
+
+controller(initialState, null);

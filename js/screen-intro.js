@@ -1,14 +1,17 @@
+import controller from './game-controller';
 import renderTemplate from './render-template';
-import changeScreen from './render-screen';
-import renderNext from './screen-greeting';
 
-const TEMPLATE = `
+
+const contentTemplate = `
 <div id="main" class="central__content">
   <div id="intro" class="intro">
     <h1 class="intro__asterisk">*</h1>
     <p class="intro__motto"><sup>*</sup> Это не фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.</p>
   </div>
 </div>
+`;
+
+const footerTemplate = `
 <footer class="footer">
   <a href="https://htmlacademy.ru" class="social-link social-link--academy">HTML Academy</a>
   <span class="footer__made-in">Сделано в <a href="https://htmlacademy.ru" class="footer__link">HTML Academy</a> &copy; 2016</span>
@@ -21,13 +24,18 @@ const TEMPLATE = `
 </footer>
 `;
 
-export default () => {
-  const screen = renderTemplate(TEMPLATE);
-  const link = screen.querySelector(`.intro__asterisk`);
+export default (state) => {
+  const screen = document.createElement(`template`);
 
+  const content = renderTemplate(contentTemplate);
+  const footer = renderTemplate(footerTemplate);
+
+  screen.content.appendChild(content);
+  screen.content.appendChild(footer);
+
+  const link = screen.content.querySelector(`.intro__asterisk`);
   link.addEventListener(`click`, () => {
-    changeScreen(renderNext());
+    controller(state, {transition: true});
   });
-
-  return screen;
+  return screen.content;
 };

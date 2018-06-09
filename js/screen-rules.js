@@ -1,7 +1,5 @@
 import renderTemplate from './render-template';
-import changeScreen from './render-screen';
-import renderNext from './screen-game-1';
-import initReturn from './return-behavior';
+import controller from './game-controller';
 
 const TEMPLATE = `
 <header class="header">
@@ -40,7 +38,7 @@ const TEMPLATE = `
 </footer>
 `;
 
-export default () => {
+export default (state) => {
   const screen = renderTemplate(TEMPLATE);
   const form = screen.querySelector(`.rules__form`);
   const input = screen.querySelector(`.rules__input`);
@@ -52,10 +50,11 @@ export default () => {
 
   form.addEventListener(`submit`, (evt) => {
     evt.preventDefault();
-    changeScreen(renderNext());
+    controller(state, {userName: input.value});
   });
 
-  initReturn(screen);
+  // initReturn(screen);
+
 
   return screen;
 };

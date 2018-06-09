@@ -1,6 +1,5 @@
+import controller from './game-controller';
 import renderTemplate from './render-template';
-import changeScreen from './render-screen';
-import renderNext from './screen-rules';
 
 const TEMPLATE = `
 <div class="greeting central--blur">
@@ -28,12 +27,12 @@ const TEMPLATE = `
 </footer>
 `;
 
-export default () => {
+export default (state) => {
   const screen = renderTemplate(TEMPLATE);
   const link = screen.querySelector(`.greeting__continue`);
 
   link.addEventListener(`click`, () => {
-    changeScreen(renderNext());
+    controller(state, {transition: true});
   });
 
   return screen;
