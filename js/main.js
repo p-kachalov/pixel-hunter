@@ -1,4 +1,4 @@
-import changeScreen from './change-screen';
+import changeScreen from './render-screen';
 import renderNext from './screen-intro';
 
 const nextScreen = renderNext();

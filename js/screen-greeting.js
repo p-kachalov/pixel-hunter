@@ -1,5 +1,5 @@
 import renderTemplate from './render-template';
-import changeScreen from './change-screen';
+import changeScreen from './render-screen';
 import renderNext from './screen-rules';
 
 const TEMPLATE = `
