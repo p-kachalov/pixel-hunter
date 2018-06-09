@@ -14,5 +14,5 @@ const footerTemplate = `
 `;
 
 export default () => {
-  renderTemplate(footerTemplate);
+  return renderTemplate(footerTemplate);
 };
