@@ -1,4 +1,3 @@
-
 const container = document.querySelector(`.central`);
 
 const clearContainer = (element) => {
@@ -7,7 +6,7 @@ const clearContainer = (element) => {
   }
 };
 
-export default (newScreen) => {
+export default (screen) => {
   clearContainer(container);
-  container.appendChild(newScreen);
+  container.appendChild(screen);
 };
