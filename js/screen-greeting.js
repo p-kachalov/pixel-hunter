@@ -1,4 +1,4 @@
-import controller from './game-controller';
+import controller from './controller';
 import renderTemplate from './render-template';
 import getFooter from './footer';
 
@@ -29,7 +29,7 @@ export default (state) => {
 
   const link = screen.content.querySelector(`.greeting__continue`);
   link.addEventListener(`click`, () => {
-    controller(state, {transition: true});
+    controller(state, true);
   });
 
   return screen.content;

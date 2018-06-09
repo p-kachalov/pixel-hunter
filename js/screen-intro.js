@@ -1,4 +1,4 @@
-import controller from './game-controller';
+import controller from './controller';
 import renderTemplate from './render-template';
 import getFooter from './footer';
 

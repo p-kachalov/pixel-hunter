@@ -23,6 +23,16 @@ const greetingController = (state, update) => {
 };
 
 const rulesController = (state, update) => {
+  if (update.back) {
+    renderScreen(getGreeting(state));
+    return;
+  }
+
+  const newState = Object.assign({}, state, {screen: `rules`, userName: update.userName});
+  renderScreen(getRuls(newState));
+};
+
+const gameController = (state, update) => {
   const newState = Object.assign({}, state, {screen: `rules`, userName: update.userName});
   renderScreen(getRuls(newState));
 };
@@ -31,6 +41,7 @@ const handleScreen = {
   'intro': introController,
   'greeting': greetingController,
   'rules': rulesController,
+  'game': gameController,
 };
 
 export default (state, update) => {

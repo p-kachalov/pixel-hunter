@@ -1,5 +1,6 @@
 import renderTemplate from './render-template';
-import controller from './game-controller';
+import controller from './controller';
+import hangBackHandler from './back-handler';
 
 const TEMPLATE = `
 <header class="header">
@@ -50,11 +51,10 @@ export default (state) => {
 
   form.addEventListener(`submit`, (evt) => {
     evt.preventDefault();
-    controller(state, {userName: input.value});
+    controller(state, {back: false, userName: input.value});
   });
 
-  // initReturn(screen);
-
+  hangBackHandler(screen, state);
 
   return screen;
 };

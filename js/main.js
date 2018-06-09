@@ -1,4 +1,4 @@
-import controller from './game-controller';
+import controller from './controller';
 
 const initialState = {
   screen: `intro`,
