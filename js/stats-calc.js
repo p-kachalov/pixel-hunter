@@ -1,9 +1,14 @@
 
+import AnswerSpeed from './answer-speed';
+
 const LIVE_BONUS = 50;
-const SPEED_BONUS = 50;
-const SPEED_PENALTY = 50;
 const RIGHT_ANSWER_SCORE = 100;
 const ANSWERS_COUNT = 10;
+const SPEED_RATE = {
+  [AnswerSpeed.NORMAL]: 0,
+  [AnswerSpeed.FAST]: 50,
+  [AnswerSpeed.SLOW]: -50,
+};
 
 export default (answers, lives) => {
   if (answers.length < ANSWERS_COUNT) {
@@ -15,9 +20,6 @@ export default (answers, lives) => {
       return acc;
     }
 
-    const bonus = item.fast ? SPEED_BONUS : 0;
-    const penalty = item.slow ? SPEED_PENALTY : 0;
-
-    return acc + RIGHT_ANSWER_SCORE + bonus - penalty;
+    return acc + RIGHT_ANSWER_SCORE + SPEED_RATE[item.speed];
   }, lives * LIVE_BONUS);
 };
