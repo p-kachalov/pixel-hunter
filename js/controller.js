@@ -2,44 +2,44 @@ import renderScreen from './render-screen';
 
 const introController = (state, update) => {
   if (!update) {
-    renderScreen(state);
-    return;
+    return state;
   }
 
   const newState = Object.assign({}, state, {screen: `greeting`});
-  renderScreen(newState);
+  return newState;
 };
 
 const greetingController = (state, update) => {
   if (!update) {
-    return;
+    return state;
   }
   const newState = Object.assign({}, state, {screen: `rules`});
-  renderScreen(newState);
+  return newState;
 };
 
 const rulesController = (state, update) => {
   const newState = Object.assign({}, state, {screen: `game1`, userName: update.userName});
-  renderScreen(newState);
+  return newState;
 };
 
 
 const game1Controller = (state) => {
   const newState = Object.assign({}, state, {screen: `game2`});
-  renderScreen(newState);
+  return newState;
 };
 
 const game2Controller = (state) => {
   const newState = Object.assign({}, state, {screen: `game3`});
-  renderScreen(newState);
+  return newState;
 };
 
 const game3Controller = (state) => {
   const newState = Object.assign({}, state, {screen: `stats`});
-  renderScreen(newState);
+  return newState;
 };
 
-const statsController = () => {
+const statsController = (state) => {
+  return state;
 };
 
 const handleScreen = {
@@ -53,5 +53,6 @@ const handleScreen = {
 };
 
 export default (state, update) => {
-  handleScreen[state.screen](state, update);
+  const newState = handleScreen[state.screen](state, update);
+  renderScreen(newState);
 };
