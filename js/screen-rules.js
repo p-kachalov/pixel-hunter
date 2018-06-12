@@ -24,9 +24,7 @@ const contentTemplate = `
 `;
 
 export default (state) => {
-
   const screen = document.createElement(`template`);
-
   const header = getHeader();
   const content = renderTemplate(contentTemplate);
   const footer = getFooter();
@@ -47,8 +45,6 @@ export default (state) => {
     evt.preventDefault();
     controller(state, {back: false, userName: input.value});
   });
-
-  // hangBackHandler(screen.content, state);
 
   return screen.content;
 };

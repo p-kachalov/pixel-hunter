@@ -1,17 +1,13 @@
 import renderScreen from './render-screen';
-import getIntro from './screen-intro';
-import getGreeting from './screen-greeting';
-import getRuls from './screen-rules';
-
 
 const introController = (state, update) => {
   if (!update) {
-    renderScreen(getIntro(state));
+    renderScreen(state);
     return;
   }
 
   const newState = Object.assign({}, state, {screen: `greeting`});
-  renderScreen(getGreeting(newState));
+  renderScreen(newState);
 };
 
 const greetingController = (state, update) => {
@@ -19,29 +15,41 @@ const greetingController = (state, update) => {
     return;
   }
   const newState = Object.assign({}, state, {screen: `rules`});
-  renderScreen(getRuls(newState));
+  renderScreen(newState);
 };
 
 const rulesController = (state, update) => {
-  if (update.back) {
-    renderScreen(getGreeting(state));
-    return;
-  }
-
-  const newState = Object.assign({}, state, {screen: `rules`, userName: update.userName});
-  renderScreen(getRuls(newState));
+  const newState = Object.assign({}, state, {screen: `game1`, userName: update.userName});
+  renderScreen(newState);
 };
 
-const gameController = (state, update) => {
-  const newState = Object.assign({}, state, {screen: `rules`, userName: update.userName});
-  renderScreen(getRuls(newState));
+
+const game1Controller = (state) => {
+  const newState = Object.assign({}, state, {screen: `game2`});
+  renderScreen(newState);
+};
+
+const game2Controller = (state) => {
+  const newState = Object.assign({}, state, {screen: `game3`});
+  renderScreen(newState);
+};
+
+const game3Controller = (state) => {
+  const newState = Object.assign({}, state, {screen: `stats`});
+  renderScreen(newState);
+};
+
+const statsController = () => {
 };
 
 const handleScreen = {
   'intro': introController,
   'greeting': greetingController,
   'rules': rulesController,
-  'game': gameController,
+  'game1': game1Controller,
+  'game2': game2Controller,
+  'game3': game3Controller,
+  'stats': statsController,
 };
 
 export default (state, update) => {
