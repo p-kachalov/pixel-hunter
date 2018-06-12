@@ -1,5 +1,5 @@
 
-import controller from './controller';
+import renderScreen from './render-screen';
 
 const initialState = {
   screen: `intro`,
@@ -9,4 +9,4 @@ const initialState = {
   },
 };
 
-controller(initialState, null);
+renderScreen(initialState);
