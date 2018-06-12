@@ -1,4 +1,5 @@
 import renderTemplate from './render-template';
+import controller from './controller';
 
 const headerTemplate = `
 <header class="header">
@@ -11,6 +12,17 @@ const headerTemplate = `
 </header>
 `;
 
-export default () => {
-  return renderTemplate(headerTemplate);
+export default (state) => {
+  const screen = document.createElement(`template`);
+  const header = renderTemplate(headerTemplate);
+
+  screen.content.appendChild(header);
+
+  const backButton = screen.content.querySelector(`.back`);
+
+  backButton.addEventListener(`click`, () => {
+    controller(state, {back: true});
+  });
+
+  return screen.content;
 };

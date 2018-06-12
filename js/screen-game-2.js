@@ -39,7 +39,7 @@ const contentTemplate = `
 
 export default (state) => {
   const screen = document.createElement(`template`);
-  const header = getHeader();
+  const header = getHeader(state);
   const status = getStatus();
   const content = renderTemplate(contentTemplate);
   const footer = getFooter();

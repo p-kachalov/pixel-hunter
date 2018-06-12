@@ -53,6 +53,11 @@ const handleScreen = {
 };
 
 export default (state, update) => {
+  if (update && update.back) {
+    renderScreen(Object.assign({}, state, {screen: `greeting`}));
+    return;
+  }
+
   const newState = handleScreen[state.screen](state, update);
   renderScreen(newState);
 };
