@@ -15,10 +15,6 @@ const correctTemplate = `<li class="stats__result stats__result--correct"></li>`
 const unknownTemplate = `<li class="stats__result stats__result--unknown"></li>`;
 
 const chooseAnswerTemplate = (answer) => {
-  if (!answer) {
-    return unknownTemplate;
-  }
-
   if (!answer.right) {
     return wrongTemplate;
   }
@@ -44,6 +40,10 @@ export default (state) => {
     const answerTemplate = chooseAnswerTemplate(answer);
     answers.appendChild(renderTemplate(answerTemplate));
   });
+
+  for (let i = state.answers.length; i < state.questionNumber; i++) {
+    answers.appendChild(renderTemplate(unknownTemplate));
+  }
 
   screen.content.appendChild(stats);
 
