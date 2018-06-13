@@ -8,7 +8,7 @@ const initialState = {
     lives: 2,
     time: 0
   },
-  answera: [
+  answers: [
     {right: true, speed: AnswerSpeed.NORMAL},
     {right: true, speed: AnswerSpeed.FAST},
     {right: true, speed: AnswerSpeed.SLOW},
