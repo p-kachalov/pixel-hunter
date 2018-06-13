@@ -19,9 +19,9 @@ const getScreen = {
   'intro': getIntro,
   'greeting': getGreeting,
   'rules': getRuls,
-  'game1': (state) => getGame(state, getGame1(state)),
-  'game2': (state) => getGame(state, getGame2(state)),
-  'game3': (state) => getGame(state, getGame3(state)),
+  'game1': (state) => getGame(state, getGame1),
+  'game2': (state) => getGame(state, getGame2),
+  'game3': (state) => getGame(state, getGame3),
   'stats': getStats,
 };
 

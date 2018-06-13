@@ -1,5 +1,4 @@
 import renderTemplate from './render-template';
-import controller from './controller';
 
 const contentTemplate = `
 <div class="game">
@@ -31,7 +30,7 @@ const contentTemplate = `
 </div>
 `;
 
-export default (state) => {
+export default (callback) => {
   const screen = document.createElement(`template`);
   const content = renderTemplate(contentTemplate);
 
@@ -43,7 +42,7 @@ export default (state) => {
 
   form.addEventListener(`change`, () => {
     if (question1.value && question2.value) {
-      controller(state, {});
+      callback({});
     }
   });
 

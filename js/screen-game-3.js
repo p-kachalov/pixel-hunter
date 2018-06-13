@@ -1,5 +1,4 @@
 import renderTemplate from './render-template';
-import controller from './controller';
 
 const contentTemplate = `
 <div class="game">
@@ -18,7 +17,7 @@ const contentTemplate = `
 </div>
 `;
 
-export default (state) => {
+export default (callback) => {
   const screen = document.createElement(`template`);
   const content = renderTemplate(contentTemplate);
 
@@ -29,7 +28,7 @@ export default (state) => {
   for (const option of options) {
     option.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      controller(state, {});
+      callback({});
     });
   }
 
