@@ -1,6 +1,6 @@
 import renderScreen from './render-screen';
 
-const introController = (state, update) => {
+const introController = (state) => {
   const newState = Object.assign({}, state, {screen: `greeting`});
   return newState;
 };
