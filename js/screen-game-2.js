@@ -43,8 +43,7 @@ export default (data, callback) => {
   const questionTemplate = `
   <div class="game">
     <p class="game__task">${data.text}</p>
-    <form class="game__content  game__content--wide">
-    </form>
+    <form class="game__content  game__content--wide"></form>
   </div>
   `;
 

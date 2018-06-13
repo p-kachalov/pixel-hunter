@@ -20,6 +20,12 @@ const questionData2 = {
 
 const questionData3 = {
   type: `finde`,
+  text: `Найдите рисунок среди изображений`,
+  images: [
+    {name: `question1`, rightValue: false, src: `http://placehold.it/304x455`, alt: `Option 1`, width: `304`, height: `455`},
+    {name: `question2`, rightValue: true, src: `http://placehold.it/304x455`, alt: `Option 2`, width: `304`, height: `455`},
+    {name: `question3`, rightValue: false, src: `http://placehold.it/304x455`, alt: `Option 3`, width: `304`, height: `455`},
+  ]
 };
 
 const initialState = {
@@ -27,7 +33,7 @@ const initialState = {
   lives: 3,
   time: 0,
   answers: [],
-  questions: [questionData1, questionData2, questionData3, questionData1],
+  questions: [questionData1, questionData3, questionData2, questionData1],
 };
 
 renderScreen(initialState);

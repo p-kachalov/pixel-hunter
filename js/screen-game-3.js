@@ -1,43 +1,54 @@
 import renderTemplate from './render-template';
+import AnswerSpeed from './answer-speed';
 
-const contentTemplate = `
-<div class="game">
-  <p class="game__task">Найдите рисунок среди изображений</p>
-  <form class="game__content  game__content--triple">
-    <div class="game__option">
-      <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
-    </div>
-    <div class="game__option  game__option--selected">
-      <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
-    </div>
-    <div class="game__option">
-      <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
-    </div>
-  </form>
-</div>
-`;
-
-const question = {
-  type: `finde`,
-  image1: `http://placehold.it/304x455`,
-  image2: `http://placehold.it/304x455`,
-  image3: `http://placehold.it/304x455`,
+const getSpeed = () => {
+  // here will be a function which calculate answer speed
+  return AnswerSpeed.NORMAL;
 };
 
-export default (callback) => {
+const getResult = (questions, answerName) => {
+  const result = questions.filter((question) => question.name === answerName)[0].rightValue;
+  return result;
+};
+
+const renderOption = (image) => {
+  const gameOptionTemplate = `
+  <div class="game__option" data-name="${image.name}">
+    <img src="${image.src}" alt="${image.alt}" width="${image.width}" height="${image.height}">
+  </div>
+  `;
+
+  const gameOption = renderTemplate(gameOptionTemplate);
+  return gameOption;
+};
+
+export default (data, callback) => {
   const screen = document.createElement(`template`);
-  const content = renderTemplate(contentTemplate);
+  const questionTemplate = `
+  <div class="game">
+    <p class="game__task">${data.text}</p>
+    <form class="game__content  game__content--triple"></form>
+  </div>
+  `;
 
-  screen.content.appendChild(content);
+  const question = renderTemplate(questionTemplate);
+  const gameContent = question.querySelector(`.game__content`);
 
-  const options = screen.content.querySelectorAll(`.game__option`);
+  data.images.forEach((image) => {
+    const option = renderOption(image);
+    gameContent.appendChild(option);
+  });
+
+  const options = gameContent.querySelectorAll(`.game__option`);
 
   for (const option of options) {
     option.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      callback({right: true});
+      const result = getResult(data.images, evt.target.dataset.name);
+      callback({right: result, speed: getSpeed()});
     });
   }
 
+  screen.content.appendChild(question);
   return screen.content;
 };
