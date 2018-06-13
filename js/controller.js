@@ -5,32 +5,24 @@ const introController = (state) => {
   return newState;
 };
 
-const greetingController = (state, update) => {
-  if (!update) {
-    return state;
-  }
+const greetingController = (state) => {
   const newState = Object.assign({}, state, {screen: `rules`});
   return newState;
 };
 
 const rulesController = (state, update) => {
-  const newState = Object.assign({}, state, {screen: `game1`, userName: update.userName});
+  const newState = Object.assign({}, state, {screen: `game`, userName: update.userName});
   return newState;
 };
 
+const gameController = (state, update) => {
+  const newScreen = update.gameOver ? `stats` : `game`;
+  const newState = Object.assign({}, state, {
+    screen: newScreen,
+    lives: update.lives,
+    answers: update.answers,
+  });
 
-const game1Controller = (state) => {
-  const newState = Object.assign({}, state, {screen: `game2`});
-  return newState;
-};
-
-const game2Controller = (state) => {
-  const newState = Object.assign({}, state, {screen: `game3`});
-  return newState;
-};
-
-const game3Controller = (state) => {
-  const newState = Object.assign({}, state, {screen: `stats`});
   return newState;
 };
 
@@ -42,9 +34,7 @@ const handleScreen = {
   'intro': introController,
   'greeting': greetingController,
   'rules': rulesController,
-  'game1': game1Controller,
-  'game2': game2Controller,
-  'game3': game3Controller,
+  'game': gameController,
   'stats': statsController,
 };
 
