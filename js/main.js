@@ -12,10 +12,13 @@ const initialState = {
     {right: true, speed: AnswerSpeed.NORMAL},
     {right: true, speed: AnswerSpeed.FAST},
     {right: true, speed: AnswerSpeed.SLOW},
-    {right: false, speed: AnswerSpeed.NORMAL},
+    {right: false, speed: null},
     {right: true, speed: AnswerSpeed.NORMAL},
     {right: true, speed: AnswerSpeed.NORMAL},
-    {right: true, speed: AnswerSpeed.NORMAL},
+    null,
+    null,
+    null,
+    null
   ]
 };
 
