@@ -1,15 +1,6 @@
 import renderTemplate from './render-template';
 import AnswerSpeed from './answer-speed';
 
-const questionData = {
-  type: `double-choose`,
-  text: `Угадайте для каждого изображения фото или рисунок?`,
-  images: [
-    {name: `question1`, rightValue: `paint`, src: `http://placehold.it/468x458`, alt: `Option 1`, width: `468`, height: `458`},
-    {name: `question2`, rightValue: `photo`, src: `http://placehold.it/468x458`, alt: `Option 2`, width: `468`, height: `458`},
-  ]
-};
-
 const getSpeed = () => {
   // here will be a function which calculate answer speed
   return AnswerSpeed.NORMAL;
@@ -47,11 +38,11 @@ const getResult = (questions, answers) => {
   return result;
 };
 
-export default (callback) => {
+export default (data, callback) => {
   const screen = document.createElement(`template`);
   const questionTemplate = `
   <div class="game">
-    <p class="game__task">${questionData.text}</p>
+    <p class="game__task">${data.text}</p>
     <form class="game__content"></form>
   </div>
   `;
@@ -59,7 +50,7 @@ export default (callback) => {
   const question = renderTemplate(questionTemplate);
   const gameContent = question.querySelector(`.game__content`);
 
-  questionData.images.forEach((image) => {
+  data.images.forEach((image) => {
     const option = renderOption(image);
     gameContent.appendChild(option);
   });
@@ -68,7 +59,7 @@ export default (callback) => {
     if (!gameContent.reportValidity()) {
       return;
     }
-    const result = getResult(questionData.images, gameContent.elements);
+    const result = getResult(data.images, gameContent.elements);
     callback({right: result, speed: getSpeed()});
   });
 
