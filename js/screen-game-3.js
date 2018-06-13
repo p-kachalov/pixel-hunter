@@ -3,6 +3,7 @@ import controller from './controller';
 import getFooter from './footer';
 import getHeader from './header';
 import getStatus from './game-status';
+import getStats from './game-stats';
 
 const contentTemplate = `
 <div class="game">
@@ -18,20 +19,6 @@ const contentTemplate = `
       <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
     </div>
   </form>
-  <div class="stats">
-    <ul class="stats">
-      <li class="stats__result stats__result--wrong"></li>
-      <li class="stats__result stats__result--slow"></li>
-      <li class="stats__result stats__result--fast"></li>
-      <li class="stats__result stats__result--correct"></li>
-      <li class="stats__result stats__result--wrong"></li>
-      <li class="stats__result stats__result--unknown"></li>
-      <li class="stats__result stats__result--slow"></li>
-      <li class="stats__result stats__result--unknown"></li>
-      <li class="stats__result stats__result--fast"></li>
-      <li class="stats__result stats__result--unknown"></li>
-    </ul>
-  </div>
 </div>
 `;
 
@@ -40,12 +27,14 @@ export default (state) => {
   const header = getHeader(state);
   const status = getStatus(state);
   const content = renderTemplate(contentTemplate);
+  const stats = getStats(state);
   const footer = getFooter();
 
   header.appendChild(status);
 
   screen.content.appendChild(header);
   screen.content.appendChild(content);
+  screen.content.appendChild(stats);
   screen.content.appendChild(footer);
 
   const options = screen.content.querySelectorAll(`.game__option`);
