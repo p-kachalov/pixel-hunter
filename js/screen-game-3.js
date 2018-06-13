@@ -1,9 +1,5 @@
 import renderTemplate from './render-template';
 import controller from './controller';
-import getFooter from './footer';
-import getHeader from './header';
-import getStatus from './game-status';
-import getStats from './game-stats';
 
 const contentTemplate = `
 <div class="game">
@@ -24,18 +20,9 @@ const contentTemplate = `
 
 export default (state) => {
   const screen = document.createElement(`template`);
-  const header = getHeader(state);
-  const status = getStatus(state);
   const content = renderTemplate(contentTemplate);
-  const stats = getStats(state);
-  const footer = getFooter();
 
-  header.appendChild(status);
-
-  screen.content.appendChild(header);
   screen.content.appendChild(content);
-  screen.content.appendChild(stats);
-  screen.content.appendChild(footer);
 
   const options = screen.content.querySelectorAll(`.game__option`);
 
