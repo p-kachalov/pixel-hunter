@@ -19,6 +19,11 @@ const contentTemplate = `
 </div>
 `;
 
+const question = {
+  type: `choose`,
+  image: `http://placehold.it/705x455`,
+};
+
 export default (callback) => {
   const screen = document.createElement(`template`);
   const content = renderTemplate(contentTemplate);
@@ -30,7 +35,7 @@ export default (callback) => {
 
   form.addEventListener(`change`, () => {
     if (question1.value) {
-      callback({});
+      callback({right: true});
     }
   });
 

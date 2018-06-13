@@ -41,7 +41,7 @@ export default (state) => {
     answers.appendChild(renderTemplate(answerTemplate));
   });
 
-  for (let i = state.answers.length; i < state.questionNumber; i++) {
+  for (let i = state.answers.length; i < state.questions.length; i++) {
     answers.appendChild(renderTemplate(unknownTemplate));
   }
 

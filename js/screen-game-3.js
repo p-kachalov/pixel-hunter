@@ -17,6 +17,13 @@ const contentTemplate = `
 </div>
 `;
 
+const question = {
+  type: `finde`,
+  image1: `http://placehold.it/304x455`,
+  image2: `http://placehold.it/304x455`,
+  image3: `http://placehold.it/304x455`,
+};
+
 export default (callback) => {
   const screen = document.createElement(`template`);
   const content = renderTemplate(contentTemplate);
@@ -28,7 +35,7 @@ export default (callback) => {
   for (const option of options) {
     option.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      callback({});
+      callback({right: true});
     });
   }
 

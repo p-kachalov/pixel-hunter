@@ -3,11 +3,6 @@ import getHeader from './header';
 import getStatus from './game-status';
 import getStats from './game-stats';
 import controller from './controller';
-import getGame1 from './screen-game-1';
-
-// import getGame2 from './screen-game-2';
-// import getGame3 from './screen-game-3';
-
 
 const calcLives = (answer, lives) => {
   return answer.right ? lives : lives - 1;
@@ -20,12 +15,12 @@ export default (state) => {
   const stats = getStats(state);
   const footer = getFooter();
 
-  const newGame = getGame1;
+  const newGame = state.questions[state.answers.length];
 
   const game = newGame((userAnswer) => {
     const lives = calcLives(userAnswer, state.lives);
     const answers = [...state.answers, userAnswer];
-    const gameOver = !userAnswer.right; // should be a function
+    const gameOver = lives === 0 || answers.length === state.questions.length;
 
     const gameUpdate = {lives, answers, gameOver};
     controller(state, gameUpdate);
