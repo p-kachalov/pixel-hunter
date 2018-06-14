@@ -30,19 +30,19 @@ const chooseAnswerTemplate = (answer) => {
   return correctTemplate;
 };
 
-export default (state) => {
+export default (answers, questionsNumber) => {
   const screen = document.createElement(`template`);
   const stats = renderTemplate(statsTemplate);
 
-  const answers = stats.querySelector(`ul.stats`);
+  const answersContainer = stats.querySelector(`ul.stats`);
 
-  state.answers.forEach((answer) => {
+  answers.forEach((answer) => {
     const answerTemplate = chooseAnswerTemplate(answer);
-    answers.appendChild(renderTemplate(answerTemplate));
+    answersContainer.appendChild(renderTemplate(answerTemplate));
   });
 
-  for (let i = state.answers.length; i < state.questions.length; i++) {
-    answers.appendChild(renderTemplate(unknownTemplate));
+  for (let i = answers.length; i < questionsNumber; i++) {
+    answersContainer.appendChild(renderTemplate(unknownTemplate));
   }
 
   screen.content.appendChild(stats);

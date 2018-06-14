@@ -12,7 +12,7 @@ export default (state, callback) => {
   const screen = document.createElement(`template`);
   const header = getHeader(state, callback);
   const status = getStatus(state);
-  const stats = getStats(state);
+  const stats = getStats(state.answers, state.questions.length);
   const footer = getFooter();
 
   const cb = (userAnswer) => {
