@@ -3,15 +3,7 @@ import getHeader from './header';
 import getStatus from './game-status';
 import getStats from './game-stats';
 import controller from './controller';
-import game1 from './screen-game-1';
-import game2 from './screen-game-2';
-import game3 from './screen-game-3';
-
-const Game = {
-  'double-choose': game1,
-  'choose': game2,
-  'finde': game3,
-};
+import renderGame from './game';
 
 const calcLives = (answer, lives) => {
   return answer.right ? lives : lives - 1;
@@ -34,9 +26,8 @@ export default (state) => {
   };
 
   const newQuestion = state.questions[state.answers.length];
-  const newGame = Game[newQuestion.type];
 
-  const game = newGame(newQuestion, callback);
+  const game = renderGame(newQuestion, callback);
 
   header.appendChild(status);
   screen.content.appendChild(header);
