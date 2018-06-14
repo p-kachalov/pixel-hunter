@@ -105,9 +105,9 @@ const contentTemplate = `
 </div>
 `;
 
-export default () => {
+export default (state, callback) => {
   const screen = document.createElement(`template`);
-  const header = getHeader();
+  const header = getHeader(state, callback);
   const content = renderTemplate(contentTemplate);
   const footer = getFooter();
 

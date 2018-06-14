@@ -1,4 +1,3 @@
-import controller from './controller';
 import renderTemplate from './render-template';
 import getFooter from './block-footer';
 
@@ -11,7 +10,7 @@ const contentTemplate = `
 </div>
 `;
 
-export default (state) => {
+export default (state, callback) => {
   const screen = document.createElement(`template`);
 
   const content = renderTemplate(contentTemplate);
@@ -22,7 +21,7 @@ export default (state) => {
 
   const link = screen.content.querySelector(`.intro__asterisk`);
   link.addEventListener(`click`, () => {
-    controller(state, true);
+    callback(true);
   });
   return screen.content;
 };

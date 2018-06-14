@@ -3,6 +3,7 @@ import getGreeting from './screen-greeting';
 import getRuls from './screen-rules';
 import getGame from './screen-game';
 import getStats from './screen-stats';
+import controller from './controller';
 
 const container = document.querySelector(`.central`);
 
@@ -16,12 +17,14 @@ const getScreen = {
   'intro': getIntro,
   'greeting': getGreeting,
   'rules': getRuls,
-  'game': (state) => getGame(state),
+  'game': getGame,
   'stats': getStats,
 };
 
 export default (state) => {
-  const newScreen = getScreen[state.screen](state);
+  const newScreen = getScreen[state.screen](state, (update) => {
+    controller(state, update);
+  });
   clearContainer(container);
   container.appendChild(newScreen);
 };

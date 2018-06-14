@@ -1,4 +1,5 @@
 import renderScreen from './render-screen';
+import initialState from './initial-state';
 
 const introController = (state) => {
   const newState = Object.assign({}, state, {screen: `greeting`});
@@ -40,7 +41,7 @@ const handleScreen = {
 
 export default (state, update) => {
   if (update && update.back) {
-    renderScreen(Object.assign({}, state, {screen: `greeting`}));
+    renderScreen(Object.assign({}, initialState, {screen: `greeting`}));
     return;
   }
 

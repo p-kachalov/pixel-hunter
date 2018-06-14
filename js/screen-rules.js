@@ -1,5 +1,4 @@
 import renderTemplate from './render-template';
-import controller from './controller';
 import getFooter from './block-footer';
 import getHeader from './block-header';
 
@@ -23,9 +22,9 @@ const contentTemplate = `
 </div>
 `;
 
-export default (state) => {
+export default (state, callback) => {
   const screen = document.createElement(`template`);
-  const header = getHeader(state);
+  const header = getHeader(state, callback);
   const content = renderTemplate(contentTemplate);
   const footer = getFooter();
 
@@ -43,7 +42,7 @@ export default (state) => {
 
   form.addEventListener(`submit`, (evt) => {
     evt.preventDefault();
-    controller(state, {back: false, userName: input.value});
+    callback({userName: input.value});
   });
 
   return screen.content;
