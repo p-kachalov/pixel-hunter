@@ -1,6 +1,6 @@
 import controller from './controller';
 import renderTemplate from './render-template';
-import getFooter from './footer';
+import getFooter from './block-footer';
 
 const contentTemplate = `
 <div class="greeting central--blur">

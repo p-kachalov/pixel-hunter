@@ -1,9 +1,9 @@
-import getFooter from './footer';
-import getHeader from './header';
-import getStatus from './game-status';
-import getStats from './game-stats';
+import getFooter from './block-footer';
+import getHeader from './block-header';
+import getStatus from './block-status';
+import getStats from './block-stats';
 import controller from './controller';
-import renderGame from './game';
+import renderGame from './block-game';
 
 const calcLives = (answer, lives) => {
   return answer.right ? lives : lives - 1;

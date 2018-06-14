@@ -1,6 +1,6 @@
 import renderTemplate from './render-template';
-import getFooter from './footer';
-import getHeader from './header';
+import getFooter from './block-footer';
+import getHeader from './block-header';
 
 const contentTemplate = `
 <div class="result">
