@@ -2,7 +2,7 @@ import getIntro from './screen-intro';
 import getGreeting from './screen-greeting';
 import getRuls from './screen-rules';
 import getGame from './screen-game';
-import getStats from './screen-stats';
+import getStats from './screen-results';
 import controller from './controller';
 
 const container = document.querySelector(`.central`);
