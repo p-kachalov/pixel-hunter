@@ -16,15 +16,27 @@ const rulesController = (state, update) => {
   return newState;
 };
 
+const finishGame = (state) => {
+  const newState = Object.assign({}, initialState, {
+    screen: `stats`,
+    results: [...state.results, {
+      lives: state.lives,
+      answers: state.answers,
+      settings: state.settings
+    }],
+  });
+
+  return newState;
+};
+
 const gameController = (state, update) => {
-  const newScreen = update.gameOver ? `stats` : `game`;
   const newState = Object.assign({}, state, {
-    screen: newScreen,
+    screen: `game`,
     lives: update.lives,
     answers: update.answers,
   });
 
-  return newState;
+  return update.gameOver ? finishGame(newState) : newState;
 };
 
 const statsController = (state) => {
@@ -41,7 +53,7 @@ const handleScreen = {
 
 export default (state, update) => {
   if (update && update.back) {
-    renderScreen(Object.assign({}, initialState, {screen: `greeting`}));
+    renderScreen(Object.assign({}, initialState, {screen: `greeting`, results: state.results}));
     return;
   }
 

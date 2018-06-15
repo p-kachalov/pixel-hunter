@@ -44,6 +44,7 @@ export default Object.freeze({
     questionData3,
     questionData1
   ],
+  results: [],
   settings: {
     questionNumber: 10,
     answerCost: 100,

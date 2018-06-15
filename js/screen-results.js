@@ -120,77 +120,13 @@ const renderResult = (data) => {
   return result;
 };
 
-const data = [
-  {
-    lives: 2,
-    answers: [
-      {right: false, speed: null},
-      {right: true, speed: AnswerSpeed.SLOW},
-      {right: true, speed: AnswerSpeed.FAST},
-      {right: true, speed: AnswerSpeed.NORMAL},
-      {right: true, speed: AnswerSpeed.NORMAL},
-      {right: true, speed: AnswerSpeed.NORMAL},
-      {right: true, speed: AnswerSpeed.SLOW},
-      {right: true, speed: AnswerSpeed.NORMAL},
-      {right: true, speed: AnswerSpeed.FAST},
-      {right: true, speed: AnswerSpeed.NORMAL},
-    ],
-    settings: {
-      answerCost: 100,
-      fastCost: 50,
-      slowCost: 50,
-      liveCost: 50,
-    }
-  },
-  {
-    lives: 0,
-    answers: [
-      {right: false, speed: null},
-      {right: true, speed: AnswerSpeed.SLOW},
-      {right: true, speed: AnswerSpeed.FAST},
-      {right: true, speed: AnswerSpeed.NORMAL},
-      {right: false, speed: null},
-      {right: true, speed: AnswerSpeed.NORMAL},
-      {right: false, speed: null},
-    ],
-    settings: {
-      answerCost: 100,
-      fastCost: 50,
-      slowCost: 50,
-      liveCost: 50,
-    }
-  },
-  {
-    lives: 3,
-    answers: [
-      {right: true, speed: AnswerSpeed.SLOW},
-      {right: true, speed: AnswerSpeed.SLOW},
-      {right: true, speed: AnswerSpeed.FAST},
-      {right: true, speed: AnswerSpeed.NORMAL},
-      {right: true, speed: AnswerSpeed.SLOW},
-      {right: true, speed: AnswerSpeed.NORMAL},
-      {right: true, speed: AnswerSpeed.SLOW},
-      {right: true, speed: AnswerSpeed.NORMAL},
-      {right: true, speed: AnswerSpeed.SLOW},
-      {right: true, speed: AnswerSpeed.NORMAL},
-    ],
-    settings: {
-      answerCost: 100,
-      fastCost: 50,
-      slowCost: 50,
-      liveCost: 50,
-    }
-  }
-];
-
-
 export default (state, callback) => {
   const screen = document.createElement(`template`);
   const header = getHeader(state, callback);
   const footer = getFooter();
   const content = renderTemplate(`<div class="result"><h1>Победа!</h1></div>`);
 
-  const resultsData = processResultsData(data);
+  const resultsData = processResultsData(state.results);
 
   resultsData.forEach((dataItem) => {
     const result = renderResult(dataItem);
