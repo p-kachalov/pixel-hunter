@@ -44,4 +44,10 @@ export default Object.freeze({
     questionData3,
     questionData1
   ],
+  settings: {
+    answerCost: 100,
+    fastCost: 50,
+    slowCost: 50,
+    liveCost: 50,
+  }
 });
