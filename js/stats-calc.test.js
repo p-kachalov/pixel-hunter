@@ -41,11 +41,12 @@ describe(`statistics`, () => {
     });
 
     it(`should return 1000 when user won with 1 live, 3 penalties and 2 bonuses`, () => {
-      const answers = replicateObject({right: true, speed: AnswerSpeed.NORMAL}, 5)
+      const answers = replicateObject({right: true, speed: AnswerSpeed.NORMAL}, 3)
         .concat(replicateObject({right: true, speed: AnswerSpeed.FAST}, 2))
-        .concat(replicateObject({right: true, speed: AnswerSpeed.SLOW}, 3));
+        .concat(replicateObject({right: true, speed: AnswerSpeed.SLOW}, 3))
+        .concat(replicateObject({right: false, speed: null}, 2));
       const lives = 1;
-      assert.equal(1000, statsCalc(answers, lives, settings));
+      assert.equal(800, statsCalc(answers, lives, settings));
     });
   });
 });
