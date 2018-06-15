@@ -21,10 +21,13 @@ const getScreen = {
   'stats': getStats,
 };
 
-export default (state) => {
+const render = (state) => {
   const newScreen = getScreen[state.screen](state, (update) => {
-    controller(state, update);
+    const newState = controller(state, update);
+    render(newState);
   });
   clearContainer(container);
   container.appendChild(newScreen);
 };
+
+export default render;
