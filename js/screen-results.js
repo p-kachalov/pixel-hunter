@@ -5,58 +5,80 @@ import getStats from './block-stats';
 import statsCalc from './stats-calc';
 import AnswerSpeed from './answer-speed';
 
-const getResultTemplate = (result) => {
+const getTotalBlock = (fail, points, totalPoints) => {
   const totalFailTemplate = `
   <td class="result__total"></td>
   <td class="result__total  result__total--final">fail</td>
   `;
 
   const totalPointsTemplate = `
-  <td class="result__points">×&nbsp;${result.points}</td>
-  <td class="result__total">${result.totalPoints}</td>
+  <td class="result__points">×&nbsp;${points}</td>
+  <td class="result__total">${totalPoints}</td>
   `;
 
+  return fail ? totalFailTemplate : totalPointsTemplate;
+};
+
+const getSpeedBonusBlock = (fail, fast, fastCost) => {
   const speetBonusTemplate = `
   <tr>
     <td></td>
     <td class="result__extra">Бонус за скорость:</td>
-    <td class="result__extra">${result.fast}&nbsp;<span class="stats__result stats__result--fast"></span></td>
-    <td class="result__points">×&nbsp;${result.fastCost}</td>
-    <td class="result__total">${result.fast * result.fastCost}</td>
+    <td class="result__extra">${fast}&nbsp;<span class="stats__result stats__result--fast"></span></td>
+    <td class="result__points">×&nbsp;${fastCost}</td>
+    <td class="result__total">${fast * fastCost}</td>
   </tr>
   `;
 
+  return (!fail && fast > 0) ? speetBonusTemplate : ``;
+};
+
+const getLivesBonusBlock = (fail, lives, liveCost) => {
   const livesBonusTemplate = `
   <tr>
     <td></td>
     <td class="result__extra">Бонус за жизни:</td>
-    <td class="result__extra">${result.lives}&nbsp;<span class="stats__result stats__result--alive"></span></td>
-    <td class="result__points">×&nbsp;${result.liveCost}</td>
-    <td class="result__total">${result.lives * result.liveCost}</td>
+    <td class="result__extra">${lives}&nbsp;<span class="stats__result stats__result--alive"></span></td>
+    <td class="result__points">×&nbsp;${liveCost}</td>
+    <td class="result__total">${lives * liveCost}</td>
   </tr>
   `;
 
+  return (!fail && lives > 0) ? livesBonusTemplate : ``;
+};
+
+const getSlowPenaltyBlock = (fail, slow, slowCost) => {
   const slowPenaltyTemplate = `
   <tr>
     <td></td>
     <td class="result__extra">Штраф за медлительность:</td>
-    <td class="result__extra">${result.slow}&nbsp;<span class="stats__result stats__result--slow"></span></td>
-    <td class="result__points">×&nbsp;${result.slowCost}</td>
-    <td class="result__total">-${result.slow * result.slowCost}</td>
+    <td class="result__extra">${slow}&nbsp;<span class="stats__result stats__result--slow"></span></td>
+    <td class="result__points">×&nbsp;${slowCost}</td>
+    <td class="result__total">-${slow * slowCost}</td>
   </tr>
   `;
 
+  return (!fail && slow > 0) ? slowPenaltyTemplate : ``;
+};
+
+const getTotalFinalBlock = (fail, totalFinal) => {
   const totalFinalTemplate = `
   <tr>
-    <td colspan="5" class="result__total  result__total--final">${result.totalFilnal}</td>
+    <td colspan="5" class="result__total  result__total--final">
+      ${totalFinal}
+    </td>
   </tr>
   `;
 
-  const totalBlock = result.fail ? totalFailTemplate : totalPointsTemplate;
-  const speedBonusBlock = (!result.fail && result.fast > 0) ? speetBonusTemplate : ``;
-  const livesBonusBlock = (!result.fail && result.lives > 0) ? livesBonusTemplate : ``;
-  const slowPenaltyBlock = (!result.fail && result.slow > 0) ? slowPenaltyTemplate : ``;
-  const totalFinalBlock = (!result.fail && result.totalFilnal > 0) ? totalFinalTemplate : ``;
+  return (!fail && totalFinal > 0) ? totalFinalTemplate : ``;
+};
+
+const getResultTemplate = (result) => {
+  const totalBlock = getTotalBlock(result.fail, result.points, result.totalPoints);
+  const speedBonusBlock = getSpeedBonusBlock(result.fail, result.fast, result.fastCost);
+  const livesBonusBlock = getLivesBonusBlock(result.fail, result.lives, result.liveCost);
+  const slowPenaltyBlock = getSlowPenaltyBlock(result.fail, result.slow, result.slowCost);
+  const totalFinalBlock = getTotalFinalBlock(result.fail, result.totalFinal);
 
   const resultTemplate = `
   <table class="result__table">
@@ -91,7 +113,7 @@ const processResultsData = (data) => {
     const fastCost = result.settings.fastCost;
     const liveCost = result.settings.liveCost;
     const slowCost = result.settings.slowCost;
-    const totalFilnal = statsCalc(result.answers, result.lives, result.settings);
+    const totalFinal = statsCalc(result.answers, result.lives, result.settings);
 
     return {
       gameNumber,
@@ -105,7 +127,7 @@ const processResultsData = (data) => {
       liveCost,
       slow,
       slowCost,
-      totalFilnal
+      totalFinal
     };
   });
   return results;
