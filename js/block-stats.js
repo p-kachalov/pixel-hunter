@@ -1,12 +1,7 @@
 import renderTemplate from './render-template';
 import AnswerSpeed from './answer-speed';
 
-const statsTemplate = `
-<div class="stats">
-  <ul class="stats">
-  </ul>
-</div>
-`;
+const statsTemplate = `<ul class="stats"></ul>`;
 
 const wrongTemplate = `<li class="stats__result stats__result--wrong"></li>`;
 const slowTemplate = `<li class="stats__result stats__result--slow"></li>`;
