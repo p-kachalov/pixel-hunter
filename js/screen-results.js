@@ -104,7 +104,9 @@ const processResultsData = (data) => {
     const fail = lives === 0;
     const stats = getStats(result.answers);
     const points = result.settings.answerCost;
-    const rightAnswer = result.answers.filter((answer) => answer.right).length;
+    const rightAnswer = result.answers.filter((answer) => {
+      return answer !== Answer.WRONG && answer !== Answer.UNKONWN;
+    }).length;
     const totalPoints = points * rightAnswer;
     const fast = result.answers.filter((answer) => answer === Answer.FAST).length;
     const slow = result.answers.filter((answer) => answer === Answer.SLOW).length;
