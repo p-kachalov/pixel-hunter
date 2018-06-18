@@ -1,11 +1,12 @@
 import GameType from './game-type';
+import images from './mock-data';
 
 const questionData1 = {
   type: GameType.DOUBLE,
   text: `Угадайте для каждого изображения фото или рисунок?`,
   images: [
-    {name: `question1`, rightValue: `paint`, src: `http://placehold.it/468x458`, alt: `Option 1`, width: `468`, height: `458`},
-    {name: `question2`, rightValue: `photo`, src: `http://placehold.it/468x458`, alt: `Option 2`, width: `468`, height: `458`},
+    {name: `question1`, rightValue: `paint`, src: images.paintings[0], alt: `Option 1`, width: `468`, height: `458`},
+    {name: `question2`, rightValue: `photo`, src: images.photos[0], alt: `Option 2`, width: `468`, height: `458`},
   ]
 };
 
@@ -13,7 +14,7 @@ const questionData2 = {
   type: GameType.SINGLE,
   text: `Угадай, фото или рисунок?`,
   images: [
-    {name: `question1`, rightValue: `paint`, src: `http://placehold.it/705x455`, alt: `Option 1`, width: `705`, height: `455`},
+    {name: `question1`, rightValue: `paint`, src: images.paintings[1], alt: `Option 1`, width: `705`, height: `455`},
   ]
 };
 
@@ -21,9 +22,9 @@ const questionData3 = {
   type: GameType.TRIPLE,
   text: `Найдите рисунок среди изображений`,
   images: [
-    {name: `question1`, rightValue: false, src: `http://placehold.it/304x455`, alt: `Option 1`, width: `304`, height: `455`},
-    {name: `question2`, rightValue: true, src: `http://placehold.it/304x455`, alt: `Option 2`, width: `304`, height: `455`},
-    {name: `question3`, rightValue: false, src: `http://placehold.it/304x455`, alt: `Option 3`, width: `304`, height: `455`},
+    {name: `question1`, rightValue: false, src: images.photos[1], alt: `Option 1`, width: `304`, height: `455`},
+    {name: `question2`, rightValue: true, src: images.paintings[2], alt: `Option 2`, width: `304`, height: `455`},
+    {name: `question3`, rightValue: false, src: images.photos[2], alt: `Option 3`, width: `304`, height: `455`},
   ]
 };
 
