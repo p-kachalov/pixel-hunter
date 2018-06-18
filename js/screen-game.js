@@ -2,12 +2,25 @@ import getFooter from './block-footer';
 import getHeader from './block-header';
 import getStatus from './block-status';
 import getStats from './block-stats';
-import renderGame from './block-game';
+import gameSingle from './block-game-single';
+import gameDouble from './block-game-double';
+import gameTriple from './block-game-triple';
 import renderTemplate from './render-template';
 import Answer from './answer';
 
 const calcLives = (answer, lives) => {
   return (answer === Answer.WRONG) ? lives - 1 : lives;
+};
+
+const getGame = (questionType) => {
+  if (questionType === `single`) {
+    return gameSingle;
+  } else if (questionType === `double`) {
+    return gameDouble;
+  } else if (questionType === `triple`) {
+    return gameTriple;
+  }
+  return null;
 };
 
 export default (state, callback) => {
@@ -26,7 +39,8 @@ export default (state, callback) => {
   };
 
   const newQuestion = state.questions[state.answers.length];
-  const game = renderGame(newQuestion, cb);
+
+  const game = getGame(newQuestion.type)(newQuestion, cb);
 
   const stats = getStats(state.answers, state.questions.length);
   const statsContainer = renderTemplate(`<div class="stats"></div>`);
