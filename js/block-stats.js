@@ -7,7 +7,6 @@ const AnswersClass = {
   [Answer.FAST]: `stats__result--fast`,
   [Answer.CORRECT]: `stats__result--correct`,
   [Answer.UNKONWN]: `stats__result--unknown`,
-
 };
 
 const getAnswerTemplate = (answer) => {
@@ -26,7 +25,7 @@ export default (answers, questionsNumber) => {
   });
 
   for (let i = answers.length; i < questionsNumber; i++) {
-    answersContainer.appendChild(renderTemplate(Answer.UNKONWN));
+    answersContainer.appendChild(renderTemplate(getAnswerTemplate(Answer.UNKONWN)));
   }
 
   block.content.appendChild(stats);
