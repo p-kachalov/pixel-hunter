@@ -24,9 +24,19 @@ const getOptionTemplate = (image) => {
   `;
 };
 
+const getGameTemplate = (questionText, containerClass) => {
+  return `
+  <div class="game">
+    <p class="game__task">${questionText}</p>
+    <form class="game__content  ${containerClass}"></form>
+  </div>
+  `;
+};
+
 export default (data, callback) => {
   const container = document.createElement(`template`);
-  const form = renderTemplate(`<form class="game__content  game__content--wide"></form>`);
+  const containerClass = `game__content--wide`;
+  const form = renderTemplate(getGameTemplate(data.text, containerClass));
   container.content.appendChild(form);
 
   const gameContent = container.content.querySelector(`.game__content`);

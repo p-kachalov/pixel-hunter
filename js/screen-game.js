@@ -15,16 +15,7 @@ const Game = {
   [GameType.TRIPLE]: gameTriple,
 };
 
-const getGameTemplate = (questionText) => {
-  return `
-  <div class="game">
-    <p class="game__task">${questionText}</p>
-  </div>
-  `;
-};
-
 const getGame = (state, callback) => {
-  // render game content
   const cb = (userAnswer) => {
     const lives = (userAnswer === Answer.WRONG) ? state.lives - 1 : state.lives;
     const answers = [...state.answers, userAnswer];
@@ -35,9 +26,7 @@ const getGame = (state, callback) => {
   };
 
   const newQuestion = state.questions[state.answers.length];
-  const game = renderTemplate(getGameTemplate(newQuestion.text));
-  const gameContent = Game[newQuestion.type](newQuestion, cb);
-  game.appendChild(gameContent);
+  const game = Game[newQuestion.type](newQuestion, cb);
   return game;
 };
 
