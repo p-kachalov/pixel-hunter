@@ -4,9 +4,10 @@ import getStatus from './block-status';
 import getStats from './block-stats';
 import renderGame from './block-game';
 import renderTemplate from './render-template';
+import Answer from './answer';
 
 const calcLives = (answer, lives) => {
-  return answer.right ? lives : lives - 1;
+  return (answer === Answer.WRONG) ? lives - 1 : lives;
 };
 
 export default (state, callback) => {

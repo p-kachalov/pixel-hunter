@@ -1,10 +1,5 @@
 import renderTemplate from './render-template';
-import AnswerSpeed from './answer-speed';
-
-const getSpeed = () => {
-  // here will be a function which calculate answer speed
-  return AnswerSpeed.NORMAL;
-};
+import Answer from './answer';
 
 const getResult = (questions, answers) => {
   let result = true;
@@ -16,7 +11,7 @@ const getResult = (questions, answers) => {
     }
   });
 
-  return result;
+  return result ? Answer.CORRECT : Answer.WRONG;
 };
 
 const getQuestionTemplate = (questionText) => {
@@ -115,8 +110,8 @@ export default (data, callback) => {
         const questions = data.images;
         const answerName = evt.target.dataset.name;
 
-        const result = questions.filter((item) => item.name === answerName)[0].rightValue;
-        callback({right: result, speed: getSpeed()});
+        const result = questions.filter((item) => item.name === answerName)[0].rightValue ? Answer.CORRECT : Answer.WRONG;
+        callback(result);
       });
     }
   } else {
@@ -126,7 +121,7 @@ export default (data, callback) => {
       }
 
       const result = getResult(data.images, gameContent.elements);
-      callback({right: result, speed: getSpeed()});
+      callback(result);
     });
   }
 

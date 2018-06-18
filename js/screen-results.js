@@ -3,7 +3,7 @@ import getFooter from './block-footer';
 import getHeader from './block-header';
 import getStats from './block-stats';
 import statsCalc from './stats-calc';
-import AnswerSpeed from './answer-speed';
+import Answer from './answer';
 
 const getTotalBlock = (fail, points, totalPoints) => {
   const totalFailTemplate = `
@@ -106,10 +106,8 @@ const processResultsData = (data) => {
     const points = result.settings.answerCost;
     const rightAnswer = result.answers.filter((answer) => answer.right).length;
     const totalPoints = points * rightAnswer;
-    const fast = result.answers.filter((answer) =>
-      answer.right && answer.speed === AnswerSpeed.FAST).length;
-    const slow = result.answers.filter((answer) =>
-      answer.right && answer.speed === AnswerSpeed.SLOW).length;
+    const fast = result.answers.filter((answer) => answer === Answer.FAST).length;
+    const slow = result.answers.filter((answer) => answer === Answer.SLOW).length;
     const fastCost = result.settings.fastCost;
     const liveCost = result.settings.liveCost;
     const slowCost = result.settings.slowCost;
