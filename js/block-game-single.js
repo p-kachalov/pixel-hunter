@@ -1,26 +1,11 @@
 import renderTemplate from './render-template';
 import Answer from './answer';
 
-const getResult = (questions, answers) => {
-  let result = true;
-
-  questions.forEach((question) => {
-    const answer = answers[question.name];
-    if (question.rightValue !== answer.value) {
-      result = false;
-    }
-  });
-
-  return result ? Answer.CORRECT : Answer.WRONG;
-};
-
-const getQuestionTemplate = (questionText) => {
-  const questionTemplate = `
-  <div class="game">
-    <p class="game__task">${questionText}</p>
-  </div>
-  `;
-  return questionTemplate;
+const getResult = (question, answer) => {
+  if (question.rightValue === answer.value) {
+    return Answer.FAST;
+  }
+  return Answer.WRONG;
 };
 
 const getOptionTemplate = (image) => {
@@ -40,26 +25,22 @@ const getOptionTemplate = (image) => {
 };
 
 export default (data, callback) => {
-  const screen = document.createElement(`template`);
-
-  const question = renderTemplate(getQuestionTemplate(data.text));
+  const container = document.createElement(`template`);
   const form = renderTemplate(`<form class="game__content  game__content--wide"></form>`);
-  question.appendChild(form);
+  container.content.appendChild(form);
 
-  const gameContent = question.querySelector(`.game__content`);
-  data.images.forEach((image) => {
-    const option = renderTemplate(getOptionTemplate(image, data.type));
-    gameContent.appendChild(option);
-  });
+  const gameContent = container.content.querySelector(`.game__content`);
+  const image = data.images[0];
+  const option = renderTemplate(getOptionTemplate(image));
+  gameContent.appendChild(option);
 
   gameContent.addEventListener(`change`, () => {
     if (!gameContent.reportValidity()) {
       return;
     }
-    const result = getResult(data.images, gameContent.elements);
+    const result = getResult(image, gameContent.elements[image.name]);
     callback(result);
   });
 
-  screen.content.appendChild(question);
-  return screen.content;
+  return container.content;
 };
