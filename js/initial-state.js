@@ -1,5 +1,7 @@
+import GameType from './game-type';
+
 const questionData1 = {
-  type: `double`,
+  type: GameType.DOUBLE,
   text: `Угадайте для каждого изображения фото или рисунок?`,
   images: [
     {name: `question1`, rightValue: `paint`, src: `http://placehold.it/468x458`, alt: `Option 1`, width: `468`, height: `458`},
@@ -8,7 +10,7 @@ const questionData1 = {
 };
 
 const questionData2 = {
-  type: `single`,
+  type: GameType.SINGLE,
   text: `Угадай, фото или рисунок?`,
   images: [
     {name: `question1`, rightValue: `paint`, src: `http://placehold.it/705x455`, alt: `Option 1`, width: `705`, height: `455`},
@@ -16,7 +18,7 @@ const questionData2 = {
 };
 
 const questionData3 = {
-  type: `triple`,
+  type: GameType.TRIPLE,
   text: `Найдите рисунок среди изображений`,
   images: [
     {name: `question1`, rightValue: false, src: `http://placehold.it/304x455`, alt: `Option 1`, width: `304`, height: `455`},
