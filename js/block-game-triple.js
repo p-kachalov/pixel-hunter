@@ -1,13 +1,9 @@
 import renderTemplate from './render-template';
 import Answer from './answer';
 
-const getQuestionTemplate = (questionText) => {
-  const questionTemplate = `
-  <div class="game">
-    <p class="game__task">${questionText}</p>
-  </div>
-  `;
-  return questionTemplate;
+const getResult = (questions, userChoice) => {
+  const answer = questions.filter((item) => item.name === userChoice.dataset.name)[0];
+  return answer.rightValue ? Answer.CORRECT : Answer.WRONG;
 };
 
 const getOptionTemplate = (image) => {
@@ -19,13 +15,11 @@ const getOptionTemplate = (image) => {
 };
 
 export default (data, callback) => {
-  const screen = document.createElement(`template`);
-
-  const question = renderTemplate(getQuestionTemplate(data.text));
+  const container = document.createElement(`template`);
   const form = renderTemplate(`<form class="game__content  game__content--triple"></form>`);
-  question.appendChild(form);
+  container.content.appendChild(form);
 
-  const gameContent = question.querySelector(`.game__content`);
+  const gameContent = container.content.querySelector(`.game__content`);
   data.images.forEach((image) => {
     const option = renderTemplate(getOptionTemplate(image));
     gameContent.appendChild(option);
@@ -36,13 +30,11 @@ export default (data, callback) => {
     option.addEventListener(`click`, (evt) => {
       evt.preventDefault();
       const questions = data.images;
-      const answerName = evt.target.dataset.name;
-
-      const result = questions.filter((item) => item.name === answerName)[0].rightValue ? Answer.CORRECT : Answer.WRONG;
+      const userChoice = evt.target;
+      const result = getResult(questions, userChoice);
       callback(result);
     });
   }
 
-  screen.content.appendChild(question);
-  return screen.content;
+  return container.content;
 };

@@ -2,25 +2,16 @@ import renderTemplate from './render-template';
 import Answer from './answer';
 
 const getResult = (questions, answers) => {
-  let result = true;
+  let userRight = true;
 
   questions.forEach((question) => {
     const answer = answers[question.name];
     if (question.rightValue !== answer.value) {
-      result = false;
+      userRight = false;
     }
   });
 
-  return result ? Answer.CORRECT : Answer.WRONG;
-};
-
-const getQuestionTemplate = (questionText) => {
-  const questionTemplate = `
-  <div class="game">
-    <p class="game__task">${questionText}</p>
-  </div>
-  `;
-  return questionTemplate;
+  return userRight ? Answer.CORRECT : Answer.WRONG;
 };
 
 const getOptionTemplate = (image) => {
@@ -40,13 +31,11 @@ const getOptionTemplate = (image) => {
 };
 
 export default (data, callback) => {
-  const screen = document.createElement(`template`);
-
-  const question = renderTemplate(getQuestionTemplate(data.text));
+  const container = document.createElement(`template`);
   const form = renderTemplate(`<form class="game__content"></form>`);
-  question.appendChild(form);
+  container.content.appendChild(form);
 
-  const gameContent = question.querySelector(`.game__content`);
+  const gameContent = container.content.querySelector(`.game__content`);
   data.images.forEach((image) => {
     const option = renderTemplate(getOptionTemplate(image));
     gameContent.appendChild(option);
@@ -61,6 +50,5 @@ export default (data, callback) => {
     callback(result);
   });
 
-  screen.content.appendChild(question);
-  return screen.content;
+  return container.content;
 };
