@@ -1,5 +1,3 @@
-
-
 const questionData1 = {
   type: `double`,
   text: `Угадайте для каждого изображения фото или рисунок?`,

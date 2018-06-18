@@ -1,22 +1,20 @@
 
-import AnswerSpeed from './answer-speed';
+import Answer from './answer';
 
 export default (answers, lives, settings) => {
   if (answers.length < settings.questionNumber) {
     return -1;
   }
 
-  const SPEED_RATE = {
-    [AnswerSpeed.NORMAL]: 0,
-    [AnswerSpeed.FAST]: settings.fastCost,
-    [AnswerSpeed.SLOW]: -(settings.slowCost),
+  const SCORE = {
+    [Answer.WRONG]: 0,
+    [Answer.UNKONWN]: 0,
+    [Answer.CORRECT]: settings.answerCost,
+    [Answer.FAST]: settings.answerCost + settings.fastCost,
+    [Answer.SLOW]: settings.answerCost - settings.slowCost,
   };
 
-  return answers.reduce((acc, item) => {
-    if (!item.right) {
-      return acc;
-    }
-
-    return acc + settings.answerCost + SPEED_RATE[item.speed];
+  return answers.reduce((acc, answer) => {
+    return acc + SCORE[answer];
   }, lives * settings.liveCost);
 };

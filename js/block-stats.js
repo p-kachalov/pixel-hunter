@@ -1,46 +1,35 @@
 import renderTemplate from './render-template';
-import AnswerSpeed from './answer-speed';
+import Answer from './answer';
 
-const statsTemplate = `<ul class="stats"></ul>`;
+const AnswersClass = {
+  [Answer.WRONG]: `stats__result--wrong`,
+  [Answer.SLOW]: `stats__result--slow`,
+  [Answer.FAST]: `stats__result--fast`,
+  [Answer.CORRECT]: `stats__result--correct`,
+  [Answer.UNKONWN]: `stats__result--unknown`,
 
-const wrongTemplate = `<li class="stats__result stats__result--wrong"></li>`;
-const slowTemplate = `<li class="stats__result stats__result--slow"></li>`;
-const fastTemplate = `<li class="stats__result stats__result--fast"></li>`;
-const correctTemplate = `<li class="stats__result stats__result--correct"></li>`;
-const unknownTemplate = `<li class="stats__result stats__result--unknown"></li>`;
+};
 
-const chooseAnswerTemplate = (answer) => {
-  if (!answer.right) {
-    return wrongTemplate;
-  }
-
-  if (answer.speed === AnswerSpeed.FAST) {
-    return fastTemplate;
-  }
-
-  if (answer.speed === AnswerSpeed.SLOW) {
-    return slowTemplate;
-  }
-
-  return correctTemplate;
+const getAnswerTemplate = (answer) => {
+  return `<li class="stats__result ${AnswersClass[answer]}"></li>`;
 };
 
 export default (answers, questionsNumber) => {
-  const screen = document.createElement(`template`);
+  const block = document.createElement(`template`);
+  const statsTemplate = `<ul class="stats"></ul>`;
   const stats = renderTemplate(statsTemplate);
-
   const answersContainer = stats.querySelector(`ul.stats`);
 
   answers.forEach((answer) => {
-    const answerTemplate = chooseAnswerTemplate(answer);
+    const answerTemplate = getAnswerTemplate(answer);
     answersContainer.appendChild(renderTemplate(answerTemplate));
   });
 
   for (let i = answers.length; i < questionsNumber; i++) {
-    answersContainer.appendChild(renderTemplate(unknownTemplate));
+    answersContainer.appendChild(renderTemplate(Answer.UNKONWN));
   }
 
-  screen.content.appendChild(stats);
+  block.content.appendChild(stats);
 
-  return screen.content;
+  return block.content;
 };

@@ -114,6 +114,7 @@ export default (data, callback) => {
         evt.preventDefault();
         const questions = data.images;
         const answerName = evt.target.dataset.name;
+
         const result = questions.filter((item) => item.name === answerName)[0].rightValue;
         callback({right: result, speed: getSpeed()});
       });
@@ -123,6 +124,7 @@ export default (data, callback) => {
       if (!gameContent.reportValidity()) {
         return;
       }
+
       const result = getResult(data.images, gameContent.elements);
       callback({right: result, speed: getSpeed()});
     });
