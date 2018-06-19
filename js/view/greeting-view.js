@@ -19,6 +19,25 @@ class GreetingView extends AbstractView {
     `;
   }
 
+  get element() {
+    if (this._element) {
+      return this._element;
+    }
+    const container = document.createElement(`template`);
+    const content = this.render();
+    const footer = this._footer;
+    container.content.appendChild(content);
+    container.content.appendChild(footer);
+
+    this._element = container.content;
+    this.bind();
+    return this._element;
+  }
+
+  set footer(footer) {
+    this._footer = footer;
+  }
+
   bind() {
     const link = this.element.querySelector(`.greeting__continue`);
     link.addEventListener(`click`, () => {

@@ -4,7 +4,7 @@ import FooterView from './view/footer-view';
 export default (state, callback) => {
   const view = new GreetingView();
   const footer = new FooterView();
+  view.footer = footer.element;
   view.callback = callback;
-  view.element.appendChild(footer.element);
   return view.element;
 };

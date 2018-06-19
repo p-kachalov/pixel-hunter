@@ -1,5 +1,5 @@
 import getIntro from './intro';
-import getGreeting from './screen-greeting';
+import getGreeting from './greeting';
 import getRuls from './screen-rules';
 import getGame from './screen-game';
 import getStats from './screen-results';
