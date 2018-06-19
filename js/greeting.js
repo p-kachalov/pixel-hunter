@@ -3,7 +3,7 @@ import FooterView from './view/footer-view';
 
 export default (state, callback) => {
   const footer = new FooterView();
-  const view = new GreetingView(footer);
+  const view = new GreetingView(footer.element);
   view.callback = callback;
   return view.element;
 };
