@@ -1,53 +1,63 @@
 import Answer from './answer';
 import GameType from './game-type';
-import getFooter from './block-footer';
-import getHeader from './block-header';
-import getStatus from './block-status';
-import getStats from './block-stats';
-import gameSingle from './block-game-single';
-import gameDouble from './block-game-double';
-import gameTriple from './block-game-triple';
-import renderTemplate from './render-template';
+import HeaderView from './view/header-view';
+import StatusView from './view/status-view';
+import StatsView from './view/stats-view';
+import FooterView from './view/footer-view';
+import GameView from './view/game-view';
+import GameSingleController from './game-single';
+import GameDoubleController from './game-double';
+import GameTripleController from './game-triple';
 
-const Game = {
-  [GameType.SINGLE]: gameSingle,
-  [GameType.DOUBLE]: gameDouble,
-  [GameType.TRIPLE]: gameTriple,
+const getAnswer = (time, result, settings) => {
+  if (!result) {
+    return Answer.WRONG;
+  }
+  if (time < settings.fastTime) {
+    return Answer.FAST;
+  }
+  if (time > settings.slowTime) {
+    return Answer.SLOW;
+  }
+
+  return Answer.CORRECT;
 };
 
-const getGame = (state, callback) => {
-  const cb = (userAnswer) => {
-    const lives = (userAnswer === Answer.WRONG) ? state.lives - 1 : state.lives;
-    const answers = [...state.answers, userAnswer];
-    const gameOver = lives === 0 || answers.length === state.settings.questionNumber;
+const makeUpdate = (state, answer) => {
+  const lives = (answer === Answer.WRONG) ? state.lives - 1 : state.lives;
+  const answers = [...state.answers, answer];
+  const gameOver = lives === 0 || answers.length === state.settings.questionNumber;
 
-    const gameUpdate = {lives, answers, gameOver};
-    callback(gameUpdate);
-  };
-
-  const newQuestion = state.questions[state.answers.length];
-  const game = Game[newQuestion.type](newQuestion, cb);
-  return game;
+  return {lives, answers, gameOver};
 };
+
+
+const GameController = {
+  [GameType.SINGLE]: GameSingleController,
+  [GameType.DOUBLE]: GameDoubleController,
+  [GameType.TRIPLE]: GameTripleController,
+};
+
 
 export default (state, callback) => {
-  const screen = document.createElement(`template`);
+  const status = new StatusView(state);
+  const header = new HeaderView(status.element);
+  header.onBackClick = () => callback({back: true});
+  const stats = new StatsView(state.answers, state.settings.questionNumber);
+  const footer = new FooterView();
 
-  const header = getHeader(state, callback);
-  const status = getStatus(state);
-  header.appendChild(status);
 
-  const game = getGame(state, callback);
+  const question = state.questions[state.answers.length];
+  const Game = GameController[question.type];
 
-  const stats = getStats(state.answers, state.questions.length);
-  const statsContainer = renderTemplate(`<div class="stats"></div>`);
-  statsContainer.appendChild(stats);
+  const game = new Game(question, (result) => {
+    const time = 15; // here will be a timer
+    const answer = getAnswer(time, result, state.settings);
+    const update = makeUpdate(state, answer);
+    callback(update);
+  });
 
-  const footer = getFooter();
+  const gameScreen = new GameView(header.element, footer.element, stats.element, game.getView().element);
 
-  screen.content.appendChild(header);
-  screen.content.appendChild(game);
-  screen.content.appendChild(statsContainer);
-  screen.content.appendChild(footer);
-  return screen.content;
+  return gameScreen.element;
 };
