@@ -17,11 +17,11 @@ class HeaderView extends AbstractView {
   bind() {
     const backButton = this.element.querySelector(`.back`);
     backButton.addEventListener(`click`, () => {
-      this.callback();
+      this.onBackClick();
     });
   }
 
-  callback() {
+  onBackClick() {
   }
 }
 

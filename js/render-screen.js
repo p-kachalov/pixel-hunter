@@ -1,6 +1,6 @@
 import getIntro from './intro';
 import getGreeting from './greeting';
-import getRuls from './screen-rules';
+import getRuls from './rules';
 import getGame from './screen-game';
 import getStats from './screen-results';
 import controller from './controller';
