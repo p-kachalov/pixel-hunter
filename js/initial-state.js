@@ -53,5 +53,7 @@ export default Object.freeze({
     fastCost: 50,
     slowCost: 50,
     liveCost: 50,
+    slowTime: 20,
+    fastTime: 10,
   }
 });
