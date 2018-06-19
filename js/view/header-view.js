@@ -27,7 +27,6 @@ class HeaderView extends AbstractView {
     if (this._status) {
       this.element.appendChild(this._status);
     }
-
     this.bind();
     return this._element;
   }
