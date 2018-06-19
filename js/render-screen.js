@@ -1,4 +1,4 @@
-import getIntro from './screen-intro';
+import getIntro from './intro';
 import getGreeting from './screen-greeting';
 import getRuls from './screen-rules';
 import getGame from './screen-game';
