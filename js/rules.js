@@ -7,9 +7,7 @@ export default (state, callback) => {
   header.onBackClick = () => callback({back: true});
   const footer = new FooterView();
 
-  const rules = new RulesView();
-  rules.header = header.element;
-  rules.footer = footer.element;
+  const rules = new RulesView(header.element, footer.element);
   rules.onSubmit = (value) => callback({userName: value});
 
   return rules.element;

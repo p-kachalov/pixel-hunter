@@ -1,6 +1,12 @@
 import AbstractView from './abstract-view';
 
 class RulesView extends AbstractView {
+  constructor(header, footer) {
+    super();
+    this._header = header;
+    this._footer = footer;
+  }
+
   get template() {
     return `
     <div class="rules">
@@ -26,25 +32,15 @@ class RulesView extends AbstractView {
     if (this._element) {
       return this._element;
     }
+
     const container = document.createElement(`template`);
-    const content = this.render();
-    const footer = this._footer;
-    const header = this._header;
-    container.content.appendChild(header);
-    container.content.appendChild(content);
-    container.content.appendChild(footer);
+    container.content.appendChild(this._header);
+    container.content.appendChild(this.render());
+    container.content.appendChild(this._footer);
 
     this._element = container.content;
     this.bind();
     return this._element;
-  }
-
-  set header(header) {
-    this._header = header;
-  }
-
-  set footer(footer) {
-    this._footer = footer;
   }
 
   bind() {
