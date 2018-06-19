@@ -1,23 +1,20 @@
 
-const LIVE_BONUS = 50;
-const SPEED_BONUS = 50;
-const SPEED_PENALTY = 50;
-const RIGHT_ANSWER_SCORE = 100;
-const ANSWERS_COUNT = 10;
+import Answer from './answer';
 
-export default (answers, lives) => {
-  if (answers.length < ANSWERS_COUNT) {
+export default (answers, lives, settings) => {
+  if (answers.length < settings.questionNumber) {
     return -1;
   }
 
-  return answers.reduce((acc, item) => {
-    if (!item.right) {
-      return acc;
-    }
+  const SCORE = {
+    [Answer.WRONG]: 0,
+    [Answer.UNKONWN]: 0,
+    [Answer.CORRECT]: settings.answerCost,
+    [Answer.FAST]: settings.answerCost + settings.fastCost,
+    [Answer.SLOW]: settings.answerCost - settings.slowCost,
+  };
 
-    const bonus = item.fast ? SPEED_BONUS : 0;
-    const penalty = item.slow ? SPEED_PENALTY : 0;
-
-    return acc + RIGHT_ANSWER_SCORE + bonus - penalty;
-  }, lives * LIVE_BONUS);
+  return answers.reduce((acc, answer) => {
+    return acc + SCORE[answer];
+  }, lives * settings.liveCost);
 };

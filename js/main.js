@@ -1,5 +1,4 @@
-import changeScreen from './change-screen';
-import renderNext from './screen-intro';
+import renderScreen from './render-screen';
+import initialState from './initial-state';
 
-const nextScreen = renderNext();
-changeScreen(nextScreen);
+renderScreen(initialState);
