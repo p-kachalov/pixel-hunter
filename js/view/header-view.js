@@ -18,17 +18,12 @@ class HeaderView extends AbstractView {
     `;
   }
 
-  get element() {
-    if (this._element) {
-      return this._element;
-    }
-
-    this._element = this.render();
+  render() {
+    const content = AbstractView.renderTemplate(this.template);
     if (this._status) {
-      this.element.appendChild(this._status);
+      content.appendChild(this._status);
     }
-    this.bind();
-    return this._element;
+    return content;
   }
 
   bind() {

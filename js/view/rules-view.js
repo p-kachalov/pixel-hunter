@@ -28,19 +28,14 @@ class RulesView extends AbstractView {
     `;
   }
 
-  get element() {
-    if (this._element) {
-      return this._element;
-    }
-
+  render() {
     const container = document.createElement(`template`);
+    const content = AbstractView.renderTemplate(this.template);
     container.content.appendChild(this._header);
-    container.content.appendChild(this.render());
+    container.content.appendChild(content);
     container.content.appendChild(this._footer);
 
-    this._element = container.content;
-    this.bind();
-    return this._element;
+    return container.content;
   }
 
   bind() {
