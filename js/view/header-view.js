@@ -1,6 +1,10 @@
 import AbstractView from './abstract-view';
 
 class HeaderView extends AbstractView {
+  constructor(status) {
+    super();
+    this._status = status;
+  }
   get template() {
     return `
     <header class="header">
@@ -12,6 +16,20 @@ class HeaderView extends AbstractView {
       </div>
     </header>
     `;
+  }
+
+  get element() {
+    if (this._element) {
+      return this._element;
+    }
+
+    this._element = this.render();
+    if (this._status) {
+      this.element.appendChild(this._status);
+    }
+
+    this.bind();
+    return this._element;
   }
 
   bind() {
