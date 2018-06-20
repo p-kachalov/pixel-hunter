@@ -1,107 +1,17 @@
-/*
 import HeaderView from '../blocks/header-view';
 import FooterView from '../blocks/footer-view';
 import ResultsView from './results-view';
 import Answer from '../data/answer';
-
-const getTotalBlock = (fail, points, totalPoints) => {
-  const totalFailTemplate = `
-  <td class="result__total"></td>
-  <td class="result__total  result__total--final">fail</td>
-  `;
-
-  const totalPointsTemplate = `
-  <td class="result__points">×&nbsp;${points}</td>
-  <td class="result__total">${totalPoints}</td>
-  `;
-
-  return fail ? totalFailTemplate : totalPointsTemplate;
-};
-
-const getSpeedBonusBlock = (fail, fast, fastCost) => {
-  const speetBonusTemplate = `
-  <tr>
-    <td></td>
-    <td class="result__extra">Бонус за скорость:</td>
-    <td class="result__extra">${fast}&nbsp;<span class="stats__result stats__result--fast"></span></td>
-    <td class="result__points">×&nbsp;${fastCost}</td>
-    <td class="result__total">${fast * fastCost}</td>
-  </tr>
-  `;
-
-  return (!fail && fast > 0) ? speetBonusTemplate : ``;
-};
-
-const getLivesBonusBlock = (fail, lives, liveCost) => {
-  const livesBonusTemplate = `
-  <tr>
-    <td></td>
-    <td class="result__extra">Бонус за жизни:</td>
-    <td class="result__extra">${lives}&nbsp;<span class="stats__result stats__result--alive"></span></td>
-    <td class="result__points">×&nbsp;${liveCost}</td>
-    <td class="result__total">${lives * liveCost}</td>
-  </tr>
-  `;
-
-  return (!fail && lives > 0) ? livesBonusTemplate : ``;
-};
-
-const getSlowPenaltyBlock = (fail, slow, slowCost) => {
-  const slowPenaltyTemplate = `
-  <tr>
-    <td></td>
-    <td class="result__extra">Штраф за медлительность:</td>
-    <td class="result__extra">${slow}&nbsp;<span class="stats__result stats__result--slow"></span></td>
-    <td class="result__points">×&nbsp;${slowCost}</td>
-    <td class="result__total">-${slow * slowCost}</td>
-  </tr>
-  `;
-
-  return (!fail && slow > 0) ? slowPenaltyTemplate : ``;
-};
-
-const getTotalFinalBlock = (fail, totalFinal) => {
-  const totalFinalTemplate = `
-  <tr>
-    <td colspan="5" class="result__total  result__total--final">
-      ${totalFinal}
-    </td>
-  </tr>
-  `;
-
-  return (!fail && totalFinal > 0) ? totalFinalTemplate : ``;
-};
-
-const getResultTemplate = (result) => {
-  const totalBlock = getTotalBlock(result.fail, result.points, result.totalPoints);
-  const speedBonusBlock = getSpeedBonusBlock(result.fail, result.fast, result.fastCost);
-  const livesBonusBlock = getLivesBonusBlock(result.fail, result.lives, result.liveCost);
-  const slowPenaltyBlock = getSlowPenaltyBlock(result.fail, result.slow, result.slowCost);
-  const totalFinalBlock = getTotalFinalBlock(result.fail, result.totalFinal);
-
-  const resultTemplate = `
-  <table class="result__table">
-    <tr>
-      <td class="result__number">${result.gameNumber}.</td>
-      <td colspan="2" class="stats-container"></td>
-      ${totalBlock}
-      ${speedBonusBlock}
-      ${livesBonusBlock}
-      ${slowPenaltyBlock}
-      ${totalFinalBlock}
-    </tr>
-  </table>
-  `;
-
-  return resultTemplate;
-};
+import statsCalc from '../blocks/stats/stats-calc';
+import ResultView from './result-view';
+import StatsView from '../blocks/stats/stats-view';
 
 const processResultsData = (data) => {
   const results = data.map((result, index) => {
+    const answers = result.answers;
     const gameNumber = index + 1;
     const lives = result.lives;
     const fail = lives === 0;
-    const stats = getStats(result.answers);
     const points = result.settings.answerCost;
     const rightAnswer = result.answers.filter((answer) => {
       return answer !== Answer.WRONG && answer !== Answer.UNKONWN;
@@ -115,9 +25,9 @@ const processResultsData = (data) => {
     const totalFinal = statsCalc(result.answers, result.lives, result.settings);
 
     return {
+      answers,
       gameNumber,
       fail,
-      stats,
       points,
       totalPoints,
       fast,
@@ -132,32 +42,22 @@ const processResultsData = (data) => {
   return results;
 };
 
-const renderResult = (data) => {
-  const resultTemplate = getResultTemplate(data);
-  const result = renderTemplate(resultTemplate);
-  const statsContainer = result.querySelector(`.stats-container`);
-  statsContainer.appendChild(data.stats);
-
-  return result;
-};
-
 export default (state, callback) => {
-  const header = new HeaderView();
-  header.onBackClick = () => callback({back: true});
-  const footer = new FooterView();
-
-  const table = document.createElement(`div`);
+  const headerView = new HeaderView();
+  headerView.onBackClick = () => callback({back: true});
+  const footerView = new FooterView();
 
   const resultsData = processResultsData(state.results);
+  let resultTable = [];
 
   resultsData.forEach((dataItem) => {
-    const result = renderResult(dataItem);
-    table.appendChild(result);
+    const statsView = new StatsView(dataItem.answers, state.settings.questionNumber);
+    const result = new ResultView(dataItem);
+    result.insertStats(statsView.element);
+    resultTable.push(result.element);
   });
 
-
-  const results = new ResultsView(header.element, footer.element, table);
+  const results = new ResultsView(headerView.element, footerView.element, resultTable);
   return results.element;
 };
-*/
-export default () =>{};
+
