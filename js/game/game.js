@@ -31,20 +31,19 @@ const makeUpdate = (state, answer) => {
   return {lives, answers, gameOver};
 };
 
-
 const GameController = {
   [GameType.SINGLE]: GameSingleController,
   [GameType.DOUBLE]: GameDoubleController,
   [GameType.TRIPLE]: GameTripleController,
 };
 
-
 export default (state, callback) => {
-  const status = new StatusView(state);
-  const header = new HeaderView(status.element);
-  header.onBackClick = () => callback({back: true});
-  const stats = new StatsView(state.answers, state.settings.questionNumber);
-  const footer = new FooterView();
+  const statusView = new StatusView(state);
+  const headerView = new HeaderView(statusView.element);
+  headerView.onBackClick = () => callback({back: true});
+
+  const statsView = new StatsView(state.answers, state.settings.questionNumber);
+  const footerView = new FooterView();
 
 
   const question = state.questions[state.answers.length];
@@ -57,7 +56,7 @@ export default (state, callback) => {
     callback(update);
   });
 
-  const gameScreen = new GameView(header.element, footer.element, stats.element, game.getView().element);
+  const gameView = new GameView(headerView.element, footerView.element, statsView.element, game.getView().element);
 
-  return gameScreen.element;
+  return gameView.element;
 };

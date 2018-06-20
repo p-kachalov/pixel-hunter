@@ -3,7 +3,7 @@ import AbstractView from '../abstract-view';
 class GameSingleView extends AbstractView {
   constructor(data) {
     super();
-    this.question = data.text;
+    this.question = data.question;
     this.image = data.image;
   }
 

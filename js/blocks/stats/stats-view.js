@@ -20,12 +20,6 @@ class StatsView extends AbstractView {
     this.questionsNumber = questionsNumber;
   }
 
-  /*
-  for (let i = answers.length; i < questionsNumber; i++) {
-    answersContainer.appendChild(renderTemplate(getAnswerTemplate(Answer.UNKONWN)));
-  };
-  */
-
   get template() {
     return `
     <ul class="stats">
