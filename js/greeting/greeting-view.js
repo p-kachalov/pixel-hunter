@@ -3,7 +3,7 @@ import AbstractView from '../abstract-view';
 class GreetingView extends AbstractView {
   constructor(footer) {
     super();
-    this._footer = footer;
+    this.footer = footer;
   }
 
   get template() {
@@ -28,7 +28,7 @@ class GreetingView extends AbstractView {
     const container = document.createElement(`template`);
     const content = AbstractView.renderTemplate(this.template);
     container.content.appendChild(content);
-    container.content.appendChild(this._footer);
+    container.content.appendChild(this.footer);
 
     return container.content;
   }
@@ -36,11 +36,11 @@ class GreetingView extends AbstractView {
   bind() {
     const link = this.element.querySelector(`.greeting__continue`);
     link.addEventListener(`click`, () => {
-      this.callback();
+      this.onContinue();
     });
   }
 
-  callback() {
+  onContinue() {
   }
 }
 

@@ -2,8 +2,8 @@ import GreetingView from './greeting-view';
 import FooterView from '../blocks/footer-view';
 
 export default (state, callback) => {
-  const footer = new FooterView();
-  const view = new GreetingView(footer.element);
-  view.callback = callback;
-  return view.element;
+  const footerView = new FooterView();
+  const greetingView = new GreetingView(footerView.element);
+  greetingView.onContinue = () => callback();
+  return greetingView.element;
 };
