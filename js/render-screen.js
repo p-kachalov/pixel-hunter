@@ -1,8 +1,8 @@
-import getIntro from './intro';
-import getGreeting from './greeting';
-import getRuls from './rules';
-import getGame from './screen-game';
-import getStats from './screen-results';
+import getIntro from './intro/intro';
+import getGreeting from './greeting/greeting';
+import getRuls from './rules/rules';
+import getGame from './game/game';
+import getStats from './results/results';
 import controller from './controller';
 
 const container = document.querySelector(`.central`);

@@ -1,4 +1,4 @@
-import GameTripleView from './view/game-triple-view';
+import GameTripleView from './game-triple-view';
 
 export default class GameDouble {
   constructor(question, callback) {

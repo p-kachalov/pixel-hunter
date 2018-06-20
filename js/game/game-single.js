@@ -1,4 +1,4 @@
-import GameSingleView from './view/game-single-view';
+import GameSingleView from './game-single-view';
 
 export default class GameSingle {
   constructor(question, callback) {

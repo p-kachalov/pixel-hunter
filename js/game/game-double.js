@@ -1,4 +1,4 @@
-import GameDoubleView from './view/game-double-view';
+import GameDoubleView from './game-double-view';
 
 export default class GameDouble {
   constructor(question, callback) {

@@ -1,5 +1,5 @@
-import AbstractView from './abstract-view';
-import Answer from '../answer';
+import AbstractView from '../../abstract-view';
+import Answer from '../../data/answer';
 
 const AnswersClass = {
   [Answer.WRONG]: `stats__result--wrong`,
@@ -13,7 +13,7 @@ const getAnswerTemplate = (answer) => {
   return `<li class="stats__result ${AnswersClass[answer]}"></li>`;
 };
 
-class StatusView extends AbstractView {
+class StatsView extends AbstractView {
   constructor(answers, questionsNumber) {
     super();
     this.answers = answers;
@@ -37,4 +37,4 @@ class StatusView extends AbstractView {
   }
 }
 
-export default StatusView;
+export default StatsView;

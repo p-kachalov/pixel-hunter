@@ -1,6 +1,6 @@
-import RulesView from './view/rules-view';
-import HeaderView from './view/header-view';
-import FooterView from './view/footer-view';
+import RulesView from './rules-view';
+import HeaderView from '../blocks/header-view';
+import FooterView from '../blocks/footer-view';
 
 export default (state, callback) => {
   const header = new HeaderView();

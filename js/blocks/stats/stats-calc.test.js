@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import Answer from './answer';
+import Answer from '../../data/answer';
 import statsCalc from './stats-calc';
 
 const replicateAnswer = (answer, count) => {

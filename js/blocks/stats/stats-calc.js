@@ -1,5 +1,5 @@
 
-import Answer from './answer';
+import Answer from '../../data/answer';
 
 export default (answers, lives, settings) => {
   if (answers.length < settings.questionNumber) {

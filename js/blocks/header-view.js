@@ -1,4 +1,4 @@
-import AbstractView from './abstract-view';
+import AbstractView from '../abstract-view';
 
 class HeaderView extends AbstractView {
   constructor(status) {

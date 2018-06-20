@@ -1,5 +1,4 @@
-// import renderScreen from './render-screen';
-import initialState from './initial-state';
+import initialState from './data/initial-state';
 
 const introController = (state) => {
   const newState = Object.assign({}, state, {screen: `greeting`});

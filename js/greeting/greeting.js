@@ -1,5 +1,5 @@
-import GreetingView from './view/greeting-view';
-import FooterView from './view/footer-view';
+import GreetingView from './greeting-view';
+import FooterView from '../blocks/footer-view';
 
 export default (state, callback) => {
   const footer = new FooterView();

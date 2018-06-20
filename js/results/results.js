@@ -1,9 +1,8 @@
-import renderTemplate from './render-template';
-import getFooter from './block-footer';
-import getHeader from './block-header';
-import getStats from './block-stats';
-import statsCalc from './stats-calc';
-import Answer from './answer';
+/*
+import HeaderView from '../blocks/header-view';
+import FooterView from '../blocks/footer-view';
+import ResultsView from './results-view';
+import Answer from '../data/answer';
 
 const getTotalBlock = (fail, points, totalPoints) => {
   const totalFailTemplate = `
@@ -143,21 +142,22 @@ const renderResult = (data) => {
 };
 
 export default (state, callback) => {
-  const screen = document.createElement(`template`);
-  const header = getHeader(state, callback);
-  const footer = getFooter();
-  const content = renderTemplate(`<div class="result"><h1>Победа!</h1></div>`);
+  const header = new HeaderView();
+  header.onBackClick = () => callback({back: true});
+  const footer = new FooterView();
+
+  const table = document.createElement(`div`);
 
   const resultsData = processResultsData(state.results);
 
   resultsData.forEach((dataItem) => {
     const result = renderResult(dataItem);
-    content.appendChild(result);
+    table.appendChild(result);
   });
 
-  screen.content.appendChild(header);
-  screen.content.appendChild(content);
-  screen.content.appendChild(footer);
 
-  return screen.content;
+  const results = new ResultsView(header.element, footer.element, table);
+  return results.element;
 };
+*/
+export default () =>{};

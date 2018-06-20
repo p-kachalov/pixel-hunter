@@ -1,4 +1,4 @@
-import IntroView from './view/intro-view';
+import IntroView from './intro-view';
 
 export default (state, callback) => {
   const view = new IntroView();
