@@ -3,10 +3,11 @@ import AbstractView from '../abstract-view';
 class GameTripleView extends AbstractView {
   constructor(data) {
     super();
-    this.question = data.question;
-    this.image1 = data.image1;
-    this.image2 = data.image2;
-    this.image3 = data.image3;
+    this.question = data.text;
+    this.image1 = data.images[0];
+    this.image2 = data.images[1];
+    this.image3 = data.images[2];
+    this.rightValue = data.images.filter((item) => item.rightValue)[0].name;
   }
 
   get template() {
@@ -41,7 +42,8 @@ class GameTripleView extends AbstractView {
       item.addEventListener(`click`, (evt) => {
         evt.preventDefault();
         const option = evt.target.dataset.name;
-        this.onAnswer({option});
+        const result = option === this.rightValue;
+        this.onAnswer(result);
       });
     }
   }

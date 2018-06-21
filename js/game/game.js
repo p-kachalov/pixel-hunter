@@ -5,9 +5,9 @@ import StatusView from '../blocks/status-view';
 import StatsView from '../blocks/stats/stats-view';
 import FooterView from '../blocks/footer-view';
 import GameView from './game-view';
-import GameSingleController from './game-single';
-import GameDoubleController from './game-double';
-import GameTripleController from './game-triple';
+import GameSingleView from './game-single-view';
+import GameDoubleView from './game-double-view';
+import GameTripleView from './game-triple-view';
 
 const getAnswer = (time, result, settings) => {
   if (!result) {
@@ -31,10 +31,10 @@ const makeUpdate = (state, answer) => {
   return {lives, answers, gameOver};
 };
 
-const GameController = {
-  [GameType.SINGLE]: GameSingleController,
-  [GameType.DOUBLE]: GameDoubleController,
-  [GameType.TRIPLE]: GameTripleController,
+const getGame = {
+  [GameType.SINGLE]: GameSingleView,
+  [GameType.DOUBLE]: GameDoubleView,
+  [GameType.TRIPLE]: GameTripleView,
 };
 
 export default (state, callback) => {
@@ -47,16 +47,17 @@ export default (state, callback) => {
 
 
   const question = state.questions[state.answers.length];
-  const Game = GameController[question.type];
+  const Game = getGame[question.type];
 
-  const game = new Game(question, (result) => {
+  const game = new Game(question);
+  game.onAnswer = (result) => {
     const time = 15; // here will be a timer
     const answer = getAnswer(time, result, state.settings);
     const update = makeUpdate(state, answer);
     callback(update);
-  });
+  };
 
-  const gameView = new GameView(headerView.element, footerView.element, statsView.element, game.getView().element);
+  const gameView = new GameView(headerView.element, footerView.element, statsView.element, game.element);
 
   return gameView.element;
 };

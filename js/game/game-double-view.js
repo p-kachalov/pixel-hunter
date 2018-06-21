@@ -3,9 +3,9 @@ import AbstractView from '../abstract-view';
 class GameDoubleView extends AbstractView {
   constructor(data) {
     super();
-    this.question = data.question;
-    this.image1 = data.image1;
-    this.image2 = data.image2;
+    this.question = data.text;
+    this.image1 = data.images[0];
+    this.image2 = data.images[1];
   }
 
   get template() {
@@ -46,9 +46,12 @@ class GameDoubleView extends AbstractView {
       if (!gameContent.reportValidity()) {
         return;
       }
+      const rightAnswer1 = this.image1.rightValue;
+      const rightAnswer2 = this.image2.rightValue;
       const option1 = gameContent.elements[this.image1.name].value;
       const option2 = gameContent.elements[this.image2.name].value;
-      this.onAnswer({option1, option2});
+      const result = option1 === rightAnswer1 && option2 === rightAnswer2;
+      this.onAnswer(result);
     });
   }
 

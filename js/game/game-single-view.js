@@ -3,8 +3,8 @@ import AbstractView from '../abstract-view';
 class GameSingleView extends AbstractView {
   constructor(data) {
     super();
-    this.question = data.question;
-    this.image = data.image;
+    this.question = data.text;
+    this.image = data.images[0];
   }
 
   get template() {
@@ -32,7 +32,7 @@ class GameSingleView extends AbstractView {
     const gameContent = this.element.querySelector(`.game__content`);
     gameContent.addEventListener(`change`, () => {
       const option = gameContent.elements[this.image.name].value;
-      this.onAnswer({option});
+      this.onAnswer(option === this.image.rightValue);
     });
   }
 
