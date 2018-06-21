@@ -19,7 +19,7 @@ class HeaderView extends AbstractView {
   }
 
   render() {
-    const content = AbstractView.renderTemplate(this.template);
+    const content = super.render();
     if (this.status) {
       content.appendChild(this.status);
     }

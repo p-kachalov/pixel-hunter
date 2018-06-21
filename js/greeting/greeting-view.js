@@ -25,8 +25,8 @@ class GreetingView extends AbstractView {
   }
 
   render() {
+    const content = super.render();
     const container = document.createElement(`template`);
-    const content = AbstractView.renderTemplate(this.template);
     container.content.appendChild(content);
     container.content.appendChild(this.footer);
 

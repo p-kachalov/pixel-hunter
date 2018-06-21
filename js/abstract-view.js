@@ -1,6 +1,8 @@
 
 class AbstractView {
-  get template() {}
+  get template() {
+    throw new Error(`Template is required`);
+  }
 
   get element() {
     if (this._element) {
@@ -11,14 +13,10 @@ class AbstractView {
     return this._element;
   }
 
-  static renderTemplate(template) {
-    const element = document.createElement(`template`);
-    element.innerHTML = template;
-    return element.content;
-  }
-
   render() {
-    return AbstractView.renderTemplate(this.template);
+    const container = document.createElement(`template`);
+    container.innerHTML = this.template;
+    return container.content;
   }
 
   bind() {}

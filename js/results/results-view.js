@@ -17,8 +17,8 @@ class ResultsView extends AbstractView {
   }
 
   render() {
+    const content = super.render();
     const container = document.createElement(`template`);
-    const content = AbstractView.renderTemplate(this.template);
     this.table.forEach((item) => {
       content.appendChild(item);
     });

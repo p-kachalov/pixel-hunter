@@ -29,8 +29,8 @@ class RulesView extends AbstractView {
   }
 
   render() {
+    const content = super.render();
     const container = document.createElement(`template`);
-    const content = AbstractView.renderTemplate(this.template);
     container.content.appendChild(this.header);
     container.content.appendChild(content);
     container.content.appendChild(this.footer);
