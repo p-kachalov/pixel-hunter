@@ -3,7 +3,7 @@ const Answer = Object.freeze({
   CORRECT: `correct`,
   FAST: `fast`,
   SLOW: `slow`,
-  UNKONWN: `unkonwn`,
+  UNKONWN: `unknown`,
 });
 
 export default Answer;
