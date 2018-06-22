@@ -1,10 +1,8 @@
 import introScreen from './intro/intro';
 import greetingScreen from './greeting/greeting';
 import rulesScreen from './rules/rules';
-import gameScreen from './game/game';
+import GameScreen from './game/game';
 import GameModel from './game-model';
-
-import initialState from './data/initial-state'; // temp
 
 const container = document.querySelector(`.central`);
 
@@ -38,9 +36,8 @@ export default class Router {
 
   static showGame(userName) {
     const model = new GameModel(userName);
-    model.state = initialState; // temp
-    const game = gameScreen(model);
-    changeView(game);
+    const game = new GameScreen(model);
+    changeView(game.element);
   }
 
 }
