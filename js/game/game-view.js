@@ -10,12 +10,12 @@ class GameView extends AbstractView {
   }
 
   render() {
-    const container = document.createElement(`template`);
-    container.content.appendChild(this.header);
-    container.content.appendChild(this.game);
-    container.content.appendChild(this.stats);
-    container.content.appendChild(this.footer);
-    return container.content;
+    const container = document.createElement(`div`);
+    container.appendChild(this.header);
+    container.appendChild(this.game);
+    container.appendChild(this.stats);
+    container.appendChild(this.footer);
+    return container;
   }
 }
 

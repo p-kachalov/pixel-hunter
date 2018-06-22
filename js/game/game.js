@@ -1,4 +1,3 @@
-import Answer from '../data/answer';
 import GameType from '../data/game-type';
 import HeaderView from '../blocks/header-view';
 import StatusView from '../blocks/status-view';
@@ -9,28 +8,6 @@ import GameSingleView from './game-single-view';
 import GameDoubleView from './game-double-view';
 import GameTripleView from './game-triple-view';
 import Application from '../application';
-
-const getAnswer = (time, result, settings) => {
-  if (!result) {
-    return Answer.WRONG;
-  }
-  if (time < settings.fastTime) {
-    return Answer.FAST;
-  }
-  if (time > settings.slowTime) {
-    return Answer.SLOW;
-  }
-
-  return Answer.CORRECT;
-};
-
-const makeUpdate = (state, answer) => {
-  const lives = (answer === Answer.WRONG) ? state.lives - 1 : state.lives;
-  const answers = [...state.answers, answer];
-  const gameOver = lives === 0 || answers.length === state.settings.questionNumber;
-
-  return {lives, answers, gameOver};
-};
 
 const getGame = {
   [GameType.SINGLE]: GameSingleView,
@@ -46,50 +23,58 @@ const makeNewGame = (question) => {
 export default class GameSceen {
   constructor(model) {
     this.model = model;
-    this.statusView = new StatusView(model);
-    this.headerView = new HeaderView(this.statusView.element);
-    this.headerView.onBackClick = () => Application.showGreeting();
-    this.statsView = new StatsView(model.answers, model.settings.questionNumber);
-    this.footerView = new FooterView();
+
+    const status = new StatusView(model);
+    this.header = new HeaderView(status.element);
+    this.header.onBackClick = () => Application.showGreeting();
+    this.stats = new StatsView(model.answers, model.settings.questionNumber);
+    this.footer = new FooterView();
 
     const question = this.model.getQuestion();
     this.game = makeNewGame(question);
-    this.game.onAnswer = (result) => {
-      const time = 15; // here will be a timer
-      const answer = getAnswer(time, result, this.model.settings);
-      const update = makeUpdate(this.model, answer);
-      this.updateModel(update);
-    };
+    this.game.onAnswer = (result) => this.onAnswer(result);
 
-    this.gameView = new GameView(this.headerView.element, this.footerView.element, this.statsView.element, this.game.element);
+    this.gameView = new GameView(this.header.element, this.footer.element, this.stats.element, this.game.element);
   }
 
   get element() {
     return this.gameView.element;
   }
 
-  updateModel(update) {
-    this.model.lives = update.lives;
-    this.model.answers = update.answers;
-
-    if (update.gameOver) {
-      Application.showGreeting();
+  onAnswer(result) {
+    const time = 15; // here will be a timer
+    this.model.handleAnswer(result, time);
+    if (this.model.gameOver) {
+      this.model.saveResult();
+      Application.showResults(this.model);
     } else {
       this.nextLevel();
+      this.updateStatus();
+      this.updateStats();
     }
   }
 
   nextLevel() {
     const question = this.model.getQuestion();
-    const game = makeNewGame(question);
-    game.onAnswer = (result) => {
-      const time = 15; // here will be a timer
-      const answer = getAnswer(time, result, this.model.settings);
-      const update = makeUpdate(this.model, answer);
-      this.updateModel(update);
-    };
+    const newGame = makeNewGame(question);
+    newGame.onAnswer = (result) => this.onAnswer(result);
 
-    this.gameView.element.replaceChild(game.element, this.game.element);
-    this.game = game;
+    this.gameView.element.replaceChild(newGame.element, this.game.element);
+    this.game = newGame;
+  }
+
+  updateStatus() {
+    const newStatus = new StatusView(this.model);
+    const newHeader = new HeaderView(newStatus.element);
+
+    this.gameView.element.replaceChild(newHeader.element, this.header.element);
+    this.header = newHeader;
+    this.header.onBackClick = () => Application.showGreeting();
+  }
+
+  updateStats() {
+    const newStats = new StatsView(this.model.answers, this.model.settings.questionNumber);
+    this.gameView.element.replaceChild(newStats.element, this.stats.element);
+    this.stats = newStats;
   }
 }

@@ -14,9 +14,9 @@ class AbstractView {
   }
 
   render() {
-    const container = document.createElement(`template`);
+    const container = document.createElement(`div`);
     container.innerHTML = this.template;
-    return container.content;
+    return container;
   }
 
   bind() {}

@@ -3,6 +3,7 @@ import greetingScreen from './greeting/greeting';
 import rulesScreen from './rules/rules';
 import GameScreen from './game/game';
 import GameModel from './game-model';
+import resultsScreen from './results/results';
 
 const container = document.querySelector(`.central`);
 
@@ -39,5 +40,11 @@ export default class Router {
     const game = new GameScreen(model);
     changeView(game.element);
   }
+
+  static showResults(model) {
+    const results = resultsScreen(model);
+    changeView(results);
+  }
+
 
 }
