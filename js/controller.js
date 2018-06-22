@@ -1,5 +1,4 @@
-// import renderScreen from './render-screen';
-import initialState from './initial-state';
+import initialState from './data/initial-state';
 
 const introController = (state) => {
   const newState = Object.assign({}, state, {screen: `greeting`});
@@ -18,7 +17,7 @@ const rulesController = (state, update) => {
 
 const finishGame = (state) => {
   const newState = Object.assign({}, initialState, {
-    screen: `stats`,
+    screen: `results`,
     results: [...state.results, {
       lives: state.lives,
       answers: state.answers,
@@ -39,7 +38,7 @@ const gameController = (state, update) => {
   return update.gameOver ? finishGame(newState) : newState;
 };
 
-const statsController = (state) => {
+const resultsController = (state) => {
   return state;
 };
 
@@ -48,7 +47,7 @@ const handleScreen = {
   'greeting': greetingController,
   'rules': rulesController,
   'game': gameController,
-  'stats': statsController,
+  'results': resultsController,
 };
 
 export default (state, update) => {

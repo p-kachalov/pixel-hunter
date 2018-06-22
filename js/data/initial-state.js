@@ -47,10 +47,13 @@ export default Object.freeze({
   ],
   results: [],
   settings: {
+    maxLivesNumber: 3,
     questionNumber: 10,
     answerCost: 100,
     fastCost: 50,
     slowCost: 50,
     liveCost: 50,
+    slowTime: 20,
+    fastTime: 10,
   }
 });
