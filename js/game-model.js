@@ -11,4 +11,8 @@ export default class GameModel {
     this.results = initialState.results;
     this.answers = initialState.answers;
   }
+
+  getQuestion() {
+    return this.questions[this.answers.length];
+  }
 }

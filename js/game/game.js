@@ -38,32 +38,10 @@ const getGame = {
   [GameType.TRIPLE]: GameTripleView,
 };
 
-/*
-
-export default (model, callback) => {
-  const state = model.state; // temp
-  const statusView = new StatusView(state);
-  const headerView = new HeaderView(statusView.element);
-  headerView.onBackClick = () => callback({back: true});
-  const statsView = new StatsView(state.answers, state.settings.questionNumber);
-  const footerView = new FooterView();
-
-
-  const question = state.questions[state.answers.length];
+const makeNewGame = (question) => {
   const Game = getGame[question.type];
-  const game = new Game(question);
-  game.onAnswer = (result) => {
-    const time = 15; // here will be a timer
-    const answer = getAnswer(time, result, state.settings);
-    const update = makeUpdate(state, answer);
-  };
-
-  const gameView = new GameView(headerView.element, footerView.element, statsView.element, game.element);
-
-  return gameView.element;
+  return new Game(question);
 };
-
-*/
 
 export default class GameSceen {
   constructor(model) {
@@ -74,34 +52,44 @@ export default class GameSceen {
     this.statsView = new StatsView(model.answers, model.settings.questionNumber);
     this.footerView = new FooterView();
 
-    const question = this.model.questions[this.model.answers.length];
-    const Game = getGame[question.type];
-    const game = new Game(question);
-    game.onAnswer = (result) => {
+    const question = this.model.getQuestion();
+    this.game = makeNewGame(question);
+    this.game.onAnswer = (result) => {
       const time = 15; // here will be a timer
       const answer = getAnswer(time, result, this.model.settings);
       const update = makeUpdate(this.model, answer);
-      console.log(update);
+      this.updateModel(update);
     };
 
-    this.gameView = new GameView(this.headerView.element, this.footerView.element, this.statsView.element, game.element);
+    this.gameView = new GameView(this.headerView.element, this.footerView.element, this.statsView.element, this.game.element);
   }
 
   get element() {
     return this.gameView.element;
   }
 
-  startGame() {
-    const question = this.model.questions[this.model.answers.length];
-    const Game = getGame[question.type];
-    const game = new Game(question);
+  updateModel(update) {
+    this.model.lives = update.lives;
+    this.model.answers = update.answers;
+
+    if (update.gameOver) {
+      Application.showGreeting();
+    } else {
+      this.nextLevel();
+    }
+  }
+
+  nextLevel() {
+    const question = this.model.getQuestion();
+    const game = makeNewGame(question);
     game.onAnswer = (result) => {
       const time = 15; // here will be a timer
       const answer = getAnswer(time, result, this.model.settings);
       const update = makeUpdate(this.model, answer);
-      console.log(update);
+      this.updateModel(update);
     };
 
-    this.gameView = new GameView(this.headerView.element, this.footerView.element, this.statsView.element, game.element);
+    this.gameView.element.replaceChild(game.element, this.game.element);
+    this.game = game;
   }
 }
