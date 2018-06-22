@@ -1,5 +1,9 @@
 import introScreen from './intro/intro';
 import greetingScreen from './greeting/greeting';
+import rulesScreen from './rules/rules';
+import gameScreen from './game/game';
+
+import initialState from './data/initial-state'; // temp
 
 const container = document.querySelector(`.central`);
 
@@ -24,6 +28,16 @@ export default class Router {
   static showGreeting() {
     const greeting = greetingScreen();
     changeView(greeting);
+  }
+
+  static showRules() {
+    const rules = rulesScreen();
+    changeView(rules);
+  }
+
+  static showGame() {
+    const game = gameScreen(initialState);
+    changeView(game);
   }
 
 }

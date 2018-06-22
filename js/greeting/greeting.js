@@ -5,6 +5,6 @@ import Application from '../application';
 export default () => {
   const footerView = new FooterView();
   const greetingView = new GreetingView(footerView.element);
-  greetingView.onContinue = () => Application.showIntro();
+  greetingView.onContinue = () => Application.showRules();
   return greetingView.element;
 };
