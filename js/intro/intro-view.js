@@ -19,8 +19,7 @@ class IntroView extends AbstractView {
     });
   }
 
-  onIntroClick() {
-  }
+  onIntroClick() {}
 }
 
 export default IntroView;
