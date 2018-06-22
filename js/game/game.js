@@ -37,7 +37,8 @@ const getGame = {
   [GameType.TRIPLE]: GameTripleView,
 };
 
-export default (state, callback) => {
+export default (model, callback) => {
+  const state = model.state; // temp
   const statusView = new StatusView(state);
   const headerView = new HeaderView(statusView.element);
   headerView.onBackClick = () => callback({back: true});

@@ -2,6 +2,7 @@ import introScreen from './intro/intro';
 import greetingScreen from './greeting/greeting';
 import rulesScreen from './rules/rules';
 import gameScreen from './game/game';
+import GameModel from './game-model';
 
 import initialState from './data/initial-state'; // temp
 
@@ -35,8 +36,10 @@ export default class Router {
     changeView(rules);
   }
 
-  static showGame() {
-    const game = gameScreen(initialState);
+  static showGame(userName) {
+    const model = new GameModel(userName);
+    model.state = initialState; // temp
+    const game = gameScreen(model);
     changeView(game);
   }
 
