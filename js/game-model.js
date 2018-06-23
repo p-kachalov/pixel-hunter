@@ -5,10 +5,10 @@ const getAnswer = (result, time, settings) => {
   if (!result) {
     return Answer.WRONG;
   }
-  if (time < settings.fastTime) {
+  if (settings.timeOnAnswer - time < settings.fastTime) {
     return Answer.FAST;
   }
-  if (time > settings.slowTime) {
+  if (settings.timeOnAnswer - time > settings.slowTime) {
     return Answer.SLOW;
   }
 
@@ -16,7 +16,7 @@ const getAnswer = (result, time, settings) => {
 };
 
 export default class GameModel {
-  constructor(userName) {
+  constructor(userName, results) {
     this.userName = userName;
     this.gameOver = false;
     this.screen = initialState.screen;
@@ -24,16 +24,20 @@ export default class GameModel {
     this.time = initialState.time;
     this.settings = initialState.settings;
     this.questions = initialState.questions;
-    this.results = initialState.results;
     this.answers = initialState.answers;
+    if (results) {
+      this.results = results;
+    } else {
+      this.results = initialState.results;
+    }
   }
 
   getQuestion() {
     return this.questions[this.answers.length];
   }
 
-  handleAnswer(result, time) {
-    const answer = getAnswer(result, time, this.settings);
+  handleAnswer(result) {
+    const answer = getAnswer(result, this.time, this.settings);
     this.lives = (answer === Answer.WRONG) ? this.lives - 1 : this.lives;
     this.answers = [...this.answers, answer];
     this.gameOver = this.lives === 0 || this.answers.length === this.settings.questionNumber;

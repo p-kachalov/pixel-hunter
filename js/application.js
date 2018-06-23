@@ -25,18 +25,18 @@ export default class Router {
     changeView(intro);
   }
 
-  static showGreeting() {
-    const greeting = greetingScreen();
+  static showGreeting(results) {
+    const greeting = greetingScreen(results);
     changeView(greeting);
   }
 
-  static showRules() {
-    const rules = rulesScreen();
+  static showRules(results) {
+    const rules = rulesScreen(results);
     changeView(rules);
   }
 
-  static showGame(userName) {
-    const model = new GameModel(userName);
+  static showGame(userName, results) {
+    const model = new GameModel(userName, results);
     const game = new GameScreen(model);
     changeView(game.element);
   }

@@ -8,6 +8,7 @@ import GameSingleView from './game-single-view';
 import GameDoubleView from './game-double-view';
 import GameTripleView from './game-triple-view';
 import Application from '../application';
+import getTimer from '../timer/timer';
 
 const getGame = {
   [GameType.SINGLE]: GameSingleView,
@@ -35,15 +36,36 @@ export default class GameSceen {
     this.game.onAnswer = (result) => this.onAnswer(result);
 
     this.gameView = new GameView(this.header.element, this.footer.element, this.stats.element, this.game.element);
+    this.startGame();
   }
 
   get element() {
     return this.gameView.element;
   }
 
+  startGame() {
+    const ticker = (timer) => {
+      this.model.time = timer.time;
+      this.updateStatus();
+      if (timer.time === 0) {
+        this.stopGame();
+        return;
+      }
+      this.timeout = window.setTimeout(() => {
+        ticker(timer.tick());
+      }, 1000);
+    };
+
+    ticker(getTimer(this.model.settings.timeOnAnswer));
+  }
+
+  stopGame() {
+    window.clearTimeout(this.timeout);
+  }
+
   onAnswer(result) {
-    const time = 15; // here will be a timer
-    this.model.handleAnswer(result, time);
+    this.stopGame();
+    this.model.handleAnswer(result);
     if (this.model.gameOver) {
       this.model.saveResult();
       Application.showResults(this.model);
@@ -61,6 +83,7 @@ export default class GameSceen {
 
     this.gameView.element.replaceChild(newGame.element, this.game.element);
     this.game = newGame;
+    this.startGame();
   }
 
   updateStatus() {

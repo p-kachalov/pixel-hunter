@@ -45,7 +45,7 @@ const processResultsData = (data, settings) => {
 
 export default (model) => {
   const headerView = new HeaderView();
-  headerView.onBackClick = () => Application.showGreeting();
+  headerView.onBackClick = () => Application.showGreeting(model.results);
   const footerView = new FooterView();
 
   const resultsData = processResultsData(model.results, model.settings);
