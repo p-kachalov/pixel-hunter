@@ -1,5 +1,5 @@
-import initialState from './data/initial-state';
 import Answer from './data/answer';
+import adaptServerData from './data/data-adapter';
 
 const getAnswer = (result, time, settings) => {
   if (!result) {
@@ -28,14 +28,15 @@ const Settings = Object.freeze({
 });
 
 export default class GameModel {
-  constructor(userName, data, results) {
+  constructor(userName, serverData, results) {
+    const data = adaptServerData(serverData);
     this.userName = userName;
     this.data = data;
     this.gameOver = false;
     this.lives = Settings.maxLivesNumber;
     this.time = 0;
     this.settings = Object.assign({}, Settings, {questionNumber: data.length});
-    this.questions = initialState.questions;
+    this.questions = data;
     this.answers = [];
     this.results = results ? results : [];
   }
