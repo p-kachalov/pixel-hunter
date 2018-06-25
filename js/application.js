@@ -3,6 +3,7 @@ import greetingScreen from './greeting/greeting';
 import rulesScreen from './rules/rules';
 import GameScreen from './game/game';
 import GameModel from './game-model';
+import ErrorView from './error/error-view';
 import resultsScreen from './results/results';
 
 const container = document.querySelector(`.central`);
@@ -16,11 +17,6 @@ const clearContainer = (element) => {
 const changeView = (element) => {
   clearContainer(container);
   container.appendChild(element);
-};
-
-const showError = () => {
-  const errorTemplate = document.querySelector(`#modal-error`);
-  container.appendChild(errorTemplate.content);
 };
 
 const checkStatus = (response) => {
@@ -43,8 +39,7 @@ export default class Router {
         Router.showGreeting(response);
       })
       .catch((error) => {
-        // console.log(error);
-        showError(error);
+        Router.showError(error);
       });
   }
 
@@ -67,6 +62,11 @@ export default class Router {
   static showResults(model) {
     const results = resultsScreen(model);
     changeView(results);
+  }
+
+  static showError(error) {
+    const errorView = new ErrorView(error);
+    changeView(errorView.element);
   }
 
 
