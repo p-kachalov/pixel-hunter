@@ -29,7 +29,6 @@ const questionData3 = {
 };
 
 export default Object.freeze({
-  screen: `intro`,
   lives: 3,
   time: 0,
   answers: [],

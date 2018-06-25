@@ -20,7 +20,6 @@ export default class GameModel {
     this.userName = userName;
     this.data = data;
     this.gameOver = false;
-    this.screen = initialState.screen;
     this.lives = initialState.lives;
     this.time = initialState.time;
     this.settings = initialState.settings;
