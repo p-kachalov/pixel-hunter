@@ -38,16 +38,16 @@ export default class Router {
       then(checkStatus).
       then((response) => response.json()).
       then((data) => {
-        Router.showGreeting(data, pastResults);
+        gameData = data;
+        Router.showGreeting();
       })
       .catch((error) => {
         Router.showError(error);
       });
   }
 
-  static showGreeting(data, results) {
-    gameData = data ? data : null;
-    pastResults = results ? results : null;
+  static showGreeting(results) {
+    pastResults = results;
     const greeting = greetingScreen();
     changeView(greeting);
   }
