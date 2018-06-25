@@ -16,8 +16,9 @@ const getAnswer = (result, time, settings) => {
 };
 
 export default class GameModel {
-  constructor(userName, results) {
+  constructor(userName, data, results) {
     this.userName = userName;
+    this.data = data;
     this.gameOver = false;
     this.screen = initialState.screen;
     this.lives = initialState.lives;

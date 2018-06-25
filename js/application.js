@@ -27,34 +27,38 @@ const checkStatus = (response) => {
   }
 };
 
-export default class Router {
+let gameData = null;
+let pastResults = null;
 
+export default class Router {
   static showIntro() {
     const intro = introScreen();
     changeView(intro);
     window.fetch(`https://es.dump.academy/pixel-hunter/questions`).
       then(checkStatus).
-      then((response) => {
-        // console.log(response);
-        Router.showGreeting(response);
+      then((response) => response.json()).
+      then((data) => {
+        Router.showGreeting(data, pastResults);
       })
       .catch((error) => {
         Router.showError(error);
       });
   }
 
-  static showGreeting(results) {
-    const greeting = greetingScreen(results);
+  static showGreeting(data, results) {
+    gameData = data ? data : null;
+    pastResults = results ? results : null;
+    const greeting = greetingScreen();
     changeView(greeting);
   }
 
-  static showRules(results) {
-    const rules = rulesScreen(results);
+  static showRules() {
+    const rules = rulesScreen();
     changeView(rules);
   }
 
-  static showGame(userName, results) {
-    const model = new GameModel(userName, results);
+  static showGame(userName) {
+    const model = new GameModel(userName, gameData, pastResults);
     const game = new GameScreen(model);
     changeView(game.element);
   }
