@@ -48,7 +48,7 @@ export default class GameSceen {
       this.model.time = timer.time;
       this.updateStatus();
       if (timer.time === 0) {
-        this.stopGame();
+        this.onAnswer(false);
         return;
       }
       this.timeout = window.setTimeout(() => {
