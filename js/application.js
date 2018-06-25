@@ -18,11 +18,34 @@ const changeView = (element) => {
   container.appendChild(element);
 };
 
+const showError = () => {
+  const errorTemplate = document.querySelector(`#modal-error`);
+  container.appendChild(errorTemplate.content);
+};
+
+const checkStatus = (response) => {
+  if (response.status >= 200 && response.status < 300) {
+    return response;
+  } else {
+    throw new Error(`${response.status}: ${response.statusText}`);
+  }
+};
+
 export default class Router {
 
   static showIntro() {
     const intro = introScreen();
     changeView(intro);
+    window.fetch(`https://es.dump.academy/pixel-hunter/questions`).
+      then(checkStatus).
+      then((response) => {
+        // console.log(response);
+        Router.showGreeting(response);
+      })
+      .catch((error) => {
+        // console.log(error);
+        showError(error);
+      });
   }
 
   static showGreeting(results) {
