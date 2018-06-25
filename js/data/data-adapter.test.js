@@ -27,6 +27,15 @@ const localData = [
       {name: `question2`, rightValue: true, src: images.paintings[2], alt: `Option 2`, width: `304`, height: `455`},
       {name: `question3`, rightValue: false, src: images.photos[2], alt: `Option 3`, width: `304`, height: `455`},
     ]
+  },
+  {
+    type: GameType.TRIPLE,
+    text: `Найдите фото среди изображений`,
+    images: [
+      {name: `question1`, rightValue: false, src: images.paintings[1], alt: `Option 1`, width: `304`, height: `455`},
+      {name: `question2`, rightValue: true, src: images.photos[2], alt: `Option 2`, width: `304`, height: `455`},
+      {name: `question3`, rightValue: false, src: images.paintings[2], alt: `Option 3`, width: `304`, height: `455`},
+    ]
   }
 ];
 
@@ -96,12 +105,42 @@ const serverData = [
         type: `photo`
       },
     ]
+  },
+  {
+    type: `one-of-three`,
+    question: `Найдите фото среди изображений`,
+    answers: [
+      {
+        image: {
+          url: images.paintings[1],
+          width: 304,
+          height: 455
+        },
+        type: `painting`
+      },
+      {
+        image: {
+          url: images.photos[2],
+          width: 304,
+          height: 455
+        },
+        type: `photo`
+      },
+      {
+        image: {
+          url: images.paintings[2],
+          width: 304,
+          height: 455
+        },
+        type: `painting`
+      },
+    ]
   }
 ];
 
 describe(`Adapt server data`, () => {
   it(`should have several format remote and local data`, () => {
-    assert.deepEqual(localData, adaptServerData(serverData));
+    assert.deepEqual(adaptServerData(serverData), localData);
   });
 });
 
