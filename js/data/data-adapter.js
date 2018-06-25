@@ -11,23 +11,25 @@ const MapValue = {
   'photo': `photo`
 };
 
-const getRightValue = (questionType, answerType) => {
-  if (MapGameType[questionType] !== GameType.TRIPLE) {
-    return MapValue[answerType];
-  }
-  return MapValue[answerType] === `paint`;
+const getRightAnswerForTriple = (answers) => {
+  const answerTypes = answers.map((answer) => answer.type);
+  return answerTypes.reduce((acc, item) => {
+    return (answerTypes.indexOf(item) === answerTypes.lastIndexOf(item)) ? item : acc;
+  }, null);
 };
 
+const isTripleGame = (question) => MapGameType[question.type] === GameType.TRIPLE;
 
 const adaptServerData = (data) => {
   return data.map((question) => {
+    const rightAnswerForTriple = isTripleGame(question) ? getRightAnswerForTriple(question.answers) : null;
     return Object.assign({}, {
       type: MapGameType[question.type],
       text: question.question,
       images: question.answers.map((answer, index) => {
         return {
           name: `question${index + 1}`,
-          rightValue: getRightValue(question.type, answer.type),
+          rightValue: isTripleGame(question) ? rightAnswerForTriple === answer.type : MapValue[answer.type],
           src: `${answer.image.url}`,
           alt: `Option ${index + 1}`,
           width: `${answer.image.width}`,
