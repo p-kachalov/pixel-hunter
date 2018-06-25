@@ -29,9 +29,6 @@ const questionData3 = {
 };
 
 export default Object.freeze({
-  lives: 3,
-  time: 0,
-  answers: [],
   questions: [
     questionData1,
     questionData2,
@@ -44,16 +41,4 @@ export default Object.freeze({
     questionData3,
     questionData1
   ],
-  results: [],
-  settings: {
-    maxLivesNumber: 3,
-    questionNumber: 10,
-    answerCost: 100,
-    fastCost: 50,
-    slowCost: 50,
-    liveCost: 50,
-    slowTime: 20,
-    fastTime: 10,
-    timeOnAnswer: 30,
-  }
 });

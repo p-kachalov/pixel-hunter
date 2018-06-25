@@ -15,21 +15,29 @@ const getAnswer = (result, time, settings) => {
   return Answer.CORRECT;
 };
 
+const Settings = Object.freeze({
+  maxLivesNumber: 3,
+  questionNumber: 10,
+  answerCost: 100,
+  fastCost: 50,
+  slowCost: 50,
+  liveCost: 50,
+  slowTime: 20,
+  fastTime: 10,
+  timeOnAnswer: 30,
+});
+
 export default class GameModel {
   constructor(userName, data, results) {
     this.userName = userName;
     this.data = data;
     this.gameOver = false;
-    this.lives = initialState.lives;
-    this.time = initialState.time;
-    this.settings = initialState.settings;
+    this.lives = Settings.maxLivesNumber;
+    this.time = 0;
+    this.settings = Object.assign({}, Settings, {questionNumber: data.length});
     this.questions = initialState.questions;
-    this.answers = initialState.answers;
-    if (results) {
-      this.results = results;
-    } else {
-      this.results = initialState.results;
-    }
+    this.answers = [];
+    this.results = results ? results : [];
   }
 
   getQuestion() {
