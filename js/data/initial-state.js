@@ -55,5 +55,6 @@ export default Object.freeze({
     liveCost: 50,
     slowTime: 20,
     fastTime: 10,
+    timeOnAnswer: 30,
   }
 });

@@ -1,4 +1,3 @@
-import Answer from '../data/answer';
 import GameType from '../data/game-type';
 import HeaderView from '../blocks/header-view';
 import StatusView from '../blocks/status-view';
@@ -8,28 +7,8 @@ import GameView from './game-view';
 import GameSingleView from './game-single-view';
 import GameDoubleView from './game-double-view';
 import GameTripleView from './game-triple-view';
-
-const getAnswer = (time, result, settings) => {
-  if (!result) {
-    return Answer.WRONG;
-  }
-  if (time < settings.fastTime) {
-    return Answer.FAST;
-  }
-  if (time > settings.slowTime) {
-    return Answer.SLOW;
-  }
-
-  return Answer.CORRECT;
-};
-
-const makeUpdate = (state, answer) => {
-  const lives = (answer === Answer.WRONG) ? state.lives - 1 : state.lives;
-  const answers = [...state.answers, answer];
-  const gameOver = lives === 0 || answers.length === state.settings.questionNumber;
-
-  return {lives, answers, gameOver};
-};
+import Application from '../application';
+import getTimer from '../timer/timer';
 
 const getGame = {
   [GameType.SINGLE]: GameSingleView,
@@ -37,27 +16,88 @@ const getGame = {
   [GameType.TRIPLE]: GameTripleView,
 };
 
-export default (state, callback) => {
-  const statusView = new StatusView(state);
-  const headerView = new HeaderView(statusView.element);
-  headerView.onBackClick = () => callback({back: true});
-
-  const statsView = new StatsView(state.answers, state.settings.questionNumber);
-  const footerView = new FooterView();
-
-
-  const question = state.questions[state.answers.length];
+const makeNewGame = (question) => {
   const Game = getGame[question.type];
-
-  const game = new Game(question);
-  game.onAnswer = (result) => {
-    const time = 15; // here will be a timer
-    const answer = getAnswer(time, result, state.settings);
-    const update = makeUpdate(state, answer);
-    callback(update);
-  };
-
-  const gameView = new GameView(headerView.element, footerView.element, statsView.element, game.element);
-
-  return gameView.element;
+  return new Game(question);
 };
+
+export default class GameSceen {
+  constructor(model) {
+    this.model = model;
+
+    const status = new StatusView(model);
+    this.header = new HeaderView(status.element);
+    this.header.onBackClick = () => Application.showGreeting();
+    this.stats = new StatsView(model.answers, model.settings.questionNumber);
+    this.footer = new FooterView();
+
+    const question = this.model.getQuestion();
+    this.game = makeNewGame(question);
+    this.game.onAnswer = (result) => this.onAnswer(result);
+
+    this.gameView = new GameView(this.header.element, this.footer.element, this.stats.element, this.game.element);
+    this.startGame();
+  }
+
+  get element() {
+    return this.gameView.element;
+  }
+
+  startGame() {
+    const ticker = (timer) => {
+      this.model.time = timer.time;
+      this.updateStatus();
+      if (timer.time === 0) {
+        this.onAnswer(false);
+        return;
+      }
+      this.timeout = window.setTimeout(() => {
+        ticker(timer.tick());
+      }, 1000);
+    };
+
+    ticker(getTimer(this.model.settings.timeOnAnswer));
+  }
+
+  stopGame() {
+    window.clearTimeout(this.timeout);
+  }
+
+  onAnswer(result) {
+    this.stopGame();
+    this.model.handleAnswer(result);
+    if (this.model.gameOver) {
+      this.model.saveResult();
+      Application.showResults(this.model);
+    } else {
+      this.nextLevel();
+      this.updateStatus();
+      this.updateStats();
+    }
+  }
+
+  nextLevel() {
+    const question = this.model.getQuestion();
+    const newGame = makeNewGame(question);
+    newGame.onAnswer = (result) => this.onAnswer(result);
+
+    this.gameView.element.replaceChild(newGame.element, this.game.element);
+    this.game = newGame;
+    this.startGame();
+  }
+
+  updateStatus() {
+    const newStatus = new StatusView(this.model);
+    const newHeader = new HeaderView(newStatus.element);
+
+    this.gameView.element.replaceChild(newHeader.element, this.header.element);
+    this.header = newHeader;
+    this.header.onBackClick = () => Application.showGreeting();
+  }
+
+  updateStats() {
+    const newStats = new StatsView(this.model.answers, this.model.settings.questionNumber);
+    this.gameView.element.replaceChild(newStats.element, this.stats.element);
+    this.stats = newStats;
+  }
+}

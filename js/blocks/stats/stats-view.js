@@ -1,4 +1,5 @@
 import AbstractView from '../../abstract-view';
+import Answer from '../../data/answer';
 
 const getAnswerTemplate = (answer) => {
   return `<li class="stats__result stats__result--${answer}"></li>`;
@@ -16,7 +17,7 @@ class StatsView extends AbstractView {
     <ul class="stats">
       ${this.answers.reduce((acc, answer) => acc + getAnswerTemplate(answer), ``)}
       ${new Array(this.questionsNumber - this.answers.length)
-        .fill(getAnswerTemplate(`unknown`)).join(``)}
+        .fill(getAnswerTemplate(Answer.UNKONWN)).join(``)}
     </ul>
     `;
   }
