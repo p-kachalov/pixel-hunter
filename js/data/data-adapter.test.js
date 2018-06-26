@@ -1,7 +1,7 @@
 import {assert} from 'chai';
 import GameType from './game-type';
 import images from './mock-data';
-import adaptServerData from './data-adapter';
+import {adaptServerData, adaptServerResults} from './data-adapter';
 
 const localData = [
   {
@@ -138,9 +138,36 @@ const serverData = [
   }
 ];
 
+const serverResults = [
+  {
+    date: 1234567567898,
+    stats: [`correct`, `wrong`, `fast`, `slow`, `correct`, `wrong`, `fast`, `slow`],
+    lives: 0
+  },
+  {
+    date: 1234567567898,
+    stats: [`correct`, `wrong`, `fast`, `fast`, `slow`, `correct`, `slow`, `correct`, `fast`, `slow`],
+    lives: 0
+  }
+];
+
+const localResults = [
+  {
+    answers: [`correct`, `wrong`, `fast`, `slow`, `correct`, `wrong`, `fast`, `slow`],
+    lives: 0
+  },
+  {
+    answers: [`correct`, `wrong`, `fast`, `fast`, `slow`, `correct`, `slow`, `correct`, `fast`, `slow`],
+    lives: 0
+  }
+];
+
 describe(`Adapt server data`, () => {
-  it(`should have several format remote and local data`, () => {
+  it(`should have several format remote and local question data`, () => {
     assert.deepEqual(adaptServerData(serverData), localData);
+  });
+  it(`should have several format remote and local results data`, () => {
+    assert.deepEqual(adaptServerResults(serverResults), localResults);
   });
 });
 
