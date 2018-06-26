@@ -5,9 +5,9 @@ import GameScreen from './game/game';
 import GameModel from './game-model';
 import ErrorView from './error/error-view';
 import resultsScreen from './results/results';
+import Loader from './loader';
 
 const container = document.querySelector(`.central`);
-const SERVER_URL = `https://es.dump.academy/pixel-hunter/questions`;
 
 const clearContainer = (element) => {
   while (element.firstChild) {
@@ -20,14 +20,6 @@ const changeView = (element) => {
   container.appendChild(element);
 };
 
-const checkStatus = (response) => {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  } else {
-    throw new Error(`${response.status}: ${response.statusText}`);
-  }
-};
-
 let gameData = null;
 let pastResults = null;
 
@@ -35,10 +27,8 @@ export default class Router {
   static showIntro() {
     const intro = introScreen();
     changeView(intro);
-    window.fetch(SERVER_URL).
-      then(checkStatus).
-      then((response) => response.json()).
-      then((data) => {
+    Loader.loadData()
+      .then((data) => {
         gameData = data;
         Router.showGreeting();
       })
