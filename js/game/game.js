@@ -36,7 +36,6 @@ export default class GameSceen {
     this.game.onAnswer = (result) => this.onAnswer(result);
 
     this.gameView = new GameView(this.header.element, this.footer.element, this.stats.element, this.game.element);
-    this.startGame();
   }
 
   get element() {
@@ -81,7 +80,7 @@ export default class GameSceen {
     const newGame = makeNewGame(question);
     newGame.onAnswer = (result) => this.onAnswer(result);
 
-    this.gameView.element.replaceChild(newGame.element, this.game.element);
+    this.game.element.parentNode.replaceChild(newGame.element, this.game.element);
     this.game = newGame;
     this.startGame();
   }
@@ -90,14 +89,14 @@ export default class GameSceen {
     const newStatus = new StatusView(this.model);
     const newHeader = new HeaderView(newStatus.element);
 
-    this.gameView.element.replaceChild(newHeader.element, this.header.element);
+    this.header.element.parentNode.replaceChild(newHeader.element, this.header.element);
     this.header = newHeader;
     this.header.onBackClick = () => Application.showGreeting();
   }
 
   updateStats() {
     const newStats = new StatsView(this.model.answers, this.model.settings.questionNumber);
-    this.gameView.element.replaceChild(newStats.element, this.stats.element);
+    this.stats.element.parentNode.replaceChild(newStats.element, this.stats.element);
     this.stats = newStats;
   }
 }
