@@ -10,7 +10,7 @@ class GameView extends AbstractView {
   }
 
   render() {
-    const container = document.createElement(`div`);
+    const container = document.createDocumentFragment();
     container.appendChild(this.header);
     container.appendChild(this.game);
     container.appendChild(this.stats);
