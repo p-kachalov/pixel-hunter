@@ -1,4 +1,4 @@
-import {adaptServerData, adaptServerResults} from './data/data-adapter';
+import {adaptServerData, adaptServerResults, adaptLocalData} from './data/data-adapter';
 
 const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
 const APP_ID = `235268235268`;
@@ -19,11 +19,11 @@ export default class Loader {
   }
 
   static loadResults(name) {
-    return fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`).then(checkStatus).then(toJSON).then(adaptServerData);
+    return fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`).then(checkStatus).then(toJSON).then(adaptServerResults);
   }
 
   static saveResults(data, name) {
-    data = Object.assign({name}, data);
+    data = Object.assign({name}, adaptLocalData(data));
     const requestSettings = {
       body: JSON.stringify(data),
       headers: {
