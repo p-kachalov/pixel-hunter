@@ -40,6 +40,10 @@ export const adaptServerData = (data) => {
   });
 };
 
+export const adaptLocalData = (result) => {
+  return {lives: result.lives, stats: result.answers};
+};
+
 export const adaptServerResults = (results) => {
   return results.map((answer) => {
     return {lives: answer.lives, answers: answer.stats};
