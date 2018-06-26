@@ -20,7 +20,7 @@ const getRightAnswerForTriple = (answers) => {
 
 const isTripleGame = (question) => MapGameType[question.type] === GameType.TRIPLE;
 
-const adaptServerData = (data) => {
+export const adaptServerData = (data) => {
   return data.map((question) => {
     const rightAnswerForTriple = isTripleGame(question) ? getRightAnswerForTriple(question.answers) : null;
     return Object.assign({}, {
@@ -40,4 +40,8 @@ const adaptServerData = (data) => {
   });
 };
 
-export default adaptServerData;
+export const adaptServerResults = (results) => {
+  return results.map((answer) => {
+    return {lives: answer.lives, answers: answer.stats};
+  });
+};

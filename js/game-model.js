@@ -27,7 +27,7 @@ const Settings = Object.freeze({
 });
 
 export default class GameModel {
-  constructor(userName, data, results) {
+  constructor(userName, data) {
     this.userName = userName;
     this.gameOver = false;
     this.lives = Settings.maxLivesNumber;
@@ -35,7 +35,8 @@ export default class GameModel {
     this.settings = Object.assign({}, Settings, {questionNumber: data.length});
     this.questions = data;
     this.answers = [];
-    this.results = results ? results : [];
+    this.result = null;
+    this.results = [];
   }
 
   getQuestion() {
@@ -52,7 +53,6 @@ export default class GameModel {
   saveResult() {
     const lives = this.lives;
     const answers = this.answers;
-
-    this.results = [...this.results, {lives, answers}];
+    this.result = {lives, answers};
   }
 }
