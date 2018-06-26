@@ -4,6 +4,7 @@ import ResultsView from './results-view';
 import Answer from '../data/answer';
 import statsCalc from '../blocks/stats/stats-calc';
 import ResultView from './result-view';
+import ResultTableView from './result-tabe-view';
 import StatsView from '../blocks/stats/stats-view';
 import Application from '../application';
 
@@ -43,22 +44,34 @@ const processResultsData = (data, settings) => {
   return results;
 };
 
-export default (model) => {
-  const headerView = new HeaderView();
-  headerView.onBackClick = () => Application.showGreeting(model.results);
-  const footerView = new FooterView();
+export default class Results {
+  constructor(model) {
+    this.model = model;
+    this.headerView = new HeaderView();
+    this.headerView.onBackClick = () => Application.showGreeting();
+    this.footerView = new FooterView();
+    this.table = new ResultTableView(null, []);
+    this.resultView = new ResultsView(this.headerView.element, this.footerView.element, this.table.element);
+  }
 
-  const resultsData = processResultsData(model.results, model.settings);
-  let resultTable = [];
+  get element() {
+    return this.resultView.element;
+  }
 
-  resultsData.forEach((dataItem) => {
-    const statsView = new StatsView(dataItem.answers, model.settings.questionNumber);
-    const result = new ResultView(dataItem);
-    result.insertStats(statsView.element);
-    resultTable.push(result.element);
-  });
+  renderResultTable(data) {
+    const resultsData = processResultsData(data, this.model.settings);
+    let resultTable = [];
 
-  const results = new ResultsView(headerView.element, footerView.element, resultTable);
-  return results.element;
-};
+    resultsData.forEach((dataItem) => {
+      const statsView = new StatsView(dataItem.answers, this.model.settings.questionNumber);
+      const result = new ResultView(dataItem);
+      result.insertStats(statsView.element);
+      resultTable.push(result.element);
+    });
 
+    const isWin = this.model.lives > 0;
+    const newTable = new ResultTableView(isWin, resultTable);
+    this.resultView.element.replaceChild(newTable.element, this.table.element);
+  }
+
+}

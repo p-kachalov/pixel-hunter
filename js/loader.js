@@ -1,7 +1,7 @@
 import {adaptServerData, adaptServerResults, adaptLocalData} from './data/data-adapter';
 
 const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
-const APP_ID = `235268235268`;
+const APP_ID = `235268`;
 
 const checkStatus = (response) => {
   if (response.status >= 200 && response.status < 300) {

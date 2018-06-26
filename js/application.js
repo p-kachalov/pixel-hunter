@@ -4,7 +4,7 @@ import rulesScreen from './rules/rules';
 import GameScreen from './game/game';
 import GameModel from './game-model';
 import ErrorView from './error/error-view';
-import resultsScreen from './results/results';
+import ResultsScreen from './results/results';
 import Loader from './loader';
 
 const container = document.querySelector(`.central`);
@@ -21,7 +21,6 @@ const changeView = (element) => {
 };
 
 let gameData = null;
-let pastResults = null;
 
 export default class Router {
   static showIntro() {
@@ -37,8 +36,7 @@ export default class Router {
       });
   }
 
-  static showGreeting(results) {
-    pastResults = results;
+  static showGreeting() {
     const greeting = greetingScreen();
     changeView(greeting);
   }
@@ -49,14 +47,21 @@ export default class Router {
   }
 
   static showGame(userName) {
-    const model = new GameModel(userName, gameData, pastResults);
+    const model = new GameModel(userName, gameData);
     const game = new GameScreen(model);
     changeView(game.element);
   }
 
   static showResults(model) {
-    const results = resultsScreen(model);
-    changeView(results);
+    const results = new ResultsScreen(model);
+    changeView(results.element);
+    Loader.saveResults(model.result, model.userName).
+      then(() => Loader.loadResults(model.userName)).
+      then((data) => {
+        results.renderResultTable(data);
+      }).
+      catch(Router.showError);
+
   }
 
   static showError(error) {
