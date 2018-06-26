@@ -14,10 +14,6 @@ const getAnswer = (result, time, settings) => {
   return Answer.CORRECT;
 };
 
-const getAppId = () => {
-  return Array.from({length: 16}, () => Math.floor(Math.random() * 40)).join(``);
-};
-
 const Settings = Object.freeze({
   maxLivesNumber: 3,
   questionNumber: 10,
@@ -33,7 +29,6 @@ const Settings = Object.freeze({
 export default class GameModel {
   constructor(userName, data, results) {
     this.userName = userName;
-    this.appId = getAppId();
     this.gameOver = false;
     this.lives = Settings.maxLivesNumber;
     this.time = 0;
