@@ -13,8 +13,8 @@ const MapValue = {
 
 const getRightAnswerForTriple = (answers) => {
   const answerTypes = answers.map((answer) => answer.type);
-  return answerTypes.reduce((acc, item) => {
-    return (answerTypes.indexOf(item) === answerTypes.lastIndexOf(item)) ? item : acc;
+  return answerTypes.reduce((accumulator, currentValue) => {
+    return (answerTypes.indexOf(currentValue) === answerTypes.lastIndexOf(currentValue)) ? currentValue : accumulator;
   }, null);
 };
 
@@ -30,7 +30,7 @@ const adaptServerData = (data) => {
         return {
           name: `question${index + 1}`,
           rightValue: isTripleGame(question) ? rightAnswerForTriple === answer.type : MapValue[answer.type],
-          src: `${answer.image.url}`,
+          src: answer.image.url,
           alt: `Option ${index + 1}`,
           width: `${answer.image.width}`,
           height: `${answer.image.height}`

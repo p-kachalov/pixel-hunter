@@ -7,6 +7,7 @@ import ErrorView from './error/error-view';
 import resultsScreen from './results/results';
 
 const container = document.querySelector(`.central`);
+const SERVER_URL = `https://es.dump.academy/pixel-hunter/questions`;
 
 const clearContainer = (element) => {
   while (element.firstChild) {
@@ -34,7 +35,7 @@ export default class Router {
   static showIntro() {
     const intro = introScreen();
     changeView(intro);
-    window.fetch(`https://es.dump.academy/pixel-hunter/questions`).
+    window.fetch(SERVER_URL).
       then(checkStatus).
       then((response) => response.json()).
       then((data) => {
