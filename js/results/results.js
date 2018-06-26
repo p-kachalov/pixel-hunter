@@ -71,7 +71,7 @@ export default class Results {
 
     const isWin = this.model.lives > 0;
     const newTable = new ResultTableView(isWin, resultTable);
-    this.resultView.element.replaceChild(newTable.element, this.table.element);
+    this.table.element.parentNode.replaceChild(newTable.element, this.table.element);
   }
 
 }

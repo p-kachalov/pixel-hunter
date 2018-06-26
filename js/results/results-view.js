@@ -9,7 +9,7 @@ class ResultsView extends AbstractView {
   }
 
   render() {
-    const container = document.createElement(`div`);
+    const container = document.createDocumentFragment();
     container.appendChild(this.header);
     container.appendChild(this.table);
     container.appendChild(this.footer);

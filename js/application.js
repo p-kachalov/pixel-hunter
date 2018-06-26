@@ -50,6 +50,7 @@ export default class Router {
     const model = new GameModel(userName, gameData);
     const game = new GameScreen(model);
     changeView(game.element);
+    game.startGame();
   }
 
   static showResults(model) {
