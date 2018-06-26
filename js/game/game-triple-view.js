@@ -40,10 +40,11 @@ class GameTripleView extends AbstractView {
       this.onAnswer({option1, option2});
     });
 
-    const options = this.element.querySelectorAll(`.game__option`);
+    const options = this.element.querySelectorAll(`.game__option img`);
     for (const item of options) {
       item.addEventListener(`click`, (evt) => {
         evt.preventDefault();
+        console.log(evt.target.dataset.name);
         const option = evt.target.dataset.name;
         const result = option === this.rightValue;
         this.onAnswer(result);
