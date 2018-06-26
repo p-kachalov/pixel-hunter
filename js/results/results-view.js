@@ -1,32 +1,19 @@
 import AbstractView from '../abstract-view';
 
 class ResultsView extends AbstractView {
-  constructor(header, footer, resultTable) {
+  constructor(header, footer, table) {
     super();
     this.header = header;
     this.footer = footer;
-    this.table = resultTable;
-  }
-
-  get template() {
-    return `
-      <div class="result">
-        <h1>Победа!</h1>
-      </div>
-    `;
+    this.table = table;
   }
 
   render() {
-    const content = super.render();
-    const container = document.createElement(`template`);
-    this.table.forEach((item) => {
-      content.appendChild(item);
-    });
-
-    container.content.appendChild(this.header);
-    container.content.appendChild(content);
-    container.content.appendChild(this.footer);
-    return container.content;
+    const container = document.createElement(`div`);
+    container.appendChild(this.header);
+    container.appendChild(this.table);
+    container.appendChild(this.footer);
+    return container;
   }
 }
 
