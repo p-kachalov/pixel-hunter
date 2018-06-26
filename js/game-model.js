@@ -1,5 +1,4 @@
 import Answer from './data/answer';
-import adaptServerData from './data/data-adapter';
 
 const getAnswer = (result, time, settings) => {
   if (!result) {
@@ -32,8 +31,7 @@ const Settings = Object.freeze({
 });
 
 export default class GameModel {
-  constructor(userName, serverData, results) {
-    const data = adaptServerData(serverData);
+  constructor(userName, data, results) {
     this.userName = userName;
     this.appId = getAppId();
     this.gameOver = false;
