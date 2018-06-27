@@ -26,14 +26,12 @@ export default class Router {
   static showIntro() {
     const intro = introScreen();
     changeView(intro);
-    Loader.loadData()
-      .then((data) => {
+    Loader.loadData().
+      then((data) => {
         gameData = data;
         Router.showGreeting();
-      })
-      .catch((error) => {
-        Router.showError(error);
-      });
+      }).
+      catch((error) => Router.showError(error));
   }
 
   static showGreeting() {
@@ -58,9 +56,7 @@ export default class Router {
     changeView(results.element);
     Loader.saveResults(model.result, model.userName).
       then(() => Loader.loadResults(model.userName)).
-      then((data) => {
-        results.renderResultTable(data);
-      }).
+      then((data) => results.renderResultTable(data)).
       catch(Router.showError);
 
   }
@@ -69,6 +65,4 @@ export default class Router {
     const errorView = new ErrorView(error);
     changeView(errorView.element);
   }
-
-
 }
