@@ -49,7 +49,7 @@ class RulesView extends AbstractView {
 
     form.addEventListener(`submit`, (evt) => {
       evt.preventDefault();
-      this.onSubmit({userName: input.value});
+      this.onSubmit(input.value);
     });
   }
 
