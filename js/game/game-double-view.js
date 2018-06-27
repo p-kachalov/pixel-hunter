@@ -1,5 +1,6 @@
 import AbstractView from '../abstract-view';
 import {debugStyle} from '../util';
+import {resize} from '../resize/resize';
 
 class GameDoubleView extends AbstractView {
   constructor(data, debug) {
@@ -55,6 +56,17 @@ class GameDoubleView extends AbstractView {
       const result = option1 === rightAnswer1 && option2 === rightAnswer2;
       this.onAnswer(result);
     });
+
+    const options = this.element.querySelectorAll(`.game__option img`);
+    for (const item of options) {
+      item.addEventListener(`load`, (evt) => {
+        const imageSize = {width: evt.target.naturalWidth, height: evt.target.naturalHeight};
+        const frameSize = {width: evt.target.width, height: evt.target.height};
+        const newSize = resize(frameSize, imageSize);
+        evt.target.width = newSize.width;
+        evt.target.height = newSize.height;
+      });
+    }
   }
 
   onAnswer() {}
