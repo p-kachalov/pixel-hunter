@@ -1,8 +1,10 @@
 import AbstractView from '../abstract-view';
+import {debugStyle} from '../util';
 
 class GameSingleView extends AbstractView {
-  constructor(data) {
+  constructor(data, debug) {
     super();
+    this.debug = debug;
     this.question = data.text;
     this.image = data.images[0];
   }
@@ -16,11 +18,11 @@ class GameSingleView extends AbstractView {
           <img src="${this.image.src}" alt="${this.image.alt}" width="${this.image.width}" height="${this.image.height}">
           <label class="game__answer  game__answer--photo">
             <input name="${this.image.name}" type="radio" value="photo" required>
-            <span>Фото</span>
+            <span ${debugStyle(this.debug, this.image.rightValue === `photo`)}>Фото</span>
           </label>
           <label class="game__answer game__answer--paint game__answer--wide">
             <input name="${this.image.name}" type="radio" value="paint" required>
-            <span>Рисунок</span>
+            <span ${debugStyle(this.debug, this.image.rightValue === `paint`)}>Рисунок</span>
           </label>
         </div>
       </form>
