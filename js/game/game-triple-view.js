@@ -1,5 +1,6 @@
 import AbstractView from '../abstract-view';
 import {debugStyle} from '../util';
+import {resize} from '../resize/resize';
 
 class GameTripleView extends AbstractView {
   constructor(data, debug) {
@@ -46,6 +47,13 @@ class GameTripleView extends AbstractView {
         const option = evt.target.dataset.name;
         const result = option === this.rightValue;
         this.onAnswer(result);
+      });
+      item.addEventListener(`load`, (evt) => {
+        const imageSize = {width: evt.target.naturalWidth, height: evt.target.naturalHeight};
+        const frameSize = {width: evt.target.width, height: evt.target.height};
+        const newSize = resize(frameSize, imageSize);
+        evt.target.width = newSize.width;
+        evt.target.height = newSize.height;
       });
     }
   }
