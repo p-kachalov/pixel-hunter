@@ -22,43 +22,42 @@ const changeView = (element) => {
 
 let gameData = null;
 
-export default class Router {
+export default class Application {
   static showIntro() {
     const intro = introScreen();
     changeView(intro);
     Loader.loadData().
       then((data) => {
         gameData = data;
-        Router.showGreeting();
+        Application.showGreeting();
       }).
-      catch((error) => Router.showError(error));
+      catch((error) => Application.showError(error));
   }
 
   static showGreeting() {
-    const greeting = greetingScreen();
+    const greeting = greetingScreen(Application.showRules);
     changeView(greeting);
   }
 
   static showRules() {
-    const rules = rulesScreen();
+    const rules = rulesScreen(Application.showGreeting, Application.showGame);
     changeView(rules);
   }
 
   static showGame(userName) {
     const model = new GameModel(userName, gameData);
-    const game = new GameScreen(model);
+    const game = new GameScreen(model, Application.showGreeting, Application.showResults);
     changeView(game.element);
     game.startGame();
   }
 
   static showResults(model) {
-    const results = new ResultsScreen(model);
+    const results = new ResultsScreen(model, Application.showGreeting);
     changeView(results.element);
     Loader.saveResults(model.result, model.userName).
       then(() => Loader.loadResults(model.userName)).
       then((data) => results.renderResultTable(data)).
-      catch(Router.showError);
-
+      catch(Application.showError);
   }
 
   static showError(error) {

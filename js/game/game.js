@@ -8,7 +8,6 @@ import GameView from './game-view';
 import GameSingleView from './game-single-view';
 import GameDoubleView from './game-double-view';
 import GameTripleView from './game-triple-view';
-import Application from '../application';
 import getTimer from '../timer/timer';
 
 
@@ -24,8 +23,10 @@ const makeNewGame = (question) => {
 };
 
 export default class GameSceen {
-  constructor(model) {
+  constructor(model, transitionBack, transitionForward) {
     this.model = model;
+    this.transitionBack = transitionBack;
+    this.transitionForward = transitionForward;
 
     const status = new StatusView(model);
     this.header = new HeaderView(status.element);
@@ -33,9 +34,12 @@ export default class GameSceen {
     this.stats = new StatsView(model.answers, model.settings.questionNumber);
     this.footer = new FooterView();
     this.confirm = new ConfirmView();
-    this.confirm.onOkClick = () => Application.showGreeting();
     this.confirm.onCancelClick = () => this.hideConfirm();
     this.confirm.onCloseClick = () => this.hideConfirm();
+    this.confirm.onOkClick = () => {
+      this.stopGame();
+      this.transitionBack();
+    };
 
     const question = this.model.getQuestion();
     this.game = makeNewGame(question);
@@ -81,7 +85,7 @@ export default class GameSceen {
     this.model.handleAnswer(result);
     if (this.model.gameOver) {
       this.model.saveResult();
-      Application.showResults(this.model);
+      this.transitionForward(this.model);
     } else {
       this.nextLevel();
       this.updateStatus();

@@ -6,7 +6,6 @@ import statsCalc from '../blocks/stats/stats-calc';
 import ResultView from './result-view';
 import ResultTableView from './result-tabe-view';
 import StatsView from '../blocks/stats/stats-view';
-import Application from '../application';
 
 const processResultsData = (data, settings) => {
   const results = data.map((result, index) => {
@@ -45,10 +44,10 @@ const processResultsData = (data, settings) => {
 };
 
 export default class Results {
-  constructor(model) {
+  constructor(model, transition) {
     this.model = model;
     this.headerView = new HeaderView();
-    this.headerView.onBackClick = () => Application.showGreeting();
+    this.headerView.onBackClick = () => transition();
     this.footerView = new FooterView();
     this.table = new ResultTableView(null, []);
     this.resultView = new ResultsView(this.headerView.element, this.footerView.element, this.table.element);
