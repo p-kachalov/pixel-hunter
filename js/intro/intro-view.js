@@ -11,15 +11,6 @@ class IntroView extends AbstractView {
     </div>
     `;
   }
-
-  bind() {
-    const link = this.element.querySelector(`.intro__asterisk`);
-    link.addEventListener(`click`, () => {
-      this.onIntroClick();
-    });
-  }
-
-  onIntroClick() {}
 }
 
 export default IntroView;
