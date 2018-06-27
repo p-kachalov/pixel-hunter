@@ -40,7 +40,7 @@ class GameTripleView extends AbstractView {
       this.onAnswer({option1, option2});
     });
 
-    const options = this.element.querySelectorAll(`.game__option img`);
+    const options = this.element.querySelectorAll(`.game__option`);
     for (const item of options) {
       item.addEventListener(`click`, (evt) => {
         evt.preventDefault();
