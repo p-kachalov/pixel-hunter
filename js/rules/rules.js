@@ -1,15 +1,14 @@
 import RulesView from './rules-view';
 import HeaderView from '../blocks/header-view';
 import FooterView from '../blocks/footer-view';
-import Application from '../application';
 
-export default () => {
+export default (transitionBack, transitionForward) => {
   const headerView = new HeaderView();
-  headerView.onBackClick = () => Application.showGreeting();
+  headerView.onBackClick = () => transitionBack();
   const footerView = new FooterView();
 
   const rulesView = new RulesView(headerView.element, footerView.element);
-  rulesView.onSubmit = (userName) => Application.showGame(userName);
+  rulesView.onSubmit = (userName) => transitionForward(userName);
 
   return rulesView.element;
 };
