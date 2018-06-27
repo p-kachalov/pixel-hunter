@@ -1,6 +1,7 @@
 import GameType from '../data/game-type';
 import HeaderView from '../blocks/header-view';
 import StatusView from '../blocks/status-view';
+import ConfirmView from '../blocks/confirm-view';
 import StatsView from '../blocks/stats/stats-view';
 import FooterView from '../blocks/footer-view';
 import GameView from './game-view';
@@ -9,6 +10,7 @@ import GameDoubleView from './game-double-view';
 import GameTripleView from './game-triple-view';
 import Application from '../application';
 import getTimer from '../timer/timer';
+
 
 const getGame = {
   [GameType.SINGLE]: GameSingleView,
@@ -27,9 +29,13 @@ export default class GameSceen {
 
     const status = new StatusView(model);
     this.header = new HeaderView(status.element);
-    this.header.onBackClick = () => Application.showGreeting();
+    this.header.onBackClick = () => this.showConfirm();
     this.stats = new StatsView(model.answers, model.settings.questionNumber);
     this.footer = new FooterView();
+    this.confirm = new ConfirmView();
+    this.confirm.onOkClick = () => Application.showGreeting();
+    this.confirm.onCancelClick = () => this.hideConfirm();
+    this.confirm.onCloseClick = () => this.hideConfirm();
 
     const question = this.model.getQuestion();
     this.game = makeNewGame(question);
@@ -40,6 +46,14 @@ export default class GameSceen {
 
   get element() {
     return this.gameView.element;
+  }
+
+  showConfirm() {
+    this.header.element.parentNode.appendChild(this.confirm.element);
+  }
+
+  hideConfirm() {
+    this.confirm.element.parentNode.removeChild(this.confirm.element);
   }
 
   startGame() {
@@ -91,7 +105,7 @@ export default class GameSceen {
 
     this.header.element.parentNode.replaceChild(newHeader.element, this.header.element);
     this.header = newHeader;
-    this.header.onBackClick = () => Application.showGreeting();
+    this.header.onBackClick = () => this.showConfirm();
   }
 
   updateStats() {
