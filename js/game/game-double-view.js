@@ -1,8 +1,10 @@
 import AbstractView from '../abstract-view';
+import {debugStyle} from '../util';
 
 class GameDoubleView extends AbstractView {
-  constructor(data) {
+  constructor(data, debug) {
     super();
+    this.debug = debug;
     this.question = data.text;
     this.image1 = data.images[0];
     this.image2 = data.images[1];
@@ -17,22 +19,22 @@ class GameDoubleView extends AbstractView {
           <img src="${this.image1.src}" alt="${this.image1.alt}" width="${this.image1.width}" height="${this.image1.height}">
           <label class="game__answer  game__answer--photo">
             <input name="${this.image1.name}" type="radio" value="photo" required>
-            <span>Фото</span>
+            <span ${debugStyle(this.debug, this.image1.rightValue === `photo`)}>Фото</span>
           </label>
           <label class="game__answer  game__answer--paint">
             <input name="${this.image1.name}" type="radio" value="paint" required>
-            <span>Рисунок</span>
+            <span ${debugStyle(this.debug, this.image1.rightValue === `paint`)}>Рисунок</span>
           </label>
         </div>
         <div class="game__option">
           <img src="${this.image2.src}" alt="${this.image2.alt}" width="${this.image2.width}" height="${this.image2.height}">
           <label class="game__answer  game__answer--photo">
             <input name="${this.image2.name}" type="radio" value="photo" required>
-            <span>Фото</span>
+            <span ${debugStyle(this.debug, this.image2.rightValue === `photo`)}>Фото</span>
           </label>
           <label class="game__answer  game__answer--paint">
             <input name="${this.image2.name}" type="radio" value="paint" required>
-            <span>Рисунок</span>
+            <span ${debugStyle(this.debug, this.image2.rightValue === `paint`)}>Рисунок</span>
           </label>
         </div>
       </form>

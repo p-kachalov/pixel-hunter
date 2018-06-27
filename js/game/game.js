@@ -20,7 +20,7 @@ const getGame = {
 
 const makeNewGame = (question) => {
   const Game = getGame[question.type];
-  return new Game(question);
+  return new Game(question, true);
 };
 
 export default class GameSceen {
