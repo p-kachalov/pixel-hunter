@@ -1,8 +1,9 @@
 import AbstractView from '../abstract-view';
 
 class GameTripleView extends AbstractView {
-  constructor(data) {
+  constructor(data, debug) {
     super();
+    this.debug = debug;
     this.question = data.text;
     this.image1 = data.images[0];
     this.image2 = data.images[1];
@@ -15,7 +16,7 @@ class GameTripleView extends AbstractView {
     <div class="game">
       <p class="game__task">${this.question}</p>
       <form class="game__content game__content--triple">
-        <div class="game__option" data-name="${this.image1.name}">
+        <div class="game__option">
           <img data-name="${this.image1.name}" src="${this.image1.src}" alt="${this.image1.alt}" width="${this.image1.width}" height="${this.image1.height}">
         </div>
         <div class="game__option">
