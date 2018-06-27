@@ -37,7 +37,6 @@ export default class GameModel {
     this.questions = data;
     this.answers = [];
     this.result = null;
-    this.results = [];
   }
 
   getQuestion() {
