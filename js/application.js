@@ -6,6 +6,7 @@ import GameModel from './game-model';
 import ErrorView from './error/error-view';
 import ResultsScreen from './results/results';
 import Loader from './loader';
+import ConfirmView from './blocks/confirm-view';
 
 const container = document.querySelector(`.central`);
 
@@ -46,7 +47,7 @@ export default class Application {
 
   static showGame(userName) {
     const model = new GameModel(userName, gameData);
-    const game = new GameScreen(model, Application.showGreeting, Application.showResults);
+    const game = new GameScreen(model, () => Application.showConfirm(game), Application.showResults);
     changeView(game.element);
     game.startGame();
   }
@@ -58,6 +59,23 @@ export default class Application {
       then(() => Loader.loadResults(model.userName)).
       then((data) => results.renderResultTable(data)).
       catch(Application.showError);
+  }
+
+  static showConfirm(game) {
+    const confirm = new ConfirmView();
+    confirm.onCancelClick = () => Application.hideConfirm(confirm);
+    confirm.onCloseClick = () => Application.hideConfirm(confirm);
+    confirm.onOkClick = () => {
+      game.stopGame();
+      Application.hideConfirm(confirm);
+      Application.showGreeting();
+    };
+
+    container.parentNode.appendChild(confirm.element);
+  }
+
+  static hideConfirm(confirm) {
+    container.parentNode.removeChild(confirm.element);
   }
 
   static showError(error) {
