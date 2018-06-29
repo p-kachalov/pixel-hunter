@@ -45,32 +45,32 @@ const processResultsData = (data, settings) => {
 
 export default class Results {
   constructor(model, transition) {
-    this.model = model;
-    this.headerView = new HeaderView();
-    this.headerView.onBackClick = () => transition();
-    this.footerView = new FooterView();
-    this.table = new ResultTableView(null, []);
-    this.resultView = new ResultsView(this.headerView.element, this.footerView.element, this.table.element);
+    this._model = model;
+    this._headerView = new HeaderView();
+    this._headerView.onBackClick = () => transition();
+    this._footerView = new FooterView();
+    this._table = new ResultTableView(null, []);
+    this._resultView = new ResultsView(this._headerView.element, this._footerView.element, this._table.element);
   }
 
   get element() {
-    return this.resultView.element;
+    return this._resultView.element;
   }
 
   renderResultTable(data) {
-    const resultsData = processResultsData(data, this.model.settings);
+    const resultsData = processResultsData(data, this._model.settings);
     let resultTable = [];
 
     resultsData.forEach((dataItem) => {
-      const statsView = new StatsView(dataItem.answers, this.model.settings.questionNumber);
+      const statsView = new StatsView(dataItem.answers, this._model.settings.questionNumber);
       const result = new ResultView(dataItem);
       result.insertStats(statsView.element);
       resultTable.push(result.element);
     });
 
-    const isWin = this.model.lives > 0;
+    const isWin = this._model.lives >= 0;
     const newTable = new ResultTableView(isWin, resultTable);
-    this.table.element.parentNode.replaceChild(newTable.element, this.table.element);
+    this._table.element.parentNode.replaceChild(newTable.element, this._table.element);
   }
 
 }

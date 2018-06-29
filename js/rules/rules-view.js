@@ -3,8 +3,8 @@ import AbstractView from '../abstract-view';
 class RulesView extends AbstractView {
   constructor(header, footer) {
     super();
-    this.header = header;
-    this.footer = footer;
+    this._header = header;
+    this._footer = footer;
   }
 
   get template() {
@@ -31,9 +31,9 @@ class RulesView extends AbstractView {
   render() {
     const content = super.render();
     const container = document.createElement(`template`);
-    container.content.appendChild(this.header);
+    container.content.appendChild(this._header);
     container.content.appendChild(content);
-    container.content.appendChild(this.footer);
+    container.content.appendChild(this._footer);
 
     return container.content;
   }

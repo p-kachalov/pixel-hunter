@@ -3,16 +3,16 @@ import AbstractView from '../abstract-view';
 class ResultsView extends AbstractView {
   constructor(header, footer, table) {
     super();
-    this.header = header;
-    this.footer = footer;
-    this.table = table;
+    this._header = header;
+    this._footer = footer;
+    this._table = table;
   }
 
   render() {
     const container = document.createDocumentFragment();
-    container.appendChild(this.header);
-    container.appendChild(this.table);
-    container.appendChild(this.footer);
+    container.appendChild(this._header);
+    container.appendChild(this._table);
+    container.appendChild(this._footer);
     return container;
   }
 }

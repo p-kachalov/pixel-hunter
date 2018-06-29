@@ -8,15 +8,15 @@ const getAnswerTemplate = (answer) => {
 class StatsView extends AbstractView {
   constructor(answers, questionsNumber) {
     super();
-    this.answers = answers;
-    this.questionsNumber = questionsNumber;
+    this._answers = answers;
+    this._questionsNumber = questionsNumber;
   }
 
   get template() {
     return `
     <ul class="stats">
-      ${this.answers.reduce((acc, answer) => acc + getAnswerTemplate(answer), ``)}
-      ${new Array(this.questionsNumber - this.answers.length)
+      ${this._answers.reduce((acc, answer) => acc + getAnswerTemplate(answer), ``)}
+      ${new Array(this._questionsNumber - this._answers.length)
         .fill(getAnswerTemplate(Answer.UNKONWN)).join(``)}
     </ul>
     `;

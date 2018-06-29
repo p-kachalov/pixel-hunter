@@ -3,21 +3,21 @@ import AbstractView from '../abstract-view';
 class ResultsView extends AbstractView {
   constructor(isWin, table) {
     super();
-    this.isWin = isWin;
-    this.table = table;
+    this._isWin = isWin;
+    this._table = table;
   }
 
   get template() {
     return `
       <div class="result">
-        <h1>${this.isWin ? `Победа` : `Поражение`}!</h1>
+        <h1>${this._isWin ? `Победа` : `Поражение`}!</h1>
       </div>
     `;
   }
 
   render() {
     const content = super.render();
-    this.table.forEach((item) => {
+    this._table.forEach((item) => {
       content.appendChild(item);
     });
     return content;

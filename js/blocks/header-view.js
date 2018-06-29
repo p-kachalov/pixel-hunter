@@ -3,7 +3,7 @@ import AbstractView from '../abstract-view';
 class HeaderView extends AbstractView {
   constructor(status) {
     super();
-    this.status = status;
+    this._status = status;
   }
   get template() {
     return `
@@ -20,8 +20,8 @@ class HeaderView extends AbstractView {
 
   render() {
     const content = super.render();
-    if (this.status) {
-      content.appendChild(this.status);
+    if (this._status) {
+      content.appendChild(this._status);
     }
     return content;
   }

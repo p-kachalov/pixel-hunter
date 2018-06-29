@@ -71,25 +71,25 @@ const getTotalFinalBlock = (fail, totalFinal) => {
 class ResultView extends AbstractView {
   constructor(data) {
     super();
-    this.gameNumber = data.gameNumber;
-    this.totalBlock = getTotalBlock(data.fail, data.points, data.totalPoints);
-    this.speedBonusBlock = getSpeedBonusBlock(data.fail, data.fast, data.fastCost);
-    this.livesBonusBlock = getLivesBonusBlock(data.fail, data.lives, data.liveCost);
-    this.slowPenaltyBlock = getSlowPenaltyBlock(data.fail, data.slow, data.slowCost);
-    this.totalFinalBlock = getTotalFinalBlock(data.fail, data.totalFinal);
+    this._gameNumber = data.gameNumber;
+    this._totalBlock = getTotalBlock(data.fail, data.points, data.totalPoints);
+    this._speedBonusBlock = getSpeedBonusBlock(data.fail, data.fast, data.fastCost);
+    this._livesBonusBlock = getLivesBonusBlock(data.fail, data.lives, data.liveCost);
+    this._slowPenaltyBlock = getSlowPenaltyBlock(data.fail, data.slow, data.slowCost);
+    this._totalFinalBlock = getTotalFinalBlock(data.fail, data.totalFinal);
   }
 
   get template() {
     return `
     <table class="result__table">
       <tr>
-        <td class="result__number">${this.gameNumber}.</td>
+        <td class="result__number">${this._gameNumber}.</td>
         <td colspan="2" class="stats-container"></td>
-        ${this.totalBlock}
-        ${this.speedBonusBlock}
-        ${this.livesBonusBlock}
-        ${this.slowPenaltyBlock}
-        ${this.totalFinalBlock}
+        ${this._totalBlock}
+        ${this._speedBonusBlock}
+        ${this._livesBonusBlock}
+        ${this._slowPenaltyBlock}
+        ${this._totalFinalBlock}
       </tr>
     </table>
     `;
