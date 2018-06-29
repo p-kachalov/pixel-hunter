@@ -23,9 +23,9 @@ export default class Loader {
   }
 
   static saveResults(data, name) {
-    data = Object.assign({name}, adaptLocalData(data));
+    const savedData = Object.assign({name}, adaptLocalData(data));
     const requestSettings = {
-      body: JSON.stringify(data),
+      body: JSON.stringify(savedData),
       headers: {
         'Content-Type': `application/json`
       },
