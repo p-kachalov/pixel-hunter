@@ -12,7 +12,7 @@ const processResultsData = (data, settings) => {
     const answers = result.answers;
     const gameNumber = index + 1;
     const lives = result.lives;
-    const fail = lives === 0;
+    const fail = lives < 0;
     const points = settings.answerCost;
     const rightAnswer = result.answers.filter((answer) => {
       return answer !== Answer.WRONG && answer !== Answer.UNKONWN;

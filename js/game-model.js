@@ -47,7 +47,7 @@ export default class GameModel {
     const answer = getAnswer(result, this.time, this.settings);
     this.lives = (answer === Answer.WRONG) ? this.lives - 1 : this.lives;
     this.answers = [...this.answers, answer];
-    this.gameOver = this.lives === 0 || this.answers.length === this.settings.questionNumber;
+    this.gameOver = this.lives < 0 || this.answers.length === this.settings.questionNumber;
   }
 
   saveResult() {
