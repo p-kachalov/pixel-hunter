@@ -1,11 +1,12 @@
 import AbstractView from '../abstract-view';
 import {debugStyle} from '../util';
 import {resize} from '../resize/resize';
+import Settings from '../settings';
 
 class GameDoubleView extends AbstractView {
-  constructor(data, debug) {
+  constructor(data) {
     super();
-    this.debug = debug;
+    this.debug = Settings.DEBUG;
     this.question = data.text;
     this.image1 = data.images[0];
     this.image2 = data.images[1];

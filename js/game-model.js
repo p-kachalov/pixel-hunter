@@ -24,7 +24,6 @@ const Settings = Object.freeze({
   slowTime: 20,
   fastTime: 10,
   timeOnAnswer: 30,
-  debug: true
 });
 
 export default class GameModel {
