@@ -16,7 +16,37 @@ const clearContainer = (element) => {
   }
 };
 
-const changeView = (element) => {
+const fadeout = (callback, opacity = 1) => {
+  container.style.opacity = opacity;
+  if (opacity <= 0) {
+    container.style.opacity = 0;
+    callback();
+    return;
+  }
+
+  window.setTimeout(() => fadeout(callback, opacity - 0.1), 100);
+};
+
+const fadein = (opacity = 0) => {
+  container.style.opacity = opacity;
+  if (opacity >= 1) {
+    container.style.opacity = 1;
+    return;
+  }
+
+  window.setTimeout(() => fadein(opacity + 0.1), 100);
+};
+
+const changeView = (element, crossfade) => {
+  if (crossfade) {
+    fadeout(() => {
+      clearContainer(container);
+      container.appendChild(element);
+      fadein();
+    });
+    return;
+  }
+
   clearContainer(container);
   container.appendChild(element);
 };
@@ -30,14 +60,14 @@ export default class Application {
     Loader.loadData().
       then((data) => {
         gameData = data;
-        Application.showGreeting();
+        Application.showGreeting(true);
       }).
       catch((error) => Application.showError(error));
   }
 
-  static showGreeting() {
+  static showGreeting(crossfade = false) {
     const greeting = greetingScreen(Application.showRules);
-    changeView(greeting);
+    changeView(greeting, crossfade);
   }
 
   static showRules() {
