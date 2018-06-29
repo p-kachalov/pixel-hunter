@@ -1,9 +1,8 @@
 import AbstractView from '../abstract-view';
 
 class ConfirmView extends AbstractView {
-  constructor(status) {
+  constructor() {
     super();
-    this.status = status;
   }
   get template() {
     return `
