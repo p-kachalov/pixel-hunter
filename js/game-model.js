@@ -1,4 +1,5 @@
 import Answer from './data/answer';
+import Settings from './settings';
 
 const getAnswer = (result, time, settings) => {
   if (!result) {
@@ -14,25 +15,13 @@ const getAnswer = (result, time, settings) => {
   return Answer.CORRECT;
 };
 
-const Settings = Object.freeze({
-  maxLivesNumber: 3,
-  questionNumber: 10,
-  answerCost: 100,
-  fastCost: 50,
-  slowCost: 50,
-  liveCost: 50,
-  slowTime: 20,
-  fastTime: 10,
-  timeOnAnswer: 30,
-});
-
 export default class GameModel {
   constructor(userName, data) {
     this.userName = userName;
     this.gameOver = false;
-    this.lives = Settings.maxLivesNumber;
+    this.lives = Settings.GAME_SETTINGS.maxLivesNumber;
     this.time = 0;
-    this.settings = Object.assign({}, Settings, {questionNumber: data.length});
+    this.settings = Object.assign({}, Settings.GAME_SETTINGS, {questionNumber: data.length});
     this.questions = data;
     this.answers = [];
     this.result = null;
