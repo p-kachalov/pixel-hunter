@@ -1,7 +1,7 @@
 
 export const resize = (frame, image) => {
-  const widthScale = image.width / frame.width; // 150 / 10 = 15
-  const heightScale = image.height / frame.height; // 300 / 10 = 30
+  const widthScale = image.width / frame.width;
+  const heightScale = image.height / frame.height;
   const scale = widthScale > heightScale ? widthScale : heightScale;
 
   return {
