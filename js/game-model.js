@@ -1,20 +1,6 @@
 import Answer from './data/answer';
 import Settings from './settings';
 
-const getAnswer = (result, time, settings) => {
-  if (!result) {
-    return Answer.WRONG;
-  }
-  if (settings.timeOnAnswer - time < settings.fastTime) {
-    return Answer.FAST;
-  }
-  if (settings.timeOnAnswer - time > settings.slowTime) {
-    return Answer.SLOW;
-  }
-
-  return Answer.CORRECT;
-};
-
 export default class GameModel {
   constructor(userName, data) {
     this._userName = userName;
@@ -59,12 +45,26 @@ export default class GameModel {
     this._time = newTime;
   }
 
+  _getAnswer(result, time, settings) {
+    if (!result) {
+      return Answer.WRONG;
+    }
+    if (settings.timeOnAnswer - time < settings.fastTime) {
+      return Answer.FAST;
+    }
+    if (settings.timeOnAnswer - time > settings.slowTime) {
+      return Answer.SLOW;
+    }
+
+    return Answer.CORRECT;
+  }
+
   getQuestion() {
     return this._questions[this._answers.length];
   }
 
   handleAnswer(result) {
-    const answer = getAnswer(result, this._time, this._settings);
+    const answer = this._getAnswer(result, this._time, this._settings);
     this._lives = (answer === Answer.WRONG) ? this._lives - 1 : this._lives;
     this._answers = [...this._answers, answer];
     this._gameOver = this._lives < 0 || this._answers.length === this._settings.questionNumber;
