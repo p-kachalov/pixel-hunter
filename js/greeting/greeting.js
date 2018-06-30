@@ -5,5 +5,6 @@ export default (transition) => {
   const footerView = new FooterView();
   const greetingView = new GreetingView(footerView.element);
   greetingView.onContinue = () => transition();
+
   return greetingView.element;
 };

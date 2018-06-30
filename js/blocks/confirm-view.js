@@ -4,6 +4,7 @@ class ConfirmView extends AbstractView {
   constructor() {
     super();
   }
+
   get template() {
     return `
     <section class="modal-confirm modal-confirm__wrap">
@@ -41,14 +42,11 @@ class ConfirmView extends AbstractView {
 
   }
 
-  onOkClick() {
-  }
+  onOkClick() {}
 
-  onCancelClick() {
-  }
+  onCancelClick() {}
 
-  onCloseClick() {
-  }
+  onCloseClick() {}
 }
 
 export default ConfirmView;

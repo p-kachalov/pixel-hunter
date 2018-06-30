@@ -10,14 +10,14 @@ import GameTripleView from './game-triple-view';
 import getTimer from '../timer/timer';
 
 
-const GameSet = {
+const GameViewSet = {
   [GameType.SINGLE]: GameSingleView,
   [GameType.DOUBLE]: GameDoubleView,
   [GameType.TRIPLE]: GameTripleView,
 };
 
 const makeNewGame = (question) => {
-  const Game = GameSet[question.type];
+  const Game = GameViewSet[question.type];
   return new Game(question);
 };
 
@@ -44,10 +44,35 @@ export default class GameSceen {
     return this._gameView.element;
   }
 
+  _updateStatus() {
+    const newStatus = new StatusView(this._model);
+    const newHeader = new HeaderView(newStatus.element);
+
+    this._header.element.parentNode.replaceChild(newHeader.element, this._header.element);
+    this._header = newHeader;
+    this._header.onBackClick = () => this._transitionBack();
+  }
+
+  _updateStats() {
+    const newStats = new StatsView(this._model.answers, this._model.settings.questionNumber);
+    this._stats.element.parentNode.replaceChild(newStats.element, this._stats.element);
+    this._stats = newStats;
+  }
+
+  _nextLevel() {
+    const question = this._model.getQuestion();
+    const newGame = makeNewGame(question);
+    newGame.onAnswer = (result) => this.onAnswer(result);
+
+    this._game.element.parentNode.replaceChild(newGame.element, this._game.element);
+    this._game = newGame;
+    this.startGame();
+  }
+
   startGame() {
     const ticker = (timer) => {
       this._model.time = timer.time;
-      this.updateStatus();
+      this._updateStatus();
       if (timer.time === 0) {
         this.onAnswer(false);
         return;
@@ -71,34 +96,9 @@ export default class GameSceen {
       this._model.saveResult();
       this._transitionForward(this._model);
     } else {
-      this.nextLevel();
-      this.updateStatus();
-      this.updateStats();
+      this._nextLevel();
+      this._updateStatus();
+      this._updateStats();
     }
-  }
-
-  nextLevel() {
-    const question = this._model.getQuestion();
-    const newGame = makeNewGame(question);
-    newGame.onAnswer = (result) => this.onAnswer(result);
-
-    this._game.element.parentNode.replaceChild(newGame.element, this._game.element);
-    this._game = newGame;
-    this.startGame();
-  }
-
-  updateStatus() {
-    const newStatus = new StatusView(this._model);
-    const newHeader = new HeaderView(newStatus.element);
-
-    this._header.element.parentNode.replaceChild(newHeader.element, this._header.element);
-    this._header = newHeader;
-    this._header.onBackClick = () => this._transitionBack();
-  }
-
-  updateStats() {
-    const newStats = new StatsView(this._model.answers, this._model.settings.questionNumber);
-    this._stats.element.parentNode.replaceChild(newStats.element, this._stats.element);
-    this._stats = newStats;
   }
 }
