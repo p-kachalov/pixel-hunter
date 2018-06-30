@@ -1,5 +1,5 @@
 import Answer from './data/answer';
-import adaptServerData from './data/data-adapter';
+import Settings from './settings';
 
 const getAnswer = (result, time, settings) => {
   if (!result) {
@@ -15,47 +15,64 @@ const getAnswer = (result, time, settings) => {
   return Answer.CORRECT;
 };
 
-const Settings = Object.freeze({
-  maxLivesNumber: 3,
-  questionNumber: 10,
-  answerCost: 100,
-  fastCost: 50,
-  slowCost: 50,
-  liveCost: 50,
-  slowTime: 20,
-  fastTime: 10,
-  timeOnAnswer: 30,
-});
-
 export default class GameModel {
-  constructor(userName, serverData, results) {
-    const data = adaptServerData(serverData);
-    this.userName = userName;
-    this.data = data;
-    this.gameOver = false;
-    this.lives = Settings.maxLivesNumber;
-    this.time = 0;
-    this.settings = Object.assign({}, Settings, {questionNumber: data.length});
-    this.questions = data;
-    this.answers = [];
-    this.results = results ? results : [];
+  constructor(userName, data) {
+    this._userName = userName;
+    this._settings = Object.assign({}, Settings.GAME_SETTINGS, {questionNumber: data.length});
+    this._lives = Settings.GAME_SETTINGS.maxLivesNumber;
+    this._questions = data;
+    this._answers = [];
+    this._gameOver = false;
+    this._result = null;
+    this._time = 0;
+  }
+
+  get userName() {
+    return this._userName;
+  }
+
+  get settings() {
+    return this._settings;
+  }
+
+  get lives() {
+    return this._lives;
+  }
+
+  get answers() {
+    return this._answers;
+  }
+
+  get gameOver() {
+    return this._gameOver;
+  }
+
+  get result() {
+    return this._result;
+  }
+
+  get time() {
+    return this._time;
+  }
+
+  set time(newTime) {
+    this._time = newTime;
   }
 
   getQuestion() {
-    return this.questions[this.answers.length];
+    return this._questions[this._answers.length];
   }
 
   handleAnswer(result) {
-    const answer = getAnswer(result, this.time, this.settings);
-    this.lives = (answer === Answer.WRONG) ? this.lives - 1 : this.lives;
-    this.answers = [...this.answers, answer];
-    this.gameOver = this.lives === 0 || this.answers.length === this.settings.questionNumber;
+    const answer = getAnswer(result, this._time, this._settings);
+    this._lives = (answer === Answer.WRONG) ? this._lives - 1 : this._lives;
+    this._answers = [...this._answers, answer];
+    this._gameOver = this._lives < 0 || this._answers.length === this._settings.questionNumber;
   }
 
   saveResult() {
-    const lives = this.lives;
-    const answers = this.answers;
-
-    this.results = [...this.results, {lives, answers}];
+    const lives = this._lives;
+    const answers = this._answers;
+    this._result = {lives, answers};
   }
 }

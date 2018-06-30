@@ -3,7 +3,7 @@ import AbstractView from '../abstract-view';
 class GreetingView extends AbstractView {
   constructor(footer) {
     super();
-    this.footer = footer;
+    this._footer = footer;
   }
 
   get template() {
@@ -28,7 +28,7 @@ class GreetingView extends AbstractView {
     const content = super.render();
     const container = document.createElement(`template`);
     container.content.appendChild(content);
-    container.content.appendChild(this.footer);
+    container.content.appendChild(this._footer);
 
     return container.content;
   }

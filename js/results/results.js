@@ -4,15 +4,15 @@ import ResultsView from './results-view';
 import Answer from '../data/answer';
 import statsCalc from '../blocks/stats/stats-calc';
 import ResultView from './result-view';
+import ResultTableView from './result-tabe-view';
 import StatsView from '../blocks/stats/stats-view';
-import Application from '../application';
 
 const processResultsData = (data, settings) => {
   const results = data.map((result, index) => {
     const answers = result.answers;
     const gameNumber = index + 1;
     const lives = result.lives;
-    const fail = lives === 0;
+    const fail = lives < 0;
     const points = settings.answerCost;
     const rightAnswer = result.answers.filter((answer) => {
       return answer !== Answer.WRONG && answer !== Answer.UNKONWN;
@@ -43,22 +43,34 @@ const processResultsData = (data, settings) => {
   return results;
 };
 
-export default (model) => {
-  const headerView = new HeaderView();
-  headerView.onBackClick = () => Application.showGreeting(model.results);
-  const footerView = new FooterView();
+export default class Results {
+  constructor(model, transition) {
+    this._model = model;
+    this._headerView = new HeaderView();
+    this._headerView.onBackClick = () => transition();
+    this._footerView = new FooterView();
+    this._table = new ResultTableView(null, []);
+    this._resultView = new ResultsView(this._headerView.element, this._footerView.element, this._table.element);
+  }
 
-  const resultsData = processResultsData(model.results, model.settings);
-  let resultTable = [];
+  get element() {
+    return this._resultView.element;
+  }
 
-  resultsData.forEach((dataItem) => {
-    const statsView = new StatsView(dataItem.answers, model.settings.questionNumber);
-    const result = new ResultView(dataItem);
-    result.insertStats(statsView.element);
-    resultTable.push(result.element);
-  });
+  renderResultTable(data) {
+    const resultsData = processResultsData(data, this._model.settings);
+    let resultTable = [];
 
-  const results = new ResultsView(headerView.element, footerView.element, resultTable);
-  return results.element;
-};
+    resultsData.forEach((dataItem) => {
+      const statsView = new StatsView(dataItem.answers, this._model.settings.questionNumber);
+      const result = new ResultView(dataItem);
+      result.insertStats(statsView.element);
+      resultTable.push(result.element);
+    });
 
+    const isWin = this._model.lives >= 0;
+    const newTable = new ResultTableView(isWin, resultTable);
+    this._table.element.parentNode.replaceChild(newTable.element, this._table.element);
+  }
+
+}

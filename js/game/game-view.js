@@ -3,18 +3,18 @@ import AbstractView from '../abstract-view';
 class GameView extends AbstractView {
   constructor(header, footer, stats, game) {
     super();
-    this.header = header;
-    this.footer = footer;
-    this.stats = stats;
-    this.game = game;
+    this._header = header;
+    this._footer = footer;
+    this._stats = stats;
+    this._game = game;
   }
 
   render() {
-    const container = document.createElement(`div`);
-    container.appendChild(this.header);
-    container.appendChild(this.game);
-    container.appendChild(this.stats);
-    container.appendChild(this.footer);
+    const container = document.createDocumentFragment();
+    container.appendChild(this._header);
+    container.appendChild(this._game);
+    container.appendChild(this._stats);
+    container.appendChild(this._footer);
     return container;
   }
 }
