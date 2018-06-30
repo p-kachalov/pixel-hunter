@@ -10,14 +10,14 @@ import GameTripleView from './game-triple-view';
 import getTimer from '../timer/timer';
 
 
-const getGame = {
+const GameSet = {
   [GameType.SINGLE]: GameSingleView,
   [GameType.DOUBLE]: GameDoubleView,
   [GameType.TRIPLE]: GameTripleView,
 };
 
 const makeNewGame = (question) => {
-  const Game = getGame[question.type];
+  const Game = GameSet[question.type];
   return new Game(question);
 };
 
