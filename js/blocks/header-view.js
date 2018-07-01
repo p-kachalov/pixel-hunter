@@ -5,6 +5,7 @@ class HeaderView extends AbstractView {
     super();
     this._status = status;
   }
+
   get template() {
     return `
     <header class="header">
@@ -33,8 +34,7 @@ class HeaderView extends AbstractView {
     });
   }
 
-  onBackClick() {
-  }
+  onBackClick() {}
 }
 
 export default HeaderView;

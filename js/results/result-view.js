@@ -69,7 +69,7 @@ const getTotalFinalBlock = (fail, totalFinal) => {
 };
 
 class ResultView extends AbstractView {
-  constructor(data) {
+  constructor(data, statsElement) {
     super();
     this._gameNumber = data.gameNumber;
     this._totalBlock = getTotalBlock(data.fail, data.points, data.totalPoints);
@@ -77,6 +77,7 @@ class ResultView extends AbstractView {
     this._livesBonusBlock = getLivesBonusBlock(data.fail, data.lives, data.liveCost);
     this._slowPenaltyBlock = getSlowPenaltyBlock(data.fail, data.slow, data.slowCost);
     this._totalFinalBlock = getTotalFinalBlock(data.fail, data.totalFinal);
+    this._statsElement = statsElement;
   }
 
   get template() {
@@ -95,9 +96,9 @@ class ResultView extends AbstractView {
     `;
   }
 
-  insertStats(statsElement) {
+  insertStats() {
     const statsContainer = this.element.querySelector(`.stats-container`);
-    statsContainer.appendChild(statsElement);
+    statsContainer.appendChild(this._statsElement);
   }
 }
 

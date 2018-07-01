@@ -6,7 +6,6 @@ export default (transitionBack, transitionForward) => {
   const headerView = new HeaderView();
   headerView.onBackClick = () => transitionBack();
   const footerView = new FooterView();
-
   const rulesView = new RulesView(headerView.element, footerView.element);
   rulesView.onSubmit = (userName) => transitionForward(userName);
 

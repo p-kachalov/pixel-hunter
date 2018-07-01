@@ -63,8 +63,8 @@ export default class Results {
 
     resultsData.forEach((dataItem) => {
       const statsView = new StatsView(dataItem.answers, this._model.settings.questionNumber);
-      const result = new ResultView(dataItem);
-      result.insertStats(statsView.element);
+      const result = new ResultView(dataItem, statsView.element);
+      result.insertStats();
       resultTable.push(result.element);
     });
 

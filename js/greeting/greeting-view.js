@@ -40,8 +40,7 @@ class GreetingView extends AbstractView {
     });
   }
 
-  onContinue() {
-  }
+  onContinue() {}
 }
 
 export default GreetingView;

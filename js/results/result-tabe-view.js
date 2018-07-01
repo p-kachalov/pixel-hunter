@@ -20,6 +20,7 @@ class ResultsView extends AbstractView {
     this._table.forEach((item) => {
       content.appendChild(item);
     });
+
     return content;
   }
 }
