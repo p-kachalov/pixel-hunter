@@ -7,7 +7,7 @@ import GameView from './game-view';
 import GameSingleView from './game-single-view';
 import GameDoubleView from './game-double-view';
 import GameTripleView from './game-triple-view';
-import getTimer from '../timer/timer';
+import createTimer from '../timer/timer';
 
 
 const GameViewSet = {
@@ -82,7 +82,7 @@ export default class GameSceen {
       }, 1000);
     };
 
-    ticker(getTimer(this._model.settings.timeOnAnswer));
+    ticker(createTimer(this._model.settings.timeOnAnswer));
   }
 
   stopGame() {
