@@ -1,6 +1,6 @@
 import AbstractView from '../abstract-view';
 import {debugStyle} from '../util';
-import {resize} from '../resize/resize';
+import {fitIntoBox} from '../resize/resize';
 import Settings from '../settings';
 
 class GameSingleView extends AbstractView {
@@ -41,11 +41,7 @@ class GameSingleView extends AbstractView {
 
     const image = this.element.querySelector(`.game__option img`);
     image.addEventListener(`load`, (evt) => {
-      const imageSize = {width: evt.target.naturalWidth, height: evt.target.naturalHeight};
-      const frameSize = {width: evt.target.width, height: evt.target.height};
-      const newSize = resize(frameSize, imageSize);
-      evt.target.width = newSize.width;
-      evt.target.height = newSize.height;
+      fitIntoBox(evt.target);
     });
   }
 

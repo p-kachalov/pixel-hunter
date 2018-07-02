@@ -9,3 +9,12 @@ export const resize = (frame, image) => {
     height: Math.round(image.height / scale)
   };
 };
+
+export const fitIntoBox = (image) => {
+  const imageSize = {width: image.naturalWidth, height: image.naturalHeight};
+  const frameSize = {width: image.width, height: image.height};
+  const newSize = resize(frameSize, imageSize);
+  image.width = newSize.width;
+  image.height = newSize.height;
+  return;
+};
