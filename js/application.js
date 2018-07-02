@@ -110,6 +110,6 @@ export default class Application {
 
   static showError(error) {
     const errorView = new ErrorView(error);
-    changeView(errorView.element);
+    container.parentNode.appendChild(errorView.element);
   }
 }
