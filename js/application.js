@@ -59,8 +59,12 @@ export default class Application {
     changeView(intro);
     Loader.loadData().
       then((data) => {
-        gameData = data;
-        Application.showGreeting(true);
+        Loader.loadImages(data).
+        then(() => {
+          gameData = data;
+          Application.showGreeting(true);
+        }).
+        catch((error) => Application.showError(error));
       }).
       catch((error) => Application.showError(error));
   }
